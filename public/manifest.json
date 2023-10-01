@@ -1,0 +1,8 @@
+{
+  "short_name": "순수웨딩",
+  "name": "순수웨딩",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
