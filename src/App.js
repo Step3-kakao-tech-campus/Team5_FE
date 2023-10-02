@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import MainPage from "./pages/MainPage";
-import SearchPage from "./pages/SearchPage";
-import ChatListPage from "./pages/ChatListPage";
-import ProfilePage from "./pages/ProfilePage";
-import SignupPage from "./pages/SignupPage";
 import OnlyOutletLayout from "./layouts/OnlyOutletLayout";
+import ChatListPage from "./pages/ChatListPage";
+import LoginPage from "./pages/LoginPage";
+import MainPage from "./pages/MainPage";
+import ProfilePage from "./pages/ProfilePage";
+import SearchPage from "./pages/SearchPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         </Route>
         <Route element={<OnlyOutletLayout />}>
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
