@@ -11,13 +11,17 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/function-component-definition": [2, { "namedComponents": ["arrow-function", "function-declaration"] }],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": ["arrow-function", "function-declaration"] }
+    ],
     "react/react-in-jsx-scope": "off",
     "react/button-has-type": "off",
     "react/prop-types": "off",
     "no-console": "off",
     "prettier/prettier": "off",
     "import/no-extraneous-dependencies": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-param-reassign": "off"
   }
 }
