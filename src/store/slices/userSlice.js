@@ -30,6 +30,7 @@ const userSlice = createSlice({
     logOut: (state) => {
       localStorage.clear();
       state.isLogged = false;
+      state.userInfo = {};
       window.location.reload();
     },
   },
