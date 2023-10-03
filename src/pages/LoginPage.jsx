@@ -1,5 +1,6 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../apis/user";
 import Box from "../components/signup/atoms/Box";
@@ -8,17 +9,19 @@ import Container from "../components/signup/atoms/Container";
 import AlertBox from "../components/signup/molecules/AlertBox";
 import InputGroup from "../components/signup/molecules/InputGroup";
 import useInput from "../hooks/useInput";
+import { fetchUserInfo, logIn } from "../store/slices/userSlice";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); // api 호출 중인지 아닌지 확인
+  const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const { values, handleChange } = useInput({
     email: "",
     password: "",
   });
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
+  const dispatch = useDispatch();
 
   const isValidValue = () => {
     const emailRegex =
@@ -55,10 +58,13 @@ export default function LoginPage() {
     try {
       setIsSubmitting(true);
       const response = await login({
+        // 여기서 localstorage에 token 저장
         email: values.email,
         password: values.password,
       });
       if (response.success) {
+        dispatch(logIn());
+        dispatch(fetchUserInfo());
         navigate("/");
       }
       setIsSubmitting(false);

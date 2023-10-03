@@ -1,28 +1,17 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { getUserInfo } from "../../apis/user";
+import { useDispatch, useSelector } from "react-redux";
 import PaymentModal from "./PaymentModal";
+import { logOut } from "../../store/slices/userSlice";
 
 export default function ProfileTemplate() {
-  const { data, isLoading } = useQuery("/user/info", getUserInfo);
+  const { userInfo } = useSelector((state) => state.user);
   const [modalOpen, setModalOpen] = useState(false);
-  const userInfo = data?.response;
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.reload();
+    dispatch(logOut());
   };
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center h-1/5 items-center">
-        <CircularProgress
-          color="primary"
-          style={{ width: "30px", height: "30px" }}
-        />
-      </div>
-    );
   return (
     <div className="w-full h-full relative ">
       {modalOpen && <PaymentModal handler={() => setModalOpen(false)} />}
