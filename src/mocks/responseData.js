@@ -7,9 +7,9 @@ export const sucess = {
 export const userInfo = {
   success: true,
   response: {
-    username: "김지은",
-    email: "asdf@naver.com",
-    role: "planner",
+    username: "김하나",
+    email: "hana0101@naver.com",
+    role: "couple",
     grade: "premium",
     payedAt: "2023.09.15",
   },
