@@ -1,3 +1,4 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../apis/user";
@@ -11,6 +12,7 @@ import useInput from "../hooks/useInput";
 export default function LoginPage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // api 호출 중인지 아닌지 확인
   const { values, handleChange } = useInput({
     email: "",
     password: "",
@@ -41,18 +43,29 @@ export default function LoginPage() {
     }
     if (!isValidValue()) {
       // validation check fail시 api 호출하지 않음
+      setErrorMessage("");
+      setIsSubmitting(true);
+      await new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      });
       setErrorMessage("이메일 또는 비밀번호를 잘못 입력했습니다. ");
+      setIsSubmitting(false);
       return;
     }
     try {
-      await login({
+      setIsSubmitting(true);
+      const response = await login({
         email: values.email,
         password: values.password,
       });
-      navigate("/");
+      if (response.success) {
+        navigate("/");
+      }
+      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
       setErrorMessage("이메일 또는 비밀번호를 잘못 입력했습니다. ");
+      setIsSubmitting(false);
     }
   };
 
@@ -96,20 +109,31 @@ export default function LoginPage() {
               label={errorMessage}
             />
           )}
-          <Button
-            onClick={() => {
-              handleLogin();
-            }}
-            className="block w-full h-[50px] mt-[30px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
-          >
-            로그인
-          </Button>
+          {isSubmitting ? (
+            <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center">
+              <CircularProgress
+                color="primary"
+                style={{ width: "30px", height: "30px" }}
+              />
+            </div>
+          ) : (
+            <Button
+              onClick={handleLogin}
+              disabled={isSubmitting}
+              className={`block w-full h-[50px] mt-[30px] rounded-[10px] font-normal text-sm ${
+                isSubmitting ? "bg-zinc-300" : "bg-[#A7CFFF]"
+              }`}
+            >
+              로그인
+            </Button>
+          )}
+
           <div className="flex items-center justify-center pt-5 tracking-tight gap-2">
             <span>아직 계정이 없으신가요?</span>
             <button
+              type="button" // submit 방지
               className=" underline font-bold"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 navigate("/signup");
               }}
             >
