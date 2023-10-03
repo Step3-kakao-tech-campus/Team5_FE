@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PaymentModal from "./PaymentModal";
+import DeleteAccountModal from "./DeleteAccountModal";
 import { logOut } from "../../store/slices/userSlice";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -14,7 +16,12 @@ export default function ProfileTemplate() {
 
   return (
     <div className="w-full h-full relative ">
-      {modalOpen && <PaymentModal handler={() => setModalOpen(false)} />}
+      {paymentModalOpen && (
+        <PaymentModal handler={() => setPaymentModalOpen(false)} />
+      )}
+      {deleteAccountModalOpen && (
+        <DeleteAccountModal handler={() => setDeleteAccountModalOpen(false)} />
+      )}
       <div className="w-full h-full relative p-16 flex flex-col gap-10">
         {/* 유저 정보 영역 */}
         <div className="flex flex-col pt-10">
@@ -25,7 +32,7 @@ export default function ProfileTemplate() {
         {/* 결제 영역 */}
         <div className="flex flex-col text-2xl gap-2">
           <span className="text-xl text-zinc-500">서비스</span>
-          <button className=" w-fit" onClick={() => setModalOpen(true)}>
+          <button className=" w-fit" onClick={() => setPaymentModalOpen(true)}>
             순수 멤버십
           </button>
         </div>
@@ -40,7 +47,12 @@ export default function ProfileTemplate() {
           >
             로그아웃
           </button>
-          <button className=" w-fit">회원탈퇴</button>
+          <button
+            className=" w-fit"
+            onClick={() => setDeleteAccountModalOpen(true)}
+          >
+            회원탈퇴
+          </button>
         </div>
       </div>
     </div>
