@@ -1,11 +1,29 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteAccount } from "../../apis/user";
+import { logOut } from "../../store/slices/userSlice";
 import Modal from "../common/Modal";
 import Button from "../signup/atoms/Button";
 
 export default function DeleteAccountModal({ handler }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
+  const dispatch = useDispatch();
+
   const handleAgreement = (e) => {
     setAgreePolicy(e.target.checked);
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!agreePolicy) return;
+    try {
+      const response = await deleteAccount();
+      console.log(response);
+      if (response.success) {
+        dispatch(logOut());
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -37,6 +55,10 @@ export default function DeleteAccountModal({ handler }) {
           className={`block w-full h-[50px] mt-[10px] rounded-[10px] font-normal text-sm ${
             agreePolicy ? "bg-lightskyblue-sunsu" : "bg-zinc-300"
           }`}
+          onClick={() => {
+            handleDeleteAccount();
+          }}
+          disabled={!agreePolicy}
         >
           탈퇴하기
         </Button>
