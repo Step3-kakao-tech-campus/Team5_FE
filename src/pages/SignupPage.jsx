@@ -1,14 +1,16 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import Container from "../components/signup/atoms/Container";
 import Box from "../components/signup/atoms/Box";
 import InputGroup from "../components/signup/molecules/InputGroup";
 import Button from "../components/signup/atoms/Button";
 import AlertBox from "../components/signup/molecules/AlertBox";
-import { instance } from "../apis";
 import Label from "../components/signup/atoms/Label";
+import { signup } from "../apis/user";
 
 export default function SignupPage() {
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState();
   const [activeButton, setActiveButton] = useState(null);
   const [agreePolicy, setAgreePolicy] = useState(false);
@@ -17,10 +19,10 @@ export default function SignupPage() {
 
   const { values, handleChange } = useInput({
     role: "",
-    username: "",
     email: "",
     password: "",
-    passwordConfirm: "",
+    password2: "",
+    username: "",
   });
 
   const handleButtonClick = (buttonNumber) => {
@@ -77,7 +79,7 @@ export default function SignupPage() {
       setErrorMessage("비밀번호 형식에 맞게 입력해주세요.");
       return;
     }
-    if (!values.passwordConfirm) {
+    if (!values.password2) {
       setErrorMessage("비밀번호 확인을 입력해주세요.");
       return;
     }
@@ -85,13 +87,22 @@ export default function SignupPage() {
       setErrorMessage("개인정보 제3자 제공 동의에 동의해주세요.");
       return;
     }
-    const data = await instance.post("/user/signup", JSON.stringify(values));
-    if (data.data?.success) {
-      alert("회원가입이 완료되었습니다.");
-      window.location.replace(`/`);
-    } else {
-      // eslint-disable-next-line no-alert
-      setErrorMessage(data?.error?.message);
+    try {
+      const response = await signup({
+        // 여기서 localstorage에 token 저장
+        role: values.role,
+        email: values.email,
+        password: values.password,
+        password2: values.password2,
+        username: values.username,
+      });
+      if (response?.success) {
+        alert("회원가입이 완료되었습니다.");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage("에러가 발생했습니다.");
     }
   };
 
@@ -154,12 +165,12 @@ export default function SignupPage() {
           className="relative pt-[15px]"
         />
         <InputGroup
-          id="passwordConfirm"
+          id="password2"
           type="password"
-          name="passwordConfirm"
+          name="password2"
           label="비밀번호 확인"
           placeholder="비밀번호 확인"
-          value={values.passwordConfirm}
+          value={values.password2}
           onChange={handleChange}
           className="relative pt-[15px]"
         />
