@@ -108,7 +108,7 @@ export default function SignupPage() {
       });
       if (response?.success) {
         alert("회원가입이 완료되었습니다.");
-        navigate("/");
+        navigate("/login");
       }
       setIsSubmitting(false);
     } catch (error) {
