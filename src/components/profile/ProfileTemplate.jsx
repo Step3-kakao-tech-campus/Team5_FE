@@ -26,7 +26,7 @@ export default function ProfileTemplate() {
         {/* 유저 정보 영역 */}
         <div className="flex flex-col pt-10">
           <span className=" font-normal text-3xl">안녕하세요</span>
-          <span className=" font-medium text-3xl">{userInfo.username}님</span>
+          <span className=" font-normal text-3xl">{userInfo.username}님</span>
           <span className=" tracking-tighter pt-2">{userInfo.email}</span>
         </div>
         {/* 결제 영역 */}
