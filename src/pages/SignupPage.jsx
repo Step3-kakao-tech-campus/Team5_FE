@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 import useInput from "../hooks/useInput";
 import Container from "../components/signup/atoms/Container";
 import Box from "../components/signup/atoms/Box";
@@ -14,6 +15,7 @@ export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState();
   const [activeButton, setActiveButton] = useState(null);
   const [agreePolicy, setAgreePolicy] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const agreePolicyRef = useRef(null);
 
@@ -57,39 +59,47 @@ export default function SignupPage() {
 
     if (!values.role) {
       setErrorMessage("회원 구분을 선택해주세요.");
+      setIsSubmitting(false);
       return;
     }
     if (!values.username) {
       setErrorMessage("이름을 입력해주세요.");
+      setIsSubmitting(false);
       return;
     }
     if (!values.email) {
       setErrorMessage("이메일을 입력해주세요.");
+      setIsSubmitting(false);
       return;
     }
     if (!emailRegex.test(values.email)) {
       setErrorMessage("이메일 형식으로 입력해주세요.");
+      setIsSubmitting(false);
       return;
     }
     if (!values.password) {
       setErrorMessage("비밀번호를 입력해주세요.");
+      setIsSubmitting(false);
       return;
     }
     if (!passwordRegex.test(values.password)) {
       setErrorMessage("비밀번호 형식에 맞게 입력해주세요.");
+      setIsSubmitting(false);
       return;
     }
     if (!values.password2) {
       setErrorMessage("비밀번호 확인을 입력해주세요.");
+      setIsSubmitting(false);
       return;
     }
     if (!agreePolicy) {
       setErrorMessage("개인정보 제3자 제공 동의에 동의해주세요.");
+      setIsSubmitting(false);
       return;
     }
     try {
+      setIsSubmitting(true);
       const response = await signup({
-        // 여기서 localstorage에 token 저장
         role: values.role,
         email: values.email,
         password: values.password,
@@ -100,9 +110,11 @@ export default function SignupPage() {
         alert("회원가입이 완료되었습니다.");
         navigate("/");
       }
+      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
       setErrorMessage("에러가 발생했습니다.");
+      setIsSubmitting(false);
     }
   };
 
@@ -198,14 +210,26 @@ export default function SignupPage() {
             label={errorMessage}
           />
         )}
-        <Button
-          onClick={() => {
-            handleSubmit();
-          }}
-          className="block w-full h-[50px] mt-[10px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
-        >
-          회원가입
-        </Button>
+        {isSubmitting ? (
+          <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center">
+            <CircularProgress
+              color="primary"
+              style={{ width: "30px", height: "30px" }}
+            />
+          </div>
+        ) : (
+          <Button
+            onClick={() => {
+              handleSubmit();
+            }}
+            disabled={isSubmitting}
+            className={`block w-full h-[50px] mt-[30px] rounded-[10px] font-normal text-sm ${
+              isSubmitting ? "bg-zinc-300" : "bg-lightskyblue-sunsu"
+            }`}
+          >
+            회원가입
+          </Button>
+        )}
       </Box>
     </Container>
   );
