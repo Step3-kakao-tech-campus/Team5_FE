@@ -3,11 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../apis/user";
-import Box from "../components/signup/atoms/Box";
-import Button from "../components/signup/atoms/Button";
-import Container from "../components/signup/atoms/Container";
-import AlertBox from "../components/signup/molecules/AlertBox";
-import InputGroup from "../components/signup/molecules/InputGroup";
+import AlertBox from "../components/common/accounts/AlertBox";
+import InputGroup from "../components/common/accounts/InputGroup";
+import Box from "../components/common/atoms/Box";
+import Button from "../components/common/atoms/Button";
+import Container from "../components/common/atoms/Container";
 import useInput from "../hooks/useInput";
 import { fetchUserInfo, logIn } from "../store/slices/userSlice";
 
@@ -84,7 +84,8 @@ export default function LoginPage() {
 
   return (
     <Container className="max-w-none">
-      <Box className="relative h-full mx-auto px-[29px] pt-[45px] text-xs justify-center">
+      <Box className="relative h-full mx-auto px-[29px] pt-[100px] text-xs justify-center">
+        <h1 className="w-full text-center text-xl">로그인</h1>
         <form>
           <InputGroup
             id="email"

@@ -1,14 +1,14 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import useInput from "../hooks/useInput";
-import Container from "../components/signup/atoms/Container";
-import Box from "../components/signup/atoms/Box";
-import InputGroup from "../components/signup/molecules/InputGroup";
-import Button from "../components/signup/atoms/Button";
-import AlertBox from "../components/signup/molecules/AlertBox";
-import Label from "../components/signup/atoms/Label";
 import { signup } from "../apis/user";
+import AlertBox from "../components/common/accounts/AlertBox";
+import InputGroup from "../components/common/accounts/InputGroup";
+import Box from "../components/common/atoms/Box";
+import Button from "../components/common/atoms/Button";
+import Container from "../components/common/atoms/Container";
+import Label from "../components/common/atoms/Label";
+import useInput from "../hooks/useInput";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -121,6 +121,7 @@ export default function SignupPage() {
   return (
     <Container className="max-w-none">
       <Box className="relative h-full mx-auto px-[29px] pt-[45px] text-xs justify-center">
+        <h1 className="w-full text-center text-xl pb-10">회원가입</h1>
         <div className="pb-[5px]">
           <Label className="text-xs">회원 구분</Label>
         </div>

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-export default function Modal({ handler, children }) {
+export default function BottomSheet({ handler, children }) {
   const modalRef = useRef(null);
   const modalWrapperRef = useRef(null);
 

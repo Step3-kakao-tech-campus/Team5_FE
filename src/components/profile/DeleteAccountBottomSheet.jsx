@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteAccount } from "../../apis/user";
 import { logOut } from "../../store/slices/userSlice";
-import Modal from "../common/Modal";
-import Button from "../signup/atoms/Button";
+import BottomSheet from "../common/BottomSheet";
+import Button from "../common/atoms/Button";
 
-export default function DeleteAccountModal({ handler }) {
+export default function DeleteAccountBottomSheet({ handler }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ export default function DeleteAccountModal({ handler }) {
   };
 
   return (
-    <Modal handler={handler}>
+    <BottomSheet handler={handler}>
       <div className="flex flex-col gap-3">
         <div className="flex flex-col tracking-tight font-bold text-lg ">
           <span>정말 회원탈퇴 하시겠습니까?</span>
@@ -63,6 +63,6 @@ export default function DeleteAccountModal({ handler }) {
           탈퇴하기
         </Button>
       </div>
-    </Modal>
+    </BottomSheet>
   );
 }
