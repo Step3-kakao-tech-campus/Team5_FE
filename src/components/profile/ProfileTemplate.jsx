@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PaymentModal from "./PaymentModal";
-import DeleteAccountModal from "./DeleteAccountModal";
 import { logOut } from "../../store/slices/userSlice";
+import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
+import PaymentBottomSheet from "./PaymentBottomSheet";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
-  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
-  const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false);
+  const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
+  const [deleteAccountBottomSheetOpen, setDeleteAccountBottomSheetOpen] =
+    useState(false);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -16,11 +17,13 @@ export default function ProfileTemplate() {
 
   return (
     <div className="w-full h-full relative ">
-      {paymentModalOpen && (
-        <PaymentModal handler={() => setPaymentModalOpen(false)} />
+      {paymentBottomSheetOpen && (
+        <PaymentBottomSheet handler={() => setPaymentBottomSheetOpen(false)} />
       )}
-      {deleteAccountModalOpen && (
-        <DeleteAccountModal handler={() => setDeleteAccountModalOpen(false)} />
+      {deleteAccountBottomSheetOpen && (
+        <DeleteAccountBottomSheet
+          handler={() => setDeleteAccountBottomSheetOpen(false)}
+        />
       )}
       <div className="w-full h-full relative p-16 flex flex-col gap-10">
         {/* 유저 정보 영역 */}
@@ -32,7 +35,10 @@ export default function ProfileTemplate() {
         {/* 결제 영역 */}
         <div className="flex flex-col text-2xl gap-2">
           <span className="text-xl text-zinc-500">서비스</span>
-          <button className=" w-fit" onClick={() => setPaymentModalOpen(true)}>
+          <button
+            className=" w-fit"
+            onClick={() => setPaymentBottomSheetOpen(true)}
+          >
             순수 멤버십
           </button>
         </div>
@@ -49,7 +55,7 @@ export default function ProfileTemplate() {
           </button>
           <button
             className=" w-fit"
-            onClick={() => setDeleteAccountModalOpen(true)}
+            onClick={() => setDeleteAccountBottomSheetOpen(true)}
           >
             회원탈퇴
           </button>

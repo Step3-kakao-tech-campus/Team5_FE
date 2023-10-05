@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
+import Box from "../atoms/Box";
 import Input from "../atoms/Input";
 import Label from "../atoms/Label";
-import Box from "../atoms/Box";
 
 const InputGroup = forwardRef(
   ({ id, name, type, value, placeholder, label, className, onChange }, ref) => {

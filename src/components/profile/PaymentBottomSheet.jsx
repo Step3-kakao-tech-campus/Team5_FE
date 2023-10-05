@@ -1,10 +1,10 @@
 import React from "react";
-import Button from "../signup/atoms/Button";
-import Modal from "../common/Modal";
+import BottomSheet from "../common/BottomSheet";
+import Button from "../common/atoms/Button";
 
-export default function PaymentModal({ handler }) {
+export default function PaymentBottomSheet({ handler }) {
   return (
-    <Modal handler={handler}>
+    <BottomSheet handler={handler}>
       <div>
         <div className="flex flex-col tracking-tight font-bold text-lg">
           <span>한 번만 결제하면</span>
@@ -24,6 +24,6 @@ export default function PaymentModal({ handler }) {
           결제하기
         </Button>
       </div>
-    </Modal>
+    </BottomSheet>
   );
 }
