@@ -85,6 +85,7 @@ export default function LoginPage() {
   return (
     <Container className="max-w-none">
       <Box className="relative h-full mx-auto px-[29px] pt-[100px] text-xs justify-center">
+        <h1 className="w-full text-center text-xl">로그인</h1>
         <form>
           <InputGroup
             id="email"

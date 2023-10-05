@@ -121,6 +121,7 @@ export default function SignupPage() {
   return (
     <Container className="max-w-none">
       <Box className="relative h-full mx-auto px-[29px] pt-[45px] text-xs justify-center">
+        <h1 className="w-full text-center text-xl pb-10">회원가입</h1>
         <div className="pb-[5px]">
           <Label className="text-xs">회원 구분</Label>
         </div>
