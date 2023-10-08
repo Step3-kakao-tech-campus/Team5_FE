@@ -1,11 +1,12 @@
 import Card from "../common/atoms/Card";
 import { comma } from "../../utils/convert";
+import SquarePhoto from "../common/atoms/SquarePhoto";
 
 // eslint-disable-next-line no-unused-vars
 const PortfolioCard = ({ portfolio, loading }) => {
   return (
     <Card to={`/portfolios/${portfolio.id}`} className="portfolio-card">
-      <img
+      <SquarePhoto
         src={`${portfolio.image.substring(1, portfolio.image.length)}`}
         alt={portfolio.plannerName}
         className="portfolio-image"
