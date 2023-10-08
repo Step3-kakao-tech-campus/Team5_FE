@@ -13,7 +13,7 @@ export default function PaymentBottomSheet({ handler }) {
   const handleOnPayment = async () => {
     try {
       const tosspayments = await loadTossPayments(
-        process.env.REACT_APP_TOSS_CLIENT_KEY
+        process.env.REACT_APP_TOSS_CLIENT_KEY,
       );
       tossPaymentsRef.current = tosspayments;
 

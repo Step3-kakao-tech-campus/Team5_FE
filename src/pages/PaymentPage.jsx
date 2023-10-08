@@ -20,7 +20,7 @@ export default function PaymentPage() {
         const confirmResponse = await confirmPayment({ orderId, amount });
         if (confirmResponse.response === "fail") {
           navigate(
-            `/payments/fail?message=${"의심스러운 행위를 감지하였습니다."}`
+            `/payments/fail?message=${"의심스러운 행위를 감지하였습니다."}`,
           );
           return;
         }
