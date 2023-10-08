@@ -24,7 +24,7 @@ const InputGroup = forwardRef(
         />
       </Box>
     );
-  }
+  },
 );
 
 export default InputGroup;

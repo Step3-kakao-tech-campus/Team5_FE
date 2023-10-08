@@ -17,7 +17,7 @@ export const fetchUserInfo = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 const userSlice = createSlice({
