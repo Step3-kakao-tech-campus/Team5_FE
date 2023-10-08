@@ -17,7 +17,7 @@ export const quotationHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        })
+        }),
       );
     }
     return res(ctx.status(200), ctx.json(quotationList));
@@ -32,7 +32,7 @@ export const quotationHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        })
+        }),
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
@@ -47,7 +47,7 @@ export const quotationHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        })
+        }),
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
@@ -62,7 +62,7 @@ export const quotationHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        })
+        }),
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
@@ -77,7 +77,7 @@ export const quotationHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        })
+        }),
       );
     }
     return res(ctx.status(200), ctx.json(sucess));

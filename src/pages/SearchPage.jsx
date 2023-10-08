@@ -1,9 +1,10 @@
 import React from "react";
+import PortfolioTemplate from "../components/portfolios/PortfolioTemplate";
 
 export default function SearchPage() {
   return (
-    <div className="flex justify-center items-center h-full">
-      <h1>SearchPage</h1>
+    <div className="flex w-full h-full flex-col">
+      <PortfolioTemplate />
     </div>
   );
 }
