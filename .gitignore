@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,react,webstorm,visualstudiocode,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,react,webstorm,visualstudiocode,git
 
+# misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 ### Git ###
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
