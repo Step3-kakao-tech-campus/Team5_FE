@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { userInfo, sucess } from "./responseData";
+import { sucess, paymentsConfirm } from "./responseData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -7,26 +7,8 @@ async function sleep(ms) {
   });
 }
 
-export const userHandlers = [
-  // /user/signup
-  rest.post("/user/signup", async (req, res, ctx) => {
-    await sleep(500);
-    return res(ctx.status(200), ctx.json(sucess));
-  }),
-
-  // /user/login
-  rest.post("/user/login", async (req, res, ctx) => {
-    const fakeToken = "SunsuWeddingToken";
-    await sleep(500);
-    return res(
-      ctx.status(200),
-      ctx.json(sucess),
-      ctx.set("Authorization", `Bearer ${fakeToken}`),
-    );
-  }),
-
-  // /user
-  rest.delete("/user", async (req, res, ctx) => {
+export const paymentHandlers = [
+  rest.post("/payments/save", async (req, res, ctx) => {
     await sleep(500);
     const isAuthenticated = localStorage.getItem("token");
     if (!isAuthenticated) {
@@ -41,8 +23,7 @@ export const userHandlers = [
     return res(ctx.status(200), ctx.json(sucess));
   }),
 
-  // /user/info
-  rest.get("/user/info", async (req, res, ctx) => {
+  rest.post("/payments/confirm", async (req, res, ctx) => {
     await sleep(500);
     const isAuthenticated = localStorage.getItem("token");
     if (!isAuthenticated) {
@@ -54,11 +35,10 @@ export const userHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(userInfo));
+    return res(ctx.status(200), ctx.json(paymentsConfirm));
   }),
 
-  // /user/upgrade
-  rest.post("/user/upgrade", async (req, res, ctx) => {
+  rest.post("/payments/upgrade", async (req, res, ctx) => {
     await sleep(500);
     const isAuthenticated = localStorage.getItem("token");
     if (!isAuthenticated) {
