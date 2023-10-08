@@ -13,7 +13,7 @@ export default function GNB() {
   const location = useLocation();
 
   return (
-    <div className="w-full max-w-[768px] h-[50px] border-solid border-0 border-t-2 border-zinc-200 absolute bottom-0 flex justify-around items-center z-10 bg-white">
+    <div className="w-full max-w-[768px] h-[50px] border-solid border-0 border-t-2 border-zinc-200 sticky bottom-0 flex justify-around items-center z-10 bg-white">
       <Link
         to="/"
         className="text-black w-full flex items-center justify-center"
