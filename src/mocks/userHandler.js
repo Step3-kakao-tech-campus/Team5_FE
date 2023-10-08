@@ -21,7 +21,7 @@ export const userHandlers = [
     return res(
       ctx.status(200),
       ctx.json(sucess),
-      ctx.set("Authorization", `Bearer ${fakeToken}`),
+      ctx.set("Authorization", `Bearer ${fakeToken}`)
     );
   }),
 
@@ -35,7 +35,7 @@ export const userHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
@@ -51,7 +51,7 @@ export const userHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     return res(ctx.status(200), ctx.json(userInfo));
@@ -67,7 +67,7 @@ export const userHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     return res(ctx.status(200), ctx.json(sucess));

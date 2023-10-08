@@ -7,12 +7,11 @@ export const sucess = {
 export const userInfo = {
   success: true,
   response: {
-    userId: 1,
-    username: "김하나",
-    email: "hana0101@naver.com",
-    role: "couple",
-    grade: "normal",
-    payedAt: "2023년 09월 15일",
+    username: "김지은",
+    email: "asdf@naver.com",
+    role: "planner",
+    grade: "premium",
+    payedAt: "2023.09.15",
   },
   error: null,
 };
@@ -312,7 +311,6 @@ export const portfolioDetail = {
   success: true,
   response: {
     id: 1, // Long
-    userId: 999,
     images: ["/images/1.jpg", "/images/2.jpg", "/images/3.jpg"],
     title: "한 번 뿐인 결혼, 가장 아름답게 만들어드리겠습니다.",
     plannerName: "유희정",
@@ -447,11 +445,5 @@ export const quotationList = {
       },
     ],
   },
-  error: null,
-};
-
-export const paymentsConfirm = {
-  success: true,
-  response: "success", // 실패하면 fail
   error: null,
 };

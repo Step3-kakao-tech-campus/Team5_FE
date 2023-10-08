@@ -25,6 +25,7 @@ export const login = async (data) => {
       password,
     });
     // 로그인 성공 시 토큰을 localStorage에 저장
+    // localStorage.clear();
     localStorage.setItem("token", response.headers.authorization);
     return response.data;
   } catch (error) {
