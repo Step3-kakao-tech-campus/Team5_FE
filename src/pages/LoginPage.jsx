@@ -85,7 +85,7 @@ export default function LoginPage() {
   return (
     <Container className="max-w-none">
       <Box className="relative h-full mx-auto px-[29px] pt-[100px] text-xs justify-center">
-        <h1 className="w-full text-center text-xl">로그인</h1>
+        <h1 className="w-full text-center text-xl font-medium">로그인</h1>
         <form>
           <InputGroup
             id="email"
@@ -118,10 +118,7 @@ export default function LoginPage() {
           )}
           {isSubmitting ? (
             <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center">
-              <CircularProgress
-                color="primary"
-                style={{ width: "30px", height: "30px" }}
-              />
+              <CircularProgress color="primary" size={30} />
             </div>
           ) : (
             <Button
