@@ -7,5 +7,5 @@ import { quotationHandlers } from "./quotationHandler";
 export const worker = setupWorker(
   ...userHandlers,
   ...portfolioHandlers,
-  ...quotationHandlers
+  ...quotationHandlers,
 );

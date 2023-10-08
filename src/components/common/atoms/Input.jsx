@@ -14,7 +14,7 @@ const Input = forwardRef(
         ref={ref}
       />
     );
-  }
+  },
 );
 
 export default Input;
