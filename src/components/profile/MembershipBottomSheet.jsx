@@ -7,7 +7,7 @@ export default function MembershipBottomSheet({ handler }) {
 
   return (
     <BottomSheet handler={handler}>
-      <div className="flex flex-col font-bold pb-10 text-lg">
+      <div className="flex flex-col font-bold pb-[70px] text-lg">
         <span>
           {userInfo.username}님은 {userInfo.payedAt}부터
         </span>
