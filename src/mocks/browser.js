@@ -9,5 +9,5 @@ export const worker = setupWorker(
   ...userHandlers,
   ...portfolioHandlers,
   ...quotationHandlers,
-  ...paymentHandlers
+  ...paymentHandlers,
 );
