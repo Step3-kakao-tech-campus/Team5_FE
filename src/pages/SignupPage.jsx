@@ -1,30 +1,26 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signup } from "../apis/user";
-import AlertBox from "../components/common/accounts/AlertBox";
-import InputGroup from "../components/common/accounts/InputGroup";
-import Box from "../components/common/atoms/Box";
-import Button from "../components/common/atoms/Button";
-import Container from "../components/common/atoms/Container";
-import Label from "../components/common/atoms/Label";
 import useInput from "../hooks/useInput";
+import Container from "../components/signup/atoms/Container";
+import Box from "../components/signup/atoms/Box";
+import InputGroup from "../components/signup/molecules/InputGroup";
+import Button from "../components/signup/atoms/Button";
+import AlertBox from "../components/signup/molecules/AlertBox";
+import { instance } from "../apis";
+import Label from "../components/signup/atoms/Label";
 
 export default function SignupPage() {
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState();
   const [activeButton, setActiveButton] = useState(null);
   const [agreePolicy, setAgreePolicy] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const agreePolicyRef = useRef(null);
 
   const { values, handleChange } = useInput({
     role: "",
+    username: "",
     email: "",
     password: "",
-    password2: "",
-    username: "",
+    passwordConfirm: "",
   });
 
   const handleButtonClick = (buttonNumber) => {
@@ -59,69 +55,49 @@ export default function SignupPage() {
 
     if (!values.role) {
       setErrorMessage("회원 구분을 선택해주세요.");
-      setIsSubmitting(false);
       return;
     }
     if (!values.username) {
       setErrorMessage("이름을 입력해주세요.");
-      setIsSubmitting(false);
       return;
     }
     if (!values.email) {
       setErrorMessage("이메일을 입력해주세요.");
-      setIsSubmitting(false);
       return;
     }
     if (!emailRegex.test(values.email)) {
       setErrorMessage("이메일 형식으로 입력해주세요.");
-      setIsSubmitting(false);
       return;
     }
     if (!values.password) {
       setErrorMessage("비밀번호를 입력해주세요.");
-      setIsSubmitting(false);
       return;
     }
     if (!passwordRegex.test(values.password)) {
       setErrorMessage("비밀번호 형식에 맞게 입력해주세요.");
-      setIsSubmitting(false);
       return;
     }
-    if (!values.password2) {
+    if (!values.passwordConfirm) {
       setErrorMessage("비밀번호 확인을 입력해주세요.");
-      setIsSubmitting(false);
       return;
     }
     if (!agreePolicy) {
       setErrorMessage("개인정보 제3자 제공 동의에 동의해주세요.");
-      setIsSubmitting(false);
       return;
     }
-    try {
-      setIsSubmitting(true);
-      const response = await signup({
-        role: values.role,
-        email: values.email,
-        password: values.password,
-        password2: values.password2,
-        username: values.username,
-      });
-      if (response?.success) {
-        alert("회원가입이 완료되었습니다.");
-        navigate("/login");
-      }
-      setIsSubmitting(false);
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("에러가 발생했습니다.");
-      setIsSubmitting(false);
+    const data = await instance.post("/user/signup", JSON.stringify(values));
+    if (data.data?.success) {
+      alert("회원가입이 완료되었습니다.");
+      window.location.replace(`/`);
+    } else {
+      // eslint-disable-next-line no-alert
+      setErrorMessage(data?.error?.message);
     }
   };
 
   return (
     <Container className="max-w-none">
       <Box className="relative h-full mx-auto px-[29px] pt-[45px] text-xs justify-center">
-        <h1 className="w-full text-center text-xl pb-10">회원가입</h1>
         <div className="pb-[5px]">
           <Label className="text-xs">회원 구분</Label>
         </div>
@@ -178,12 +154,12 @@ export default function SignupPage() {
           className="relative pt-[15px]"
         />
         <InputGroup
-          id="password2"
+          id="passwordConfirm"
           type="password"
-          name="password2"
+          name="passwordConfirm"
           label="비밀번호 확인"
           placeholder="비밀번호 확인"
-          value={values.password2}
+          value={values.passwordConfirm}
           onChange={handleChange}
           className="relative pt-[15px]"
         />
@@ -211,26 +187,14 @@ export default function SignupPage() {
             label={errorMessage}
           />
         )}
-        {isSubmitting ? (
-          <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center">
-            <CircularProgress
-              color="primary"
-              style={{ width: "30px", height: "30px" }}
-            />
-          </div>
-        ) : (
-          <Button
-            onClick={() => {
-              handleSubmit();
-            }}
-            disabled={isSubmitting}
-            className={`block w-full h-[50px] mt-[30px] rounded-[10px] font-normal text-sm ${
-              isSubmitting ? "bg-zinc-300" : "bg-lightskyblue-sunsu"
-            }`}
-          >
-            회원가입
-          </Button>
-        )}
+        <Button
+          onClick={() => {
+            handleSubmit();
+          }}
+          className="block w-full h-[50px] mt-[10px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
+        >
+          회원가입
+        </Button>
       </Box>
     </Container>
   );

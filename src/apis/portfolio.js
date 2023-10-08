@@ -3,7 +3,7 @@ import { instance } from "./index";
 export const getPortfolioList = async (page) => {
   try {
     const response = await instance.get(`/portfolios?page=${page}`);
-    return response.data.response;
+    return response.data;
   } catch (error) {
     console.log("Get Portfolio List Api Error", error);
     throw error;

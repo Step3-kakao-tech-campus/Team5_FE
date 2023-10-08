@@ -25,7 +25,7 @@ export const portfolioHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     if (page === "1") {
@@ -39,7 +39,7 @@ export const portfolioHandlers = [
     }
     return res(
       ctx.status(200),
-      ctx.json({ success: true, response: [], error: null }),
+      ctx.json({ success: true, response: [], error: null })
     );
   }),
 
@@ -53,7 +53,7 @@ export const portfolioHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     return res(ctx.status(200), ctx.json(portfolioDetail));
@@ -69,7 +69,7 @@ export const portfolioHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
@@ -85,7 +85,7 @@ export const portfolioHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
@@ -101,7 +101,7 @@ export const portfolioHandlers = [
         ctx.json({
           code: 403,
           message: "Not authorized",
-        }),
+        })
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
