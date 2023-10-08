@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../store/slices/userSlice";
 import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
 import PaymentBottomSheet from "./PaymentBottomSheet";
+import MembershipBottomSheet from "./MembershipBottomSheet";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
+  const [membershipBottomSheetOpen, setMembershipBottomSheetOpen] =
+    useState(false);
+  useState(false);
   const [deleteAccountBottomSheetOpen, setDeleteAccountBottomSheetOpen] =
     useState(false);
   const dispatch = useDispatch();
@@ -20,6 +24,11 @@ export default function ProfileTemplate() {
       {paymentBottomSheetOpen && (
         <PaymentBottomSheet handler={() => setPaymentBottomSheetOpen(false)} />
       )}
+      {membershipBottomSheetOpen && (
+        <MembershipBottomSheet
+          handler={() => setMembershipBottomSheetOpen(false)}
+        />
+      )}
       {deleteAccountBottomSheetOpen && (
         <DeleteAccountBottomSheet
           handler={() => setDeleteAccountBottomSheetOpen(false)}
@@ -29,7 +38,7 @@ export default function ProfileTemplate() {
         {/* 유저 정보 영역 */}
         <div className="flex flex-col pt-10">
           <span className=" font-normal text-3xl">안녕하세요</span>
-          <span className=" font-normal text-3xl">{userInfo.username}님</span>
+          <span className=" font-normal text-2xl">{userInfo.username}님</span>
           <span className=" tracking-tighter pt-2">{userInfo.email}</span>
         </div>
         {/* 결제 영역 */}
@@ -37,7 +46,13 @@ export default function ProfileTemplate() {
           <span className="text-xl text-zinc-500">서비스</span>
           <button
             className=" w-fit"
-            onClick={() => setPaymentBottomSheetOpen(true)}
+            onClick={() => {
+              if (userInfo.grade === "premium") {
+                setMembershipBottomSheetOpen(true);
+                return;
+              }
+              setPaymentBottomSheetOpen(true);
+            }}
           >
             순수 멤버십
           </button>
