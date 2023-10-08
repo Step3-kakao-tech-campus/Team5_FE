@@ -9,10 +9,10 @@ const PortfolioTemplate = () => {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
     error,
     hasNextPage,
-    isLoading,
+    // isLoading,
     fetchNextPage,
     portfolios,
-    // isFetching,
+    isFetching,
   } = useFetchPortfolios();
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const PortfolioTemplate = () => {
           <h1 className="text-lg font-bold">웨딩플래너 탐색</h1>
         </div>
         <div>
-          <PortfolioGrid portfolios={portfolios} loading={isLoading} />
+          <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
         </div>
       </Container>
       <div ref={bottomObserver} />

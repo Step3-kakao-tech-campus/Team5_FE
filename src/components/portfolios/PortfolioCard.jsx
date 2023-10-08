@@ -2,8 +2,7 @@ import Card from "../common/atoms/Card";
 import { comma } from "../../utils/convert";
 import SquarePhoto from "../common/atoms/SquarePhoto";
 
-// eslint-disable-next-line no-unused-vars
-const PortfolioCard = ({ portfolio, loading }) => {
+const PortfolioCard = ({ portfolio }) => {
   return (
     <Card to={`/portfolios/${portfolio.id}`} className="portfolio-card">
       <SquarePhoto
