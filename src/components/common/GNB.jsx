@@ -28,7 +28,8 @@ export default function GNB() {
         to="/search"
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname === "/search" ? (
+        {location.pathname === "/search" ||
+        location.pathname.startsWith("/portfolios/") ? (
           <SearchIcon className="w-6 h-6" />
         ) : (
           <SearchOutlinedIcon className="w-6 h-6" />

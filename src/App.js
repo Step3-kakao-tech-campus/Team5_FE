@@ -10,6 +10,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
 import PaymentPage from "./pages/PaymentPage";
+import PortfolioDetailPage from "./pages/PortfolioDetailPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/payments/complete" element={<PaymentCompletePage />} />
           <Route path="/payments/fail" element={<PaymentFailPage />} />
+          <Route path="/portfolios/:id" element={<PortfolioDetailPage />} />
         </Route>
         <Route element={<OnlyOutletLayout />}>
           <Route path="/signup" element={<SignupPage />} />
