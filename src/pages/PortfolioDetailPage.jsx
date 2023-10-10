@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
+import { useEffect } from "react";
 import { getPortfolioDetail } from "../apis/portfolio";
 import PortfolioDetailTemplate from "../components/portfolios/PortfolioDetailTemplate";
 import GNBBOX from "../components/common/GNBBOX";
+import Spinner from "../components/common/atoms/Spinner";
 
 const PortfolioDetailPage = () => {
   const { id } = useParams();
@@ -11,8 +13,15 @@ const PortfolioDetailPage = () => {
   );
   const portfolio = data?.response;
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (error) return <div>에러가 발생했습니다.</div>;
+  useEffect(() => {
+    if (error) {
+      console.error(error.message);
+      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+    }
+  }, [error]);
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div className="flex w-full h-full flex-col">
       <div className="w-full h-full overflow-y-auto">
