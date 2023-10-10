@@ -22,7 +22,7 @@ export default function BottomSheet({ handler, children }) {
           </button>
         </div>
         {/* 모달 내용 */}
-        <div className="bg-white px-[38px] pt-0.5">{children}</div>
+        <div className="bg-white px-[38px] pt-0.5 pb-[35px]">{children}</div>
       </div>
     </>
   );
