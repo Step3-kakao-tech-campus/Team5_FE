@@ -6,6 +6,7 @@ import { sunsuMembershipPrice } from "../../utils/constants";
 import BottomSheet from "../common/BottomSheet";
 import Button from "../common/atoms/Button";
 import { savePayment } from "../../apis/payments";
+import { comma } from "../../utils/convert";
 
 export default function PaymentBottomSheet({ handler }) {
   const { userInfo } = useSelector((state) => state.user);
@@ -57,7 +58,7 @@ export default function PaymentBottomSheet({ handler }) {
           해지됩니다.
         </div>
         <div className="py-5 text-lg">
-          <span className="font-bold">6,900원</span>
+          <span className="font-bold">{comma(sunsuMembershipPrice)}원</span>
           <span>에 순수 멤버십을 이용해보세요.</span>
         </div>
         <Button

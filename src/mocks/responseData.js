@@ -60,7 +60,7 @@ export const portfolioList1 = {
       id: 5, // Long
       image: "/images/4.jpg",
       title: "한 번 뿐인 결혼, 가장 아름답게 만들어드리겠습니다.",
-      plannerName: "유희정4",
+      plannerName: "유희정5",
       price: 5550000,
       location: "서울",
       contractCount: 5,
@@ -69,7 +69,7 @@ export const portfolioList1 = {
       id: 6, // Long
       image: "/images/4.jpg",
       title: "한 번 뿐인 결혼, 가장 아름답게 만들어드리겠습니다.",
-      plannerName: "유희정4",
+      plannerName: "유희정6",
       price: 6660000,
       location: "서울",
       contractCount: 6,
@@ -78,7 +78,7 @@ export const portfolioList1 = {
       id: 7, // Long
       image: "/images/4.jpg",
       title: "한 번 뿐인 결혼, 가장 아름답게 만들어드리겠습니다.",
-      plannerName: "유희정4",
+      plannerName: "유희정7",
       price: 7770000,
       location: "서울",
       contractCount: 7,
@@ -87,7 +87,7 @@ export const portfolioList1 = {
       id: 8, // Long
       image: "/images/4.jpg",
       title: "한 번 뿐인 결혼, 가장 아름답게 만들어드리겠습니다.",
-      plannerName: "유희정4",
+      plannerName: "유희정8",
       price: 8880000,
       location: "서울",
       contractCount: 8,
@@ -96,7 +96,7 @@ export const portfolioList1 = {
       id: 9, // Long
       image: "/images/4.jpg",
       title: "한 번 뿐인 결혼, 가장 아름답게 만들어드리겠습니다.",
-      plannerName: "유희정4",
+      plannerName: "유희정9",
       price: 9990000,
       location: "서울",
       contractCount: 9,
@@ -105,7 +105,7 @@ export const portfolioList1 = {
       id: 10, // Long
       image: "/images/4.jpg",
       title: "한 번 뿐인 결혼, 가장 아름답게 만들어드리겠습니다.",
-      plannerName: "유희정4",
+      plannerName: "유희정10",
       price: 10000000,
       location: "서울",
       contractCount: 10,
@@ -121,7 +121,7 @@ export const portfolioList2 = {
       id: 11, // Long
       image: "/images/1.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정1",
+      plannerName: "유희정11",
       price: 1110000,
       location: "서울",
       contractCount: 1,
@@ -130,7 +130,7 @@ export const portfolioList2 = {
       id: 12, // Long
       image: "/images/2.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정2",
+      plannerName: "유희정12",
       price: 2220000,
       location: "서울",
       contractCount: 2,
@@ -139,7 +139,7 @@ export const portfolioList2 = {
       id: 13, // Long
       image: "/images/3.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정3",
+      plannerName: "유희정13",
       price: 3330000,
       location: "서울",
       contractCount: 3,
@@ -148,7 +148,7 @@ export const portfolioList2 = {
       id: 14, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정14",
       price: 4440000,
       location: "서울",
       contractCount: 4,
@@ -157,7 +157,7 @@ export const portfolioList2 = {
       id: 15, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정15",
       price: 5550000,
       location: "서울",
       contractCount: 5,
@@ -166,7 +166,7 @@ export const portfolioList2 = {
       id: 16, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정16",
       price: 6660000,
       location: "서울",
       contractCount: 6,
@@ -175,7 +175,7 @@ export const portfolioList2 = {
       id: 17, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정17",
       price: 7770000,
       location: "서울",
       contractCount: 7,
@@ -184,7 +184,7 @@ export const portfolioList2 = {
       id: 18, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정18",
       price: 8880000,
       location: "서울",
       contractCount: 8,
@@ -193,7 +193,7 @@ export const portfolioList2 = {
       id: 19, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정19",
       price: 9990000,
       location: "서울",
       contractCount: 9,
@@ -202,7 +202,7 @@ export const portfolioList2 = {
       id: 20, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정20",
       price: 10000000,
       location: "서울",
       contractCount: 10,
@@ -218,7 +218,7 @@ export const portfolioList3 = {
       id: 21, // Long
       image: "/images/1.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정1",
+      plannerName: "유희정21",
       price: 1110000,
       location: "서울",
       contractCount: 1,
@@ -227,7 +227,7 @@ export const portfolioList3 = {
       id: 22, // Long
       image: "/images/2.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정2",
+      plannerName: "유희정22",
       price: 2220000,
       location: "서울",
       contractCount: 2,
@@ -236,7 +236,7 @@ export const portfolioList3 = {
       id: 23, // Long
       image: "/images/3.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정3",
+      plannerName: "유희정23",
       price: 3330000,
       location: "서울",
       contractCount: 3,
@@ -245,7 +245,7 @@ export const portfolioList3 = {
       id: 24, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정24",
       price: 4440000,
       location: "서울",
       contractCount: 4,
@@ -254,7 +254,7 @@ export const portfolioList3 = {
       id: 25, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정25",
       price: 5550000,
       location: "서울",
       contractCount: 5,
@@ -263,7 +263,7 @@ export const portfolioList3 = {
       id: 26, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정26",
       price: 6660000,
       location: "서울",
       contractCount: 6,
@@ -272,7 +272,7 @@ export const portfolioList3 = {
       id: 27, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정27",
       price: 7770000,
       location: "서울",
       contractCount: 7,
@@ -281,7 +281,7 @@ export const portfolioList3 = {
       id: 28, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정28",
       price: 8880000,
       location: "서울",
       contractCount: 8,
@@ -290,7 +290,7 @@ export const portfolioList3 = {
       id: 29, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정29",
       price: 9990000,
       location: "서울",
       contractCount: 9,
@@ -299,7 +299,7 @@ export const portfolioList3 = {
       id: 30, // Long
       image: "/images/4.jpg",
       title: "포트폴리오 제목",
-      plannerName: "유희정4",
+      plannerName: "유희정30",
       price: 10000000,
       location: "서울",
       contractCount: 10,
