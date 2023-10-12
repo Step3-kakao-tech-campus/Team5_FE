@@ -3,6 +3,7 @@ import { userHandlers } from "./userHandler";
 import { portfolioHandlers } from "./portfolioHandler";
 import { quotationHandlers } from "./quotationHandler";
 import { paymentHandlers } from "./paymentHandler";
+import { matchHandlers } from "./matchHandler";
 
 // This configures a Service Worker with the given request handlers.
 export const worker = setupWorker(
@@ -10,4 +11,5 @@ export const worker = setupWorker(
   ...portfolioHandlers,
   ...quotationHandlers,
   ...paymentHandlers,
+  ...matchHandlers,
 );
