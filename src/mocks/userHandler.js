@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { userInfo, sucess } from "./responseData";
+import { userInfo, sucess, userId } from "./responseData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -11,7 +11,7 @@ export const userHandlers = [
   // /user/signup
   rest.post("/user/signup", async (req, res, ctx) => {
     await sleep(500);
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(userId));
   }),
 
   // /user/login

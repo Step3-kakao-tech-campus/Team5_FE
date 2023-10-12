@@ -4,6 +4,22 @@ export const sucess = {
   error: null,
 };
 
+export const userId = {
+  success: true,
+  response: {
+    userId: 1,
+  },
+  error: null,
+};
+
+export const chatId = {
+  success: true,
+  response: {
+    chatId: 999,
+  },
+  error: null,
+};
+
 export const userInfo = {
   success: true,
   response: {
