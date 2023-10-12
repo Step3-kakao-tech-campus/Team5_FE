@@ -1,6 +1,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getDatabase, ref, set } from "firebase/database";
 import { signup } from "../apis/user";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
@@ -8,6 +9,7 @@ import Box from "../components/common/atoms/Box";
 import Button from "../components/common/atoms/Button";
 import Container from "../components/common/atoms/Container";
 import Label from "../components/common/atoms/Label";
+import "../firebase";
 import useInput from "../hooks/useInput";
 
 export default function SignupPage() {
@@ -110,14 +112,17 @@ export default function SignupPage() {
     if (!validateInput()) return;
     try {
       setIsSubmitting(true);
-      const response = await signup({
+      const res = await signup({
         role: values.role,
         email: values.email,
         password: values.password,
         password2: values.password2,
         username: values.username,
       });
-      if (response?.success) {
+      if (res.success) {
+        await set(ref(getDatabase(), `users/${res.response.userId}`), {
+          name: values.username,
+        });
         alert("회원가입이 완료되었습니다. 다시 로그인해주세요.");
         navigate("/login");
       }
