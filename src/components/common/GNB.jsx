@@ -36,10 +36,10 @@ export default function GNB() {
         )}
       </Link>
       <Link
-        to="/chatlist"
+        to="/chat/list"
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname === "/chatlist" ? (
+        {location.pathname.startsWith("/chat") ? (
           <ChatIcon className="w-6 h-6" />
         ) : (
           <ChatOutlinedIcon className="w-6 h-6" />
