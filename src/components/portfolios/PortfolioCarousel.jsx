@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import SquarePhoto from "../common/atoms/SquarePhoto";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./PortfolioCarousel.css";
 
 const PortfolioCarousel = ({ portfolio }) => {
   const settings = {
@@ -12,6 +13,22 @@ const PortfolioCarousel = ({ portfolio }) => {
     autoplaySpeed: 5000,
     slidesToShow: 1,
     slidesToScroll: 1,
+    // eslint-disable-next-line react/no-unstable-nested-components
+    appendDots: (dots) => (
+      <div
+        style={{
+          width: "100%",
+          position: "absolute",
+          bottom: "8px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ul> {dots} </ul>
+      </div>
+    ),
+    dotsClass: "custom-dots",
   };
 
   return (
