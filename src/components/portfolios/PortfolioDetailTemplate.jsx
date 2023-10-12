@@ -10,6 +10,7 @@ import { comma } from "../../utils/convert";
 import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
 import HistoryBottomSheet from "./HistoryBottomSheet";
 import { paymentAtom } from "../../store";
+import PortfolioCarousel from "./PortfolioCarousel";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
   const { userInfo } = useSelector((state) => state.user);
@@ -25,7 +26,9 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
       {historyBottomSheetOpen && (
         <HistoryBottomSheet handler={() => setHistoryBottomSheetOpen(false)} />
       )}
-      <div className="bg-lightgray-sunsu w-full after:pb-[100%] after:block" />
+      <div>
+        <PortfolioCarousel portfolio={portfolio} />
+      </div>
       <div className="p-5 justify-between">
         <div className="flex whitespace-nowrap">
           <div className="inline mr-auto text-xl">
