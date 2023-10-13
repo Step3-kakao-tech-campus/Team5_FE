@@ -1,22 +1,78 @@
-import { useSelector } from "react-redux";
-import React, { useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  child,
+  get,
+  getDatabase,
+  ref,
+  serverTimestamp,
+  set,
+} from "firebase/database";
 import { useSetAtom } from "jotai";
-import DescriptionRow from "./DescriptionRow";
-import DivideBar from "../common/atoms/DivideBar";
-import PriceInfoRow from "./PriceInfoRow";
-import Button from "../common/atoms/Button";
-import PaymentBottomSheet from "../profile/PaymentBottomSheet";
-import { comma } from "../../utils/convert";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { createChatRoom } from "../../apis/match";
 import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
-import HistoryBottomSheet from "./HistoryBottomSheet";
+import "../../firebase";
 import { paymentAtom } from "../../store";
 import PortfolioCarousel from "./PortfolioCarousel";
+import { comma } from "../../utils/convert";
+import Button from "../common/atoms/Button";
+import DivideBar from "../common/atoms/DivideBar";
+import PaymentBottomSheet from "../profile/PaymentBottomSheet";
+import DescriptionRow from "./DescriptionRow";
+import HistoryBottomSheet from "./HistoryBottomSheet";
+import PriceInfoRow from "./PriceInfoRow";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
   const { userInfo } = useSelector((state) => state.user);
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [historyBottomSheetOpen, setHistoryBottomSheetOpen] = useState(false);
   const setPayment = useSetAtom(paymentAtom);
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleOnCreateChatRoom = async () => {
+    setIsSubmitting(true);
+    const db = getDatabase();
+    const userRef = ref(db, `users/${userInfo.userId}`);
+    const counterUserRef = ref(db, `users/${portfolio.userId}`);
+    try {
+      const snapshot = await get(userRef);
+      const data = snapshot.val();
+      if (data && data.chatRooms) {
+        const chatIds = Object.keys(data.chatRooms);
+        const existChatRoom = chatIds.find((chatId) => {
+          const chatRoom = data.chatRooms[chatId];
+          return chatRoom.counterId === portfolio.userId;
+        });
+        if (existChatRoom) {
+          // console.log("이미 채팅방이 존재합니다.");
+          navigate(`/chat/${existChatRoom}`);
+          return;
+        }
+      }
+      // 채팅방이 없을 경우 새로 만들어준다.
+      const res = await createChatRoom(portfolio.userId);
+      const { chatId } = res.response;
+      await set(child(userRef, `chatRooms/${chatId}`), {
+        chatId,
+        counterId: portfolio.userId,
+        counterName: portfolio.plannerName,
+        lastVisited: serverTimestamp(),
+      });
+      await set(child(counterUserRef, `chatRooms/${chatId}`), {
+        chatId,
+        counterId: userInfo.userId,
+        counterName: userInfo.username,
+        lastVisited: serverTimestamp(),
+      });
+      navigate(`/chat/${chatId}`);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsSubmitting(false);
+  };
 
   return (
     <div className="w-full h-full relative">
@@ -94,12 +150,14 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
                 </div>
               </div>
               <div>
-                {portfolio.paymentHistory.payments?.map((payment) => (
+                {portfolio.paymentHistory.payments?.map((payment, idx) => (
                   <Button
                     onClick={() => {
                       setPayment(payment);
                       setHistoryBottomSheetOpen(true);
                     }}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={idx}
                     className="block w-full mt-3"
                   >
                     <div className="flex text-sm items-center">
@@ -138,6 +196,18 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
             </div>
           )}
         </div>
+      </div>
+      <DivideBar />
+      <div className=" w-full p-5 flex items-center justify-center flex-col gap-1">
+        <h4 className="text-sm">지금 바로 상담 받아보세요.</h4>
+        <Button
+          className="w-1/2 min-w-[240px] h-[30px] bg-skyblue-sunsu text-white p-1 rounded-md flex items-center justify-center"
+          onClick={handleOnCreateChatRoom}
+          disabled={isSubmitting}
+        >
+          {isSubmitting && <CircularProgress size={15} />}
+          {isSubmitting ? "" : "견적 상담받기"}
+        </Button>
       </div>
     </div>
   );
