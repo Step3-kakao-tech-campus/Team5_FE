@@ -11,6 +11,8 @@ module.exports = {
         "gray-sunsu": "#667788",
         "darkgray-sunsu": "#292D32",
         "red-sunsu": "#EC6A5E",
+        "gradient-from-sunsu": "rgba(255, 255, 255, 0.0)",
+        "gradient-to-sunsu": "rgba(0, 0, 0, 0.67)",
       },
     },
   },
