@@ -1,23 +1,12 @@
 import React from "react";
 import GNBBOX from "../components/common/GNBBOX";
+import MainCarousel from "../components/main/MainCarousel";
 
 export default function MainPage() {
   return (
     <div className="flex w-full h-full flex-col">
-      {/* 컨텐츠 영역 */}
-      <div className="w-full h-full overflow-y-auto">
-        <div className="w-full h-[300px] flex items-center justify-center">
-          MainPage
-        </div>
-        <div className="w-full h-[300px] flex items-center justify-center">
-          MainPage
-        </div>
-        <div className="w-full h-[300px] flex items-center justify-center">
-          MainPage
-        </div>
-        <div className="w-full h-[300px] flex items-center justify-center">
-          MainPage
-        </div>
+      <div className="w-full h-full overflow-x-hidden overflow-y-auto">
+        <MainCarousel />
       </div>
       <GNBBOX />
     </div>
