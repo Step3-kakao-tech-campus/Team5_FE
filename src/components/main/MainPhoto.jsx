@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Photo from "../common/atoms/Photo";
 
 const MainPhoto = ({
@@ -10,11 +11,33 @@ const MainPhoto = ({
   brideName = "",
   brideInstagram = "",
 }) => {
+  const navigate = useNavigate();
+  const [moved, setMoved] = useState(false);
+
+  const downListener = () => {
+    setMoved(false);
+  };
+
+  const moveListener = () => {
+    setMoved(true);
+  };
+
+  const upListener = () => {
+    if (!moved) {
+      navigate(to);
+    }
+  };
+
   return (
     <div
       className={`photo-wrapper relative h-[600px] min-[576px]:h-[800px] ${className}`}
     >
-      <Link to={to}>
+      <div
+        onMouseUp={() => upListener()}
+        onMouseMove={moveListener}
+        onMouseDown={downListener}
+        role="presentation"
+      >
         <Photo
           src={src}
           alt={alt}
@@ -29,7 +52,7 @@ const MainPhoto = ({
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
