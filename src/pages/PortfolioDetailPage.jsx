@@ -24,7 +24,7 @@ const PortfolioDetailPage = () => {
 
   return (
     <div className="flex w-full h-full flex-col">
-      <div className="w-full h-full overflow-x-hidden overflow-y-auto">
+      <div className="w-full h-full overflow-x-hidden">
         {portfolio && <PortfolioDetailTemplate portfolio={portfolio} />}
       </div>
       <GNBBOX />
