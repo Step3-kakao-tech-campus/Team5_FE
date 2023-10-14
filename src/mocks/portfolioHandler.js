@@ -15,11 +15,11 @@ async function sleep(ms) {
 }
 
 export const portfolioHandlers = [
-  // /portfolios?page={page}
+  // /portfolios?cursor={nextCursor}
   rest.get("/portfolios", async (req, res, ctx) => {
     await sleep(500);
     const isAuthenticated = localStorage.getItem("token");
-    const page = req.url.searchParams.get("page");
+    const nextCursor = req.url.searchParams.get("cursor");
     if (!isAuthenticated) {
       return res(
         ctx.status(403),
@@ -29,19 +29,13 @@ export const portfolioHandlers = [
         }),
       );
     }
-    if (page === "1") {
+    if (nextCursor === "-1") {
       return res(ctx.status(200), ctx.json(portfolioList1));
     }
-    if (page === "2") {
+    if (nextCursor === "10") {
       return res(ctx.status(200), ctx.json(portfolioList2));
     }
-    if (page === "3") {
-      return res(ctx.status(200), ctx.json(portfolioList3));
-    }
-    return res(
-      ctx.status(200),
-      ctx.json({ success: true, response: [], error: null }),
-    );
+    return res(ctx.status(200), ctx.json(portfolioList3));
   }),
 
   // /portfolios/{portfolioId}
