@@ -1,38 +1,3 @@
-export const sucess = {
-  success: true,
-  response: null,
-  error: null,
-};
-
-export const userId = {
-  success: true,
-  response: {
-    userId: 1,
-  },
-  error: null,
-};
-
-export const chatId = {
-  success: true,
-  response: {
-    chatId: 999,
-  },
-  error: null,
-};
-
-export const userInfo = {
-  success: true,
-  response: {
-    userId: 1,
-    username: "김하나",
-    email: "hana0101@naver.com",
-    role: "couple",
-    grade: "premium",
-    payedAt: "2023년 09월 15일",
-  },
-  error: null,
-};
-
 export const portfolioList1 = {
   success: true,
   response: [
@@ -415,60 +380,5 @@ export const portfolioDetail = {
       ], // orders ended
     }, // orderHistory ended
   }, // response ended
-  error: null,
-};
-
-export const chat = {
-  success: true,
-  response: 3, // chatId (Long)
-  error: null,
-};
-
-export const chatList = {
-  success: true,
-  response: [1, 2, 3], // chatId (Long)
-  error: null,
-};
-
-export const quotationList = {
-  success: true,
-  response: {
-    status: "완료", // 미완료
-    quotations: [
-      {
-        id: 1,
-        title: "헤어",
-        price: 350000,
-        company: "***",
-        description: "",
-        status: "완료",
-        modifiedAt: "2023.09.13",
-      },
-      {
-        id: 2,
-        title: "헤어",
-        price: 350000,
-        company: "***",
-        description: "",
-        status: "완료",
-        modifiedAt: "2023.09.13",
-      },
-      {
-        id: 3,
-        title: "헤어",
-        price: 350000,
-        company: "***",
-        description: "",
-        status: "미완료",
-        modifiedAt: "2023.09.13",
-      },
-    ],
-  },
-  error: null,
-};
-
-export const paymentsConfirm = {
-  success: true,
-  response: "success", // 실패하면 fail
   error: null,
 };

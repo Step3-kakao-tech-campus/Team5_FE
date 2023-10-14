@@ -1,11 +1,11 @@
 import { rest } from "msw";
+import { sucess } from "./commonData";
 import {
+  portfolioDetail,
   portfolioList1,
   portfolioList2,
   portfolioList3,
-  portfolioDetail,
-  sucess,
-} from "./responseData";
+} from "./portfolioData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {

@@ -1,5 +1,6 @@
 import { rest } from "msw";
-import { userInfo, sucess, userId } from "./responseData";
+import { sucess } from "./commonData";
+import { infoResponse, signupResponse } from "./userData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -11,12 +12,14 @@ export const userHandlers = [
   // /user/signup
   rest.post("/user/signup", async (req, res, ctx) => {
     await sleep(500);
-    return res(ctx.status(200), ctx.json(userId));
+    return res(ctx.status(200), ctx.json(signupResponse));
   }),
 
   // /user/login
   rest.post("/user/login", async (req, res, ctx) => {
     const fakeToken = "SunsuWeddingToken";
+    console.log(req.body);
+
     await sleep(500);
     return res(
       ctx.status(200),
@@ -54,7 +57,7 @@ export const userHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(userInfo));
+    return res(ctx.status(200), ctx.json(infoResponse));
   }),
 
   // /user/upgrade
