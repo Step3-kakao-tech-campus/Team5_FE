@@ -2,7 +2,7 @@ import { instance } from "./index";
 
 export const createChatRoom = async (plannerId) => {
   try {
-    const response = await instance.post("/match/chat", {
+    const response = await instance.post("/chat", {
       plannerId,
     });
     return response.data;

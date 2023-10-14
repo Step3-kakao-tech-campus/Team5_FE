@@ -11,17 +11,17 @@ import { useSetAtom } from "jotai";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createChatRoom } from "../../apis/match";
+import { createChatRoom } from "../../apis/chat";
 import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
 import "../../firebase";
 import { paymentAtom } from "../../store";
-import PortfolioCarousel from "./PortfolioCarousel";
 import { comma } from "../../utils/convert";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
 import PaymentBottomSheet from "../profile/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import HistoryBottomSheet from "./HistoryBottomSheet";
+import PortfolioCarousel from "./PortfolioCarousel";
 import PriceInfoRow from "./PriceInfoRow";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
