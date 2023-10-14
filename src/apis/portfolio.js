@@ -1,8 +1,8 @@
 import { instance } from "./index";
 
-export const getPortfolioList = async (page) => {
+export const getPortfolioList = async (nextCursor) => {
   try {
-    const response = await instance.get(`/portfolios?page=${page}`);
+    const response = await instance.get(`/portfolios?cursor=${nextCursor}`);
     return response.data.response;
   } catch (error) {
     console.log("Get Portfolio List Api Error", error);
