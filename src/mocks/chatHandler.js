@@ -20,7 +20,7 @@ export const chatHandlers = [
         }),
       );
     }
-    if (req.body.plannerId === "1") {
+    if (req.body.plannerId === 1) {
       return res(ctx.status(200), ctx.json(chatIdHJ));
     }
     return res(ctx.status(200), ctx.json(chatIdAR));
