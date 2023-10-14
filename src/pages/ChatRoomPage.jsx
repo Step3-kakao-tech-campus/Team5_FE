@@ -12,9 +12,9 @@ import {
   update,
 } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
-import { IoChevronBack } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import ChatHeader from "../components/chat/\bChatHeader";
 import ChatInput from "../components/chat/ChatInput";
 import ChatMessage from "../components/chat/ChatMessage";
 import DateSeperationLine from "../components/chat/DateSeperationLine";
@@ -27,7 +27,6 @@ export default function ChatRoomPage() {
   const { chatId } = useParams();
   const [counterName, setCounterName] = useState("");
   const messageEndRef = useRef(null);
-  const navigate = useNavigate();
   let prevDate = null;
 
   useEffect(() => {
@@ -156,17 +155,9 @@ export default function ChatRoomPage() {
   return (
     <div className="flex flex-col h-full w-full">
       {/* 헤더 */}
-      <div className=" border-solid border-0 border-b-2 h-8 border-zinc-200 flex items-center gap-2 flex-shrink-0">
-        <IoChevronBack
-          className="text-2xl cursor-pointer"
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-        <span className=" text-xs">{counterName}</span>
-      </div>
+      <ChatHeader counterName={counterName} />
       {/* 메세지 영역 */}
-      <div className="px-10 pt-5 overflow-y-auto flex flex-col gap-2 relative mb-32">
+      <div className="px-10 pt-12 overflow-y-auto flex flex-col gap-2 relative mb-32">
         {messages?.map((message) => {
           if (prevDate !== convertToDate(message.timestamp)) {
             prevDate = convertToDate(message.timestamp);
@@ -191,7 +182,7 @@ export default function ChatRoomPage() {
         <div ref={messageEndRef} />
       </div>
       {/* 메세지 입력창 */}
-      <div className=" w-full z-10 bg-white absolute bottom-10">
+      <div className=" w-full z-10 bg-white fixed bottom-10 max-w-[576px]">
         <ChatInput />
       </div>
     </div>
