@@ -1,7 +1,8 @@
 import { rest } from "msw";
 import { sucess } from "./commonData";
 import {
-  portfolioDetail,
+  portfolioDetail1,
+  portfolioDetail2,
   portfolioList1,
   portfolioList2,
   portfolioList3,
@@ -56,7 +57,11 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(portfolioDetail));
+    if (req.params.portfolioId === "1") {
+      return res(ctx.status(200), ctx.json(portfolioDetail1));
+    }
+
+    return res(ctx.status(200), ctx.json(portfolioDetail2));
   }),
 
   // /portfolios
