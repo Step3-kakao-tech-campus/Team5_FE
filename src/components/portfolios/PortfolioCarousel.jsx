@@ -37,6 +37,8 @@ const PortfolioCarousel = ({ portfolio }) => {
       <Slider {...settings}>
         {portfolio.images?.map((image, index) => (
           <SquarePhoto
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
             src={image}
             alt={`${portfolio.plannerName} 플래너 소개 사진 - ${index + 1}번`}
             className="portfolio-image"
