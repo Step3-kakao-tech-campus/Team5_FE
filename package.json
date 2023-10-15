@@ -14,7 +14,7 @@
     "@tosspayments/payment-sdk": "^1.6.5",
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
-    "emoji-mart": "^5.5.2",
+    "emoji-picker-react": "^4.5.2",
     "firebase": "^10.4.0",
     "jotai": "^2.4.3",
     "lodash": "^4.17.21",

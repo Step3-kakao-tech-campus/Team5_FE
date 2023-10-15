@@ -1,35 +1,27 @@
-import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
-import _ from "lodash";
 import { getPortfolioList } from "../apis/portfolio";
 
 export default function useFetchPortfolios() {
-  const [portfolios, setPortfolios] = useState([]);
   const infiniteQuery = useInfiniteQuery(
     ["portfolios"],
-    ({ pageParam = 1 }) => getPortfolioList(pageParam),
+    ({ pageParam = -1 }) => getPortfolioList(pageParam),
     {
-      getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.length < 10) {
-          return undefined;
+      getNextPageParam: (lastPage) => {
+        if (lastPage.cursor) {
+          return lastPage.cursor;
         }
-        return allPages.length;
+        return undefined;
       },
       keepPreviousData: true,
     },
   );
 
-  useEffect(() => {
-    if (infiniteQuery.data) {
-      const allFetchedPortfolios = infiniteQuery.data.pages.flat();
-      setPortfolios((prev) =>
-        _.unionBy([...prev, ...allFetchedPortfolios], "id"),
-      );
-    }
-  }, [infiniteQuery.data]);
+  const allFetchedPortfolios = infiniteQuery.data?.pages.flatMap(
+    (page) => page.data,
+  );
 
   return {
-    portfolios,
+    portfolios: allFetchedPortfolios,
     ...infiniteQuery,
   };
 }

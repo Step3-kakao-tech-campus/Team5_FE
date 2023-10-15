@@ -1,5 +1,6 @@
 import { rest } from "msw";
-import { sucess, paymentsConfirm } from "./responseData";
+import { sucess } from "./commonData";
+import { paymentsConfirm } from "./paymentsData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -8,6 +9,7 @@ async function sleep(ms) {
 }
 
 export const paymentHandlers = [
+  // /payments/save
   rest.post("/payments/save", async (req, res, ctx) => {
     await sleep(500);
     const isAuthenticated = localStorage.getItem("token");
@@ -23,6 +25,7 @@ export const paymentHandlers = [
     return res(ctx.status(200), ctx.json(sucess));
   }),
 
+  // /payments/confirm
   rest.post("/payments/confirm", async (req, res, ctx) => {
     await sleep(500);
     const isAuthenticated = localStorage.getItem("token");
@@ -38,6 +41,7 @@ export const paymentHandlers = [
     return res(ctx.status(200), ctx.json(paymentsConfirm));
   }),
 
+  // /payments/upgrade
   rest.post("/payments/upgrade", async (req, res, ctx) => {
     await sleep(500);
     const isAuthenticated = localStorage.getItem("token");

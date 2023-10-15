@@ -3,12 +3,12 @@ import BottomSheet from "../common/BottomSheet";
 import { comma } from "../../utils/convert";
 import { paymentAtom } from "../../store";
 
-const HistoryBottomSheet = ({ handler }) => {
+const HistoryBottomSheet = ({ onClose }) => {
   const payment = useAtomValue(paymentAtom);
 
   console.log(payment);
   return (
-    <BottomSheet handler={handler}>
+    <BottomSheet onClose={onClose}>
       <div className="">
         <div className="text-base font-bold pb-2.5">상세 내역</div>
         {payment.paymentItems?.map((paymentItem) => (
