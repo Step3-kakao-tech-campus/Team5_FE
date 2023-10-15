@@ -5,7 +5,7 @@ import { logOut } from "../../store/slices/userSlice";
 import BottomSheet from "../common/BottomSheet";
 import Button from "../common/atoms/Button";
 
-export default function DeleteAccountBottomSheet({ handler }) {
+export default function DeleteAccountBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ export default function DeleteAccountBottomSheet({ handler }) {
   };
 
   return (
-    <BottomSheet handler={handler}>
+    <BottomSheet onClose={onClose}>
       <div className="flex flex-col">
         <div className="flex flex-col tracking-tight font-bold text-lg pb-[42px]">
           <span>정말 회원탈퇴 하시겠습니까?</span>

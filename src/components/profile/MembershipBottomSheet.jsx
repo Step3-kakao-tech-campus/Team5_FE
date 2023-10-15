@@ -2,11 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import BottomSheet from "../common/BottomSheet";
 
-export default function MembershipBottomSheet({ handler }) {
+export default function MembershipBottomSheet({ onClose }) {
   const { userInfo } = useSelector((state) => state.user);
 
   return (
-    <BottomSheet handler={handler}>
+    <BottomSheet onClose={onClose}>
       <div className="flex flex-col font-bold pb-[70px] text-lg">
         <span>
           {userInfo.username}님은 {userInfo.payedAt}부터

@@ -2,11 +2,11 @@ import React, { useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-export default function BottomSheet({ handler, children }) {
+export default function BottomSheet({ onClose, children }) {
   const modalRef = useRef(null);
   const modalWrapperRef = useRef(null);
 
-  useOnClickOutside(modalRef, modalWrapperRef, handler);
+  useOnClickOutside(modalRef, modalWrapperRef, onClose);
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function BottomSheet({ handler, children }) {
       >
         {/* 모달 상단 라운드 영역 */}
         <div className="bg-white w-full rounded-t-full h-8 flex flex-row-reverse">
-          <button onClick={handler}>
+          <button onClick={onClose}>
             <IoMdClose className=" m-6 text-xl" />
           </button>
         </div>

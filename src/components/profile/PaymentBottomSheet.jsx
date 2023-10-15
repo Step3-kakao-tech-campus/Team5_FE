@@ -8,7 +8,7 @@ import Button from "../common/atoms/Button";
 import { savePayment } from "../../apis/payments";
 import { comma } from "../../utils/convert";
 
-export default function PaymentBottomSheet({ handler }) {
+export default function PaymentBottomSheet({ onClose }) {
   const { userInfo } = useSelector((state) => state.user);
   const tossPaymentsRef = useRef(null);
   const handleOnPayment = async () => {
@@ -47,7 +47,7 @@ export default function PaymentBottomSheet({ handler }) {
   }, [tossPaymentsRef]);
 
   return (
-    <BottomSheet handler={handler}>
+    <BottomSheet onClose={onClose}>
       <div>
         <div className="flex flex-col tracking-tight font-bold text-lg">
           <span>한 번만 결제하면</span>

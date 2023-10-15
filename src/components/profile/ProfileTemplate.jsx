@@ -18,19 +18,27 @@ export default function ProfileTemplate() {
     dispatch(logOut());
   };
 
+  const handleOnShowPaymentBottomSheet = () => {
+    if (userInfo.grade === "premium") {
+      setMembershipBottomSheetOpen(true);
+      return;
+    }
+    setPaymentBottomSheetOpen(true);
+  };
+
   return (
     <div className="w-full h-full relative ">
       {paymentBottomSheetOpen && (
-        <PaymentBottomSheet handler={() => setPaymentBottomSheetOpen(false)} />
+        <PaymentBottomSheet onClose={() => setPaymentBottomSheetOpen(false)} />
       )}
       {membershipBottomSheetOpen && (
         <MembershipBottomSheet
-          handler={() => setMembershipBottomSheetOpen(false)}
+          onClose={() => setMembershipBottomSheetOpen(false)}
         />
       )}
       {deleteAccountBottomSheetOpen && (
         <DeleteAccountBottomSheet
-          handler={() => setDeleteAccountBottomSheetOpen(false)}
+          onClose={() => setDeleteAccountBottomSheetOpen(false)}
         />
       )}
       <div className="flex flex-col w-full h-full relative pl-[35px]">
@@ -54,13 +62,7 @@ export default function ProfileTemplate() {
           </span>
           <button
             className=" w-fit pt-[5px] pb-[10px]"
-            onClick={() => {
-              if (userInfo.grade === "premium") {
-                setMembershipBottomSheetOpen(true);
-                return;
-              }
-              setPaymentBottomSheetOpen(true);
-            }}
+            onClick={handleOnShowPaymentBottomSheet}
           >
             순수 멤버십
           </button>
@@ -70,12 +72,7 @@ export default function ProfileTemplate() {
           <span className="pb-[5px] text-lg text-skyblue-sunsu font-bold">
             회원정보
           </span>
-          <button
-            className=" w-fit pt-[5px] pb-[10px]"
-            onClick={() => {
-              handleLogout();
-            }}
-          >
+          <button className=" w-fit pt-[5px] pb-[10px]" onClick={handleLogout}>
             로그아웃
           </button>
           <button

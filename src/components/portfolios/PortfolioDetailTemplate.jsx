@@ -77,10 +77,10 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
   return (
     <div className="w-full h-full relative">
       {paymentBottomSheetOpen && (
-        <PaymentBottomSheet handler={() => setPaymentBottomSheetOpen(false)} />
+        <PaymentBottomSheet onClose={() => setPaymentBottomSheetOpen(false)} />
       )}
       {historyBottomSheetOpen && (
-        <HistoryBottomSheet handler={() => setHistoryBottomSheetOpen(false)} />
+        <HistoryBottomSheet onClose={() => setHistoryBottomSheetOpen(false)} />
       )}
       <div>
         <PortfolioCarousel portfolio={portfolio} />
