@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,react,webstorm,visualstudiocode,git
 
 # misc
+.env
 .env.local
 .env.development.local
 .env.test.local

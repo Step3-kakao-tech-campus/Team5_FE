@@ -10,6 +10,7 @@ const PortfolioGrid = ({ portfolios, isFetching }) => {
       {isFetching && (
         <>
           <SkeletonCard /> <SkeletonCard />
+          <SkeletonCard /> <SkeletonCard />
         </>
       )}
     </div>

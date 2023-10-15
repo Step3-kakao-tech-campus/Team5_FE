@@ -1,9 +1,10 @@
 import CircularProgress from "@mui/material/CircularProgress";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { upgradePayment } from "../apis/payments";
-import { comma, convertISO8601ToDateTime } from "../utils/convert";
+import { comma } from "../utils/convert";
 
 export default function PaymentCompletePage() {
   const [isFetching, setIsFetching] = useState(true);
@@ -38,6 +39,10 @@ export default function PaymentCompletePage() {
       }
     })();
   }, [searchParams]);
+
+  useEffect(() => {
+    console.log("payments", payments);
+  }, [payments]);
 
   if (isFetching)
     return (
@@ -80,7 +85,9 @@ export default function PaymentCompletePage() {
         </div>
         <div className="flex justify-between border-solid border-0 border-zinc-300 border-b">
           <span>승인 일시</span>
-          <span>{convertISO8601ToDateTime(payments.approvedAt)}</span>
+          <span>
+            {dayjs(payments.approvedAt).format("YYYY-MM-DD HH:mm:ss")}
+          </span>
         </div>
         <div className="flex justify-between">
           <span>주문ID</span>

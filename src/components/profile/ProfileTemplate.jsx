@@ -10,7 +10,6 @@ export default function ProfileTemplate() {
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [membershipBottomSheetOpen, setMembershipBottomSheetOpen] =
     useState(false);
-  useState(false);
   const [deleteAccountBottomSheetOpen, setDeleteAccountBottomSheetOpen] =
     useState(false);
   const dispatch = useDispatch();
@@ -19,57 +18,65 @@ export default function ProfileTemplate() {
     dispatch(logOut());
   };
 
+  const handleOnShowPaymentBottomSheet = () => {
+    if (userInfo.grade === "premium") {
+      setMembershipBottomSheetOpen(true);
+      return;
+    }
+    setPaymentBottomSheetOpen(true);
+  };
+
   return (
     <div className="w-full h-full relative ">
       {paymentBottomSheetOpen && (
-        <PaymentBottomSheet handler={() => setPaymentBottomSheetOpen(false)} />
+        <PaymentBottomSheet onClose={() => setPaymentBottomSheetOpen(false)} />
       )}
       {membershipBottomSheetOpen && (
         <MembershipBottomSheet
-          handler={() => setMembershipBottomSheetOpen(false)}
+          onClose={() => setMembershipBottomSheetOpen(false)}
         />
       )}
       {deleteAccountBottomSheetOpen && (
         <DeleteAccountBottomSheet
-          handler={() => setDeleteAccountBottomSheetOpen(false)}
+          onClose={() => setDeleteAccountBottomSheetOpen(false)}
         />
       )}
-      <div className="w-full h-full relative p-16 flex flex-col gap-10">
+      <div className="flex flex-col w-full h-full relative pl-[35px]">
         {/* 유저 정보 영역 */}
-        <div className="flex flex-col pt-10">
-          <span className=" font-normal text-3xl">안녕하세요</span>
-          <span className=" font-normal text-2xl">{userInfo.username}님</span>
-          <span className=" tracking-tighter pt-2">{userInfo.email}</span>
+        <div className="flex flex-col py-[50px]">
+          <span className=" text-xl">안녕하세요</span>
+          <span className=" text-xl">
+            <span className="font-bold text-blue-sunsu">
+              {userInfo.username}
+            </span>
+            님
+          </span>
+          <span className=" pt-[5px] text-xs tracking-tight">
+            {userInfo.email}
+          </span>
         </div>
         {/* 결제 영역 */}
-        <div className="flex flex-col text-2xl gap-2">
-          <span className="text-xl text-zinc-500">서비스</span>
+        <div className="flex flex-col text-base pt-[15px]">
+          <span className="pb-[5px] text-lg text-skyblue-sunsu font-bold">
+            서비스
+          </span>
           <button
-            className=" w-fit"
-            onClick={() => {
-              if (userInfo.grade === "premium") {
-                setMembershipBottomSheetOpen(true);
-                return;
-              }
-              setPaymentBottomSheetOpen(true);
-            }}
+            className=" w-fit pt-[5px] pb-[10px]"
+            onClick={handleOnShowPaymentBottomSheet}
           >
             순수 멤버십
           </button>
         </div>
         {/* 로그아웃 & 회원탈퇴 */}
-        <div className="flex flex-col text-2xl gap-2">
-          <span className="text-xl text-zinc-500">회원정보</span>
-          <button
-            className=" w-fit"
-            onClick={() => {
-              handleLogout();
-            }}
-          >
+        <div className="flex flex-col text-base pt-[15px] pb-[10px]">
+          <span className="pb-[5px] text-lg text-skyblue-sunsu font-bold">
+            회원정보
+          </span>
+          <button className=" w-fit pt-[5px] pb-[10px]" onClick={handleLogout}>
             로그아웃
           </button>
           <button
-            className=" w-fit"
+            className=" w-fit pt-[5px] pb-[10px]"
             onClick={() => setDeleteAccountBottomSheetOpen(true)}
           >
             회원탈퇴
