@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import ChatHeader from "../components/chat/\bChatHeader";
+import ChatHeader from "../components/chat/ChatHeader";
 import ChatInput from "../components/chat/ChatInput";
 import ChatMessage from "../components/chat/ChatMessage";
 import DateSeperationLine from "../components/chat/DateSeperationLine";
