@@ -13,7 +13,7 @@ export default function GNB() {
   const location = useLocation();
 
   return (
-    <div className="w-full max-w-[768px] h-[50px] border-solid border-0 border-t-2 border-zinc-200 sticky bottom-0 flex justify-around items-center z-10 bg-white">
+    <div className="w-full max-w-[576px] h-[50px] border-solid border-0 border-t border-zinc-200 fixed bottom-0 flex justify-around items-center z-10 bg-white">
       <Link
         to="/"
         className="text-black w-full flex items-center justify-center"
@@ -28,17 +28,18 @@ export default function GNB() {
         to="/search"
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname === "/search" ? (
+        {location.pathname === "/search" ||
+        location.pathname.startsWith("/portfolios/") ? (
           <SearchIcon className="w-6 h-6" />
         ) : (
           <SearchOutlinedIcon className="w-6 h-6" />
         )}
       </Link>
       <Link
-        to="/chatlist"
+        to="/chat/list"
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname === "/chatlist" ? (
+        {location.pathname.startsWith("/chat") ? (
           <ChatIcon className="w-6 h-6" />
         ) : (
           <ChatOutlinedIcon className="w-6 h-6" />

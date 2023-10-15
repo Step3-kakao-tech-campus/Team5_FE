@@ -5,7 +5,7 @@ import { logOut } from "../../store/slices/userSlice";
 import BottomSheet from "../common/BottomSheet";
 import Button from "../common/atoms/Button";
 
-export default function DeleteAccountBottomSheet({ handler }) {
+export default function DeleteAccountBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,17 +27,14 @@ export default function DeleteAccountBottomSheet({ handler }) {
   };
 
   return (
-    <BottomSheet handler={handler}>
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col tracking-tight font-bold text-lg ">
+    <BottomSheet onClose={onClose}>
+      <div className="flex flex-col">
+        <div className="flex flex-col tracking-tight font-bold text-lg pb-[42px]">
           <span>정말 회원탈퇴 하시겠습니까?</span>
           <span>모든 데이터는 복구가 불가능합니다.</span>
         </div>
-        <div>
-          <label
-            htmlFor="policy"
-            className="flex gap-1 items-center px-1 pt-10"
-          >
+        <div className="pb-[15px]">
+          <label htmlFor="policy" className="flex gap-1 items-center px-1">
             <input
               type="checkbox"
               id="policy"
@@ -52,7 +49,7 @@ export default function DeleteAccountBottomSheet({ handler }) {
           </label>
         </div>
         <Button
-          className={`block w-full h-[50px] mt-[10px] rounded-[10px] font-normal text-sm ${
+          className={`block w-full h-[50px] rounded-[10px] text-sm ${
             agreePolicy ? "bg-lightskyblue-sunsu" : "bg-zinc-300"
           }`}
           onClick={() => {

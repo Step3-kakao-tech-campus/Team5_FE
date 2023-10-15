@@ -1,5 +1,6 @@
 import { rest } from "msw";
-import { quotationList, sucess } from "./responseData";
+import { sucess } from "./commonData";
+import { quotationList } from "./quotationData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {

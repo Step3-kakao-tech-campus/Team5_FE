@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import PortfolioGrid from "./PortfolioGrid";
 import Container from "../common/atoms/Container";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
+import Spinner from "../common/atoms/Spinner";
 
 const PortfolioTemplate = () => {
   const bottomObserver = useRef(null);
@@ -9,7 +10,7 @@ const PortfolioTemplate = () => {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
     error,
     hasNextPage,
-    // isLoading,
+    isLoading,
     fetchNextPage,
     portfolios,
     isFetching,
@@ -39,6 +40,8 @@ const PortfolioTemplate = () => {
       alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
     }
   }, [error]);
+
+  if (isLoading) return <Spinner />;
 
   return (
     <>
