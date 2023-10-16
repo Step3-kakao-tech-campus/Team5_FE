@@ -197,18 +197,14 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
           )}
         </div>
       </div>
-      <DivideBar />
-      <div className=" w-full p-5 flex items-center justify-center flex-col gap-1">
-        <h4 className="text-sm">지금 바로 상담 받아보세요.</h4>
-        <Button
-          className="w-1/2 min-w-[240px] h-[30px] bg-skyblue-sunsu text-white p-1 rounded-md flex items-center justify-center"
-          onClick={handleOnCreateChatRoom}
-          disabled={isSubmitting}
-        >
-          {isSubmitting && <CircularProgress size={15} />}
-          {isSubmitting ? "" : "견적 상담받기"}
-        </Button>
-      </div>
+      <Button
+        className="w-full h-[50px] mt-3 items-center justify-center bg-lightskyblue-sunsu text-sm"
+        onClick={handleOnCreateChatRoom}
+        disabled={isSubmitting}
+      >
+        {isSubmitting && <CircularProgress size={15} />}
+        {isSubmitting ? "" : "채팅 상담 받기"}
+      </Button>
     </div>
   );
 };
