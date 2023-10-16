@@ -180,15 +180,15 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
             </>
           ) : (
             <div className="flex h-[46px]">
-              <div className="inline text-sm mr-auto">
+              <div className="inline text-sm mr-[10px] break-keep">
                 이전 매칭 내역을 확인하려면 순수 멤버십을 결제하셔야 합니다.
               </div>
-              <div className="inline min-w-[100px] max-w-[110px] w-full">
+              <div className="inline w-[120px]">
                 <Button
                   onClick={() => {
                     setPaymentBottomSheetOpen(true);
                   }}
-                  className="block w-full h-full rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
+                  className="block w-full h-full rounded-[10px] font-normal text-sm bg-blue-sunsu text-white"
                 >
                   결제하기
                 </Button>
