@@ -18,17 +18,7 @@ export const portfolioHandlers = [
   // /portfolios?cursor={nextCursor}
   rest.get("/portfolios", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
     const nextCursor = req.url.searchParams.get("cursor");
-    if (!isAuthenticated) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          code: 403,
-          message: "Not authorized",
-        }),
-      );
-    }
     if (nextCursor === "-1") {
       return res(ctx.status(200), ctx.json(portfolioList1));
     }
@@ -41,16 +31,6 @@ export const portfolioHandlers = [
   // /portfolios/{portfolioId}
   rest.get("/portfolios/:portfolioId", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          code: 403,
-          message: "Not authorized",
-        }),
-      );
-    }
     if (req.params.portfolioId === "1") {
       return res(ctx.status(200), ctx.json(portfolioDetail1));
     }
