@@ -13,6 +13,7 @@ import ChatRoomItem from "../components/chat/ChatRoomItem";
 import GNBBOX from "../components/common/GNBBOX";
 import Spinner from "../components/common/atoms/Spinner";
 import "../firebase";
+import ChatListHeaderRow from "../components/chat/ChatListHeaderRow";
 
 export default function ChatListPage() {
   const { userInfo } = useSelector((state) => state.user);
@@ -85,10 +86,10 @@ export default function ChatListPage() {
     );
   }
   return (
-    <div className="flex flex-col p-7 w-full h-full">
-      <h1 className=" font-bold text-xl pb-5">채팅</h1>
+    <div className="flex flex-col w-full h-full">
+      <ChatListHeaderRow />
       {/* 채팅 목록 영역 */}
-      <div className=" overflow-y-auto mb-16">
+      <div className="overflow-y-auto">
         {chatList.length > 0 &&
           chatList?.map((message) => (
             <div key={message.timestamp}>
