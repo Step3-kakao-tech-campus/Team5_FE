@@ -3,6 +3,7 @@ import PortfolioGrid from "./PortfolioGrid";
 import Container from "../common/atoms/Container";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
 import Spinner from "../common/atoms/Spinner";
+import SearchHeaderRow from "./SearchHeaderRow";
 
 const PortfolioTemplate = () => {
   const bottomObserver = useRef(null);
@@ -46,9 +47,7 @@ const PortfolioTemplate = () => {
   return (
     <>
       <Container>
-        <div className="py-[12px] pl-[20px]">
-          <h1 className="text-lg font-bold">웨딩플래너 탐색</h1>
-        </div>
+        <SearchHeaderRow />
         <div>
           <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
         </div>
