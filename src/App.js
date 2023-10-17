@@ -12,6 +12,7 @@ import PortfolioDetailPage from "./pages/PortfolioDetailPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/portfolios/:id" element={<PortfolioDetailPage />} />
           <Route path="/chat/list" element={<ChatListPage />} />
           <Route path="/chat/:chatId" element={<ChatRoomPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route element={<OnlyOutletLayout />}>
           <Route path="/signup" element={<SignupPage />} />
