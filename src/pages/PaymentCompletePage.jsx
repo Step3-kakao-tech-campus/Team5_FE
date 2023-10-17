@@ -2,7 +2,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { upgradePayment } from "../apis/payments";
 import { comma } from "../utils/convert";
 
@@ -14,7 +14,6 @@ export default function PaymentCompletePage() {
   const orderId = searchParams.get("orderId");
   const secretKey = process.env.REACT_APP_TOSS_SECRET_KEY;
   const basicToken = btoa(`${secretKey}:`);
-  const navigate = useNavigate();
   const url = `https://api.tosspayments.com/v1/payments/orders/${orderId}`;
 
   useEffect(() => {
@@ -94,14 +93,12 @@ export default function PaymentCompletePage() {
           <span>{payments.orderId}</span>
         </div>
       </div>
-      <button
+      <Link
         className="w-fit bg-blue-sunsu text-white rounded-md py-2 px-4"
-        onClick={() => {
-          navigate("/");
-        }}
+        to="/"
       >
         홈으로
-      </button>
+      </Link>
     </div>
   );
 }

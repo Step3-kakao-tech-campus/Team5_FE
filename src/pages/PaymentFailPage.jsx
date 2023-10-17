@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { AiOutlineRight } from "react-icons/ai";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function PaymentFailPage() {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const paymentFailMessage = searchParams.get("message");
   useEffect(() => {
     console.log("paymentFailMessage", paymentFailMessage);
@@ -23,17 +22,15 @@ export default function PaymentFailPage() {
       <div className=" bg-zinc-200 text-sm w-2/3 p-3 text-center rounded-sm">
         {paymentFailMessage}
       </div>
-      <button
+      <Link
         className=" bg-red-sunsu text-white p-2 px-4 rounded flex items-center gap-1"
-        onClick={() => {
-          navigate("/profile");
-        }}
+        to="/"
       >
-        <span>결제 재시도</span>
+        <span>홈으로</span>
         <span>
           <AiOutlineRight size={18} />
         </span>
-      </button>
+      </Link>
     </div>
   );
 }

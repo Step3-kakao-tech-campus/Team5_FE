@@ -1,7 +1,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../apis/user";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
@@ -134,15 +134,9 @@ export default function LoginPage() {
 
           <div className="flex items-center justify-center pt-5 tracking-tight gap-2">
             <span>아직 계정이 없으신가요?</span>
-            <button
-              type="button" // submit 방지
-              className=" underline font-bold"
-              onClick={() => {
-                navigate("/signup");
-              }}
-            >
+            <Link className=" underline font-bold" to="/signup">
               회원가입
-            </button>
+            </Link>
           </div>
         </form>
       </Box>
