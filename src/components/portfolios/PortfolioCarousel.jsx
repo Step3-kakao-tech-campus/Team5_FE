@@ -19,7 +19,7 @@ const PortfolioCarousel = ({ portfolio }) => {
         style={{
           width: "100%",
           position: "absolute",
-          bottom: "8px",
+          bottom: "4px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

@@ -44,24 +44,22 @@ export default function ProfileTemplate() {
       <div className="flex flex-col w-full h-full relative pl-[35px]">
         {/* 유저 정보 영역 */}
         <div className="flex flex-col py-[50px]">
-          <span className=" text-xl">안녕하세요</span>
-          <span className=" text-xl">
+          <span className="text-xl">안녕하세요</span>
+          <span className="text-xl">
             <span className="font-bold text-blue-sunsu">
               {userInfo.username}
             </span>
             님
           </span>
-          <span className=" pt-[5px] text-xs tracking-tight">
+          <span className="pt-[5px] text-xs tracking-tight">
             {userInfo.email}
           </span>
         </div>
         {/* 결제 영역 */}
         <div className="flex flex-col text-base pt-[15px]">
-          <span className="pb-[5px] text-lg text-skyblue-sunsu font-bold">
-            서비스
-          </span>
+          <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
           <button
-            className=" w-fit pt-[5px] pb-[10px]"
+            className="w-fit pt-[5px] pb-[10px] text-lg"
             onClick={handleOnShowPaymentBottomSheet}
           >
             순수 멤버십
@@ -69,14 +67,15 @@ export default function ProfileTemplate() {
         </div>
         {/* 로그아웃 & 회원탈퇴 */}
         <div className="flex flex-col text-base pt-[15px] pb-[10px]">
-          <span className="pb-[5px] text-lg text-skyblue-sunsu font-bold">
-            회원정보
-          </span>
-          <button className=" w-fit pt-[5px] pb-[10px]" onClick={handleLogout}>
+          <span className="pb-[5px] text-skyblue-sunsu">회원정보</span>
+          <button
+            className="w-fit pt-[5px] pb-[10px] text-lg"
+            onClick={handleLogout}
+          >
             로그아웃
           </button>
           <button
-            className=" w-fit pt-[5px] pb-[10px]"
+            className="w-fit pt-[5px] pb-[10px] text-lg"
             onClick={() => setDeleteAccountBottomSheetOpen(true)}
           >
             회원탈퇴

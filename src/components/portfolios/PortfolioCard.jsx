@@ -20,7 +20,7 @@ const PortfolioCard = ({ portfolio }) => {
           </span>
           <span className="planner-location">{portfolio.location}</span>
         </div>
-        <div className="planner-title pt-[1px] text-xs text-gray-sunsu line-clamp-2">
+        <div className="planner-title pt-[1px] h-[33px] text-xs text-gray-sunsu line-clamp-2">
           {portfolio.title}
         </div>
         <div className="planner-price flex pt-[1px] text-xs">
