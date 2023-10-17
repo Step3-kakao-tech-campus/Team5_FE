@@ -31,8 +31,7 @@ export default function PaymentBottomSheet({ onClose }) {
         orderName: "순수 멤버십",
         successUrl: `${window.location.origin}/payments`,
         failUrl: `${window.location.origin}/payments/fail`,
-        customerName: userInfo.name,
-        customerEmail: userInfo.email,
+        customerName: userInfo.username,
       });
     } catch (error) {
       console.error("비동기 작업 중 오류 발생:", error);

@@ -36,7 +36,9 @@ export default function PaymentPage() {
 
         if (!response.ok) {
           console.log("실패", res);
-          navigate(`/payments/fail?message=${res.message}`);
+          if (res.code !== "FAILED_PAYMENT_INTERNAL_SYSTEM_PROCESSING") {
+            navigate(`/payments/fail?message=${res.message}`);
+          }
         } else {
           navigate(`/payments/complete?orderId=${res.orderId}`);
         }
