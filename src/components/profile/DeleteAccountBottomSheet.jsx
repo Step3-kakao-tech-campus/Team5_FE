@@ -9,8 +9,8 @@ export default function DeleteAccountBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const dispatch = useDispatch();
 
-  const handleAgreement = (e) => {
-    setAgreePolicy(e.target.checked);
+  const handleAgreement = () => {
+    setAgreePolicy(!agreePolicy);
   };
 
   const handleDeleteAccount = async () => {

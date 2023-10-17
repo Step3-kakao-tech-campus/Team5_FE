@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
-import PortfolioGrid from "./PortfolioGrid";
-import Container from "../common/atoms/Container";
+import { useNavigate } from "react-router-dom";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
+import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
+import PortfolioGrid from "./PortfolioGrid";
 import SearchHeaderRow from "./SearchHeaderRow";
 
 const PortfolioTemplate = () => {
+  const navigate = useNavigate();
   const bottomObserver = useRef(null);
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
@@ -33,12 +35,13 @@ const PortfolioTemplate = () => {
     return () => {
       io.disconnect();
     };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage, portfolios]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   useEffect(() => {
     if (error) {
       console.error(error.message);
       alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+      navigate("/");
     }
   }, [error]);
 

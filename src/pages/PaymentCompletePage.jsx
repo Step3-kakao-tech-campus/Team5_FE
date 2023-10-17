@@ -10,7 +10,7 @@ export default function PaymentCompletePage() {
   const [isFetching, setIsFetching] = useState(true);
   const { userInfo } = useSelector((state) => state.user);
   const [searchParams] = useSearchParams();
-  const [payments, setPayments] = useState({});
+  const [paymentResults, setPaymentResults] = useState({});
   const orderId = searchParams.get("orderId");
   const secretKey = process.env.REACT_APP_TOSS_SECRET_KEY;
   const basicToken = btoa(`${secretKey}:`);
@@ -27,7 +27,7 @@ export default function PaymentCompletePage() {
           },
         });
         const res = await response.json();
-        setPayments(res);
+        setPaymentResults(res);
         setIsFetching(false);
         const { status, totalAmount } = res;
         if (res.status === "DONE") {
@@ -38,10 +38,6 @@ export default function PaymentCompletePage() {
       }
     })();
   }, [searchParams]);
-
-  useEffect(() => {
-    console.log("payments", payments);
-  }, [payments]);
 
   if (isFetching)
     return (
@@ -66,12 +62,12 @@ export default function PaymentCompletePage() {
         <div>
           <div className="flex justify-between border-solid border-0 border-zinc-300 border-t border-b">
             <span>상품명</span>
-            <span>{payments.orderName}</span>
+            <span>{paymentResults.orderName}</span>
           </div>
           <div className="flex justify-between">
             <span>결제 금액</span>
             <span className=" text-red-600">
-              {comma(payments.totalAmount)}원
+              {comma(paymentResults.totalAmount)}원
             </span>
           </div>
         </div>
@@ -85,12 +81,12 @@ export default function PaymentCompletePage() {
         <div className="flex justify-between border-solid border-0 border-zinc-300 border-b">
           <span>승인 일시</span>
           <span>
-            {dayjs(payments.approvedAt).format("YYYY-MM-DD HH:mm:ss")}
+            {dayjs(paymentResults.approvedAt).format("YYYY-MM-DD HH:mm:ss")}
           </span>
         </div>
         <div className="flex justify-between">
           <span>주문ID</span>
-          <span>{payments.orderId}</span>
+          <span>{paymentResults.orderId}</span>
         </div>
       </div>
       <Link
