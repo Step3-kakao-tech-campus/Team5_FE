@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../store/slices/userSlice";
+import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
-import PaymentBottomSheet from "./PaymentBottomSheet";
 import MembershipBottomSheet from "./MembershipBottomSheet";
 
 export default function ProfileTemplate() {

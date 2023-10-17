@@ -1,5 +1,5 @@
 import { useAtomValue } from "jotai";
-import BottomSheet from "../common/BottomSheet";
+import BottomSheet from "../common/bottomsheet/BottomSheet";
 import { comma } from "../../utils/convert";
 import { paymentAtom } from "../../store";
 

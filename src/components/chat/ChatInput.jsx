@@ -20,7 +20,7 @@ import { FiSend } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "../../firebase";
-import ImageModal from "../common/Modal/ImageModal";
+import ImageModal from "../common/modal/ImageModal";
 
 function ChatInput() {
   const { userInfo } = useSelector((state) => state.user);

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import BottomSheet from "../common/BottomSheet";
+import BottomSheet from "../common/bottomsheet/BottomSheet";
 
 export default function MembershipBottomSheet({ onClose }) {
   const { userInfo } = useSelector((state) => state.user);

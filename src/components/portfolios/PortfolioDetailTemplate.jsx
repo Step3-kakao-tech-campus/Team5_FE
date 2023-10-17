@@ -18,7 +18,7 @@ import { paymentAtom } from "../../store";
 import { comma } from "../../utils/convert";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
-import PaymentBottomSheet from "../profile/PaymentBottomSheet";
+import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import HistoryBottomSheet from "./HistoryBottomSheet";
 import PortfolioCarousel from "./PortfolioCarousel";

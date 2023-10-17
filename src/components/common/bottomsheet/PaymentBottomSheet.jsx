@@ -2,11 +2,11 @@ import { loadTossPayments } from "@tosspayments/payment-sdk";
 import { nanoid } from "nanoid";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { sunsuMembershipPrice } from "../../utils/constants";
-import BottomSheet from "../common/BottomSheet";
-import Button from "../common/atoms/Button";
-import { savePayment } from "../../apis/payments";
-import { comma } from "../../utils/convert";
+import { savePayment } from "../../../apis/payments";
+import { sunsuMembershipPrice } from "../../../utils/constants";
+import { comma } from "../../../utils/convert";
+import Button from "../atoms/Button";
+import BottomSheet from "./BottomSheet";
 
 export default function PaymentBottomSheet({ onClose }) {
   const { userInfo } = useSelector((state) => state.user);
