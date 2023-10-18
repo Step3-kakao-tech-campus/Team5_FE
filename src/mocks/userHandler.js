@@ -102,4 +102,28 @@ export const userHandlers = [
     }
     return res(ctx.status(200), ctx.json(infoResponseDH));
   }),
+
+  // /user/token
+  rest.put("/user/token", async (req, res, ctx) => {
+    await sleep(500);
+    const refreshToken = req.headers.get("Refresh");
+    return res(
+      ctx.status(200),
+      ctx.json(sucess),
+      ctx.set("Authorization", `NEW ${refreshToken}`),
+      ctx.set("Refresh", refreshToken),
+    );
+    // 리프레시 토큰 만료 테스트
+    // return res(
+    //   ctx.status(401),
+    //   ctx.json({
+    //     success: false,
+    //     response: null,
+    //     error: {
+    //       code: "INVALID_TOKEN",
+    //       message: "액세스 토큰이 없습니다. 로그인이 필요합니다.",
+    //     },
+    //   }),
+    // );
+  }),
 ];

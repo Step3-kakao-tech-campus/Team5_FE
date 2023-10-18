@@ -37,6 +37,21 @@ export const paymentHandlers = [
         }),
       );
     }
+    // 토큰 만료 테스트
+    if (accessToken === "Bearer 1002") {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          success: false,
+          response: null,
+          error: {
+            code: "EXPIRED_TOKEN",
+            message:
+              "액세스 토큰이 만료되었습니다. 리프레시 토큰으로 다시 요청해주세요.",
+          },
+        }),
+      );
+    }
     return res(ctx.status(200), ctx.json(sucess));
   }),
 ];

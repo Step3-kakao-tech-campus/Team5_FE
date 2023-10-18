@@ -49,7 +49,6 @@ export default function LoginPage() {
     try {
       setIsSubmitting(true);
       const response = await login({
-        // 여기서 localstorage에 token 저장
         email: values.email,
         password: values.password,
       });
