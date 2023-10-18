@@ -29,9 +29,11 @@ export default function PaymentBottomSheet({ onClose }) {
         amount: sunsuMembershipPrice,
         orderId: newOrderId,
         orderName: "순수 멤버십",
-        successUrl: `${window.location.origin}/payments`,
+        successUrl: `${window.location.origin}/payments/complete`,
         failUrl: `${window.location.origin}/payments/fail`,
         customerName: userInfo.username,
+        // 테스트에서는 email 정보X -> 결제 정보 날라옴
+        // customerEmail: userInfo.email,
       });
     } catch (error) {
       console.error("비동기 작업 중 오류 발생:", error);

@@ -7,7 +7,6 @@ import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import PaymentCompletePage from "./pages/PaymentCompletePage";
 import PaymentFailPage from "./pages/PaymentFailPage";
-import PaymentPage from "./pages/PaymentPage";
 import PortfolioDetailPage from "./pages/PortfolioDetailPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
@@ -32,7 +31,6 @@ function App() {
         <Route element={<OnlyOutletLayout />}>
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/payments" element={<PaymentPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
