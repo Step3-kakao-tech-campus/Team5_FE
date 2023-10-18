@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { logOut } from "../../store/slices/userSlice";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
@@ -7,6 +8,7 @@ import MembershipBottomSheet from "./MembershipBottomSheet";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [membershipBottomSheetOpen, setMembershipBottomSheetOpen] =
     useState(false);
@@ -16,6 +18,7 @@ export default function ProfileTemplate() {
 
   const handleLogout = () => {
     dispatch(logOut());
+    navigate("/");
   };
 
   const handleOnShowPaymentBottomSheet = () => {
