@@ -59,7 +59,7 @@ export default function ProfileTemplate() {
         <div className="flex flex-col text-base pt-[15px]">
           <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
           <button
-            className="w-fit pt-[5px] pb-[10px] text-lg"
+            className="w-fit pt-[5px] pb-[10px] text-lg hover:underline"
             onClick={handleOnShowPaymentBottomSheet}
           >
             순수 멤버십
@@ -69,13 +69,13 @@ export default function ProfileTemplate() {
         <div className="flex flex-col text-base pt-[15px] pb-[10px]">
           <span className="pb-[5px] text-skyblue-sunsu">회원정보</span>
           <button
-            className="w-fit pt-[5px] pb-[10px] text-lg"
+            className="w-fit pt-[5px] pb-[10px] text-lg hover:underline"
             onClick={handleLogout}
           >
             로그아웃
           </button>
           <button
-            className="w-fit pt-[5px] pb-[10px] text-lg"
+            className="w-fit pt-[5px] pb-[10px] text-lg hover:underline"
             onClick={() => setDeleteAccountBottomSheetOpen(true)}
           >
             회원탈퇴
