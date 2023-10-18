@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GNBBOX from "../components/common/GNBBOX";
 
 export default function NotFoundPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex w-full h-full flex-col">
       <div className="w-full h-full flex flex-col tracking-tighter text-center gap-5">
@@ -18,12 +20,12 @@ export default function NotFoundPage() {
           입력하신 페이지의 주소가 정확한지 다시 한번 확인해주세요.
         </p>
         <div className=" flex justify-center gap-3 font-medium text-sm">
-          <Link
-            to="../"
+          <button
+            onClick={() => navigate(-1)}
             className=" w-28 bg-white text-black rounded-md py-2 px-4 border border-solid hover:bg-zinc-200"
           >
             이전으로
-          </Link>
+          </button>
           <Link
             className="w-28 bg-blue-sunsu text-white rounded-md py-2 px-4 hover:bg-[#124b96]"
             to="/"
