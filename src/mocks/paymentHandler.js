@@ -11,8 +11,8 @@ export const paymentHandlers = [
   // /payments/save
   rest.post("/payments/save", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -27,8 +27,8 @@ export const paymentHandlers = [
   // /payments/approve
   rest.post("/payments/approve", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
