@@ -16,3 +16,14 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+instance.interceptors.response.use(
+  (response) => {
+    // console.log("interceptor response", response);
+    return response;
+  },
+  (error) => {
+    // console.log("interceptor error", error);
+    throw error;
+  },
+);
