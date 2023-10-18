@@ -12,6 +12,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import RequiredAuthLayout from "./layouts/RequiredAuthLayout";
 
 function App() {
   return (
@@ -20,13 +21,15 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<MainPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/portfolios/:id" element={<PortfolioDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route element={<RequiredAuthLayout />}>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/payments/complete" element={<PaymentCompletePage />} />
           <Route path="/payments/fail" element={<PaymentFailPage />} />
-          <Route path="/portfolios/:id" element={<PortfolioDetailPage />} />
           <Route path="/chat/list" element={<ChatListPage />} />
           <Route path="/chat/:chatId" element={<ChatRoomPage />} />
-          <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route element={<OnlyOutletLayout />}>
           <Route path="/signup" element={<SignupPage />} />
