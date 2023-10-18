@@ -17,20 +17,13 @@ export const signup = async (data) => {
   }
 };
 
-export const login = async (data) => {
-  try {
-    const { email, password } = data;
-    const response = await instance.post("/user/login", {
-      email,
-      password,
-    });
-    // 로그인 성공 시 토큰을 localStorage에 저장
-    localStorage.setItem("token", response.headers.authorization);
-    return response.data;
-  } catch (error) {
-    console.log("Login Api Error", error);
-    throw error;
-  }
+export const login = async (loginData) => {
+  const res = await instance.post("/user/login", loginData);
+  console.log("Login Api", res);
+  // 로그인시 accessToken, refreshToken을 localStorage에 저장
+  localStorage.setItem("accessToken", res.headers.get("Authorization"));
+  localStorage.setItem("refreshToken", res.headers.get("Refresh"));
+  return res.data;
 };
 
 export const deleteAccount = async () => {
