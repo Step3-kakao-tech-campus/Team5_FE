@@ -17,10 +17,10 @@ export default function PaymentCompletePage() {
   const paymentKey = searchParams.get("paymentKey");
 
   useEffect(() => {
-    // if (!amount || !orderId || !paymentKey) {
-    //   navigate(`/payments/fail?message=결제 정보가 올바르지 않습니다.`);
-    //   return;
-    // }
+    if (!amount || !orderId || !paymentKey) {
+      navigate(`/payments/fail?message=결제 정보가 올바르지 않습니다.`);
+      return;
+    }
 
     (async () => {
       try {
