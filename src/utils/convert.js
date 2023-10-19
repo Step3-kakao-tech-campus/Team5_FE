@@ -32,3 +32,9 @@ export const convertToDate = (timestamp) => {
     date.format("YYYY년 MM월 DD일 ") + daysOfWeek[date.day()];
   return formattedDate;
 };
+
+// 0 또는 양의 정수를 확인하는 함수
+export const isNonNegativeInteger = (str) => {
+  const pattern = /^(0|[1-9]\d*)$/; // 0 또는 양의 정수를 확인하는 정규 표현식
+  return pattern.test(str);
+};
