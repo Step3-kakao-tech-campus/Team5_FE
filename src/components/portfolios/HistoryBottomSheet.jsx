@@ -1,18 +1,18 @@
 import { useAtomValue } from "jotai";
-import BottomSheet from "../common/bottomsheet/BottomSheet";
-import { comma } from "../../utils/convert";
+import { Fragment } from "react";
 import { paymentAtom } from "../../store";
+import { comma } from "../../utils/convert";
+import BottomSheet from "../common/bottomsheet/BottomSheet";
 
 const HistoryBottomSheet = ({ onClose }) => {
   const payment = useAtomValue(paymentAtom);
-
-  console.log(payment);
   return (
     <BottomSheet onClose={onClose}>
       <div className="">
         <div className="text-base font-bold pb-2.5">상세 내역</div>
-        {payment.paymentItems?.map((paymentItem) => (
-          <>
+        {payment.paymentItems?.map((paymentItem, idx) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Fragment key={idx}>
             <div className="flex items-end pt-2.5">
               <div className="inline text-blue-sunsu text-sm pr-[5px]">
                 {paymentItem.paymentCompany}
@@ -30,7 +30,7 @@ const HistoryBottomSheet = ({ onClose }) => {
             <div className="flex items-end text-xs">
               {paymentItem.paymentDescription}
             </div>
-          </>
+          </Fragment>
         ))}
         <div className="flex pt-5 text-sm max-w-[200px] ml-auto">
           <div className="inline">합계</div>
