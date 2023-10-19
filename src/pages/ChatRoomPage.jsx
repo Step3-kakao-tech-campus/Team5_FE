@@ -1,3 +1,4 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   get,
   getDatabase,
@@ -19,10 +20,14 @@ import ChatInput from "../components/chat/ChatInput";
 import ChatMessage from "../components/chat/ChatMessage";
 import DateSeperationLine from "../components/chat/DateSeperationLine";
 import "../firebase";
-import { convertToDate } from "../utils/convert";
+import { convertToDate, isNonNegativeInteger } from "../utils/convert";
+import NotFoundPage from "./NotFoundPage";
 
 export default function ChatRoomPage() {
   const [messages, setMessages] = useState([]);
+  const [isValidChatId, setIsValidChatId] = useState(true);
+  // eslint-disable-next-line no-unused-vars
+  const [isLoading, setIsLoading] = useState(true); // [추가] 로딩 상태
   const { userInfo } = useSelector((state) => state.user);
   const { chatId } = useParams();
   const [counterName, setCounterName] = useState("");
@@ -30,7 +35,24 @@ export default function ChatRoomPage() {
   let prevDate = null;
 
   useEffect(() => {
-    if (!chatId) return;
+    // 0. chatId 검증
+    if (!isNonNegativeInteger(chatId)) {
+      setIsValidChatId(false);
+      return;
+    }
+    // 0. 채팅방 유저가 맞는지 검증
+    const checkChatRoomUser = async () => {
+      const chatRoomRef = ref(
+        getDatabase(),
+        `users/${userInfo.userId}/chatRooms/${chatId}`,
+      );
+      const chatRoom = await get(chatRoomRef);
+      if (!chatRoom.exists()) {
+        setIsValidChatId(false);
+        return false;
+      }
+      return true;
+    };
 
     // 1. 저장되어 있는 메세지 가져오기
     // 1-1) 채팅방 이름 가져오기
@@ -83,10 +105,13 @@ export default function ChatRoomPage() {
     };
 
     (async () => {
-      await getCounterName();
-      await updateReadMessage();
-      await getMessages();
-      updateLastVisited();
+      if (await checkChatRoomUser()) {
+        await getCounterName();
+        await updateReadMessage();
+        await getMessages();
+        updateLastVisited();
+        setIsLoading(false); // 메세지 가져오기 완료
+      }
     })();
 
     // 2. 메세지가 추가될 때마다 메세지 추가하기
@@ -149,8 +174,16 @@ export default function ChatRoomPage() {
 
   // 3. 메세지가 추가될 때마다 스크롤 내리기
   useEffect(() => {
-    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages.length]);
+
+  if (!isValidChatId) return <NotFoundPage />;
+  if (isLoading)
+    return (
+      <div className="flex justify-center pt-8">
+        <CircularProgress color="primary" size={30} />
+      </div>
+    );
 
   return (
     <div className="flex flex-col h-full w-full">
