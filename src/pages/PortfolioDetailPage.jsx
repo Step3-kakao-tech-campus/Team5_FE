@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
 import { getPortfolioDetail } from "../apis/portfolio";
-import PortfolioDetailTemplate from "../components/portfolios/PortfolioDetailTemplate";
+import PortfolioDetailTemplate from "../components/portfoliodetail/PortfolioDetailTemplate";
 import GNBBOX from "../components/common/GNBBOX";
 import Spinner from "../components/common/atoms/Spinner";
 
