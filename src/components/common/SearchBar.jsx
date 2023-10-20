@@ -12,7 +12,6 @@ export default function SearchBar({ handleCloseSearchBar }) {
   const navigate = useNavigate();
 
   const handleOnChange = (e) => {
-    console.log(e.target.value);
     setName(e.target.value);
   };
 
