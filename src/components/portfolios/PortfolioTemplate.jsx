@@ -4,7 +4,6 @@ import useFetchPortfolios from "../../hooks/useFetchPortfolios";
 import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
 import PortfolioGrid from "./PortfolioGrid";
-import SearchHeaderRow from "./SearchHeaderRow";
 
 const PortfolioTemplate = () => {
   const navigate = useNavigate();
@@ -50,7 +49,6 @@ const PortfolioTemplate = () => {
   return (
     <>
       <Container>
-        <SearchHeaderRow />
         <div>
           <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
         </div>
