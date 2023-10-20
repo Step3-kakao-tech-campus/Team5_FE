@@ -4,12 +4,10 @@ import GNB from "../components/common/GNB";
 
 export default function MainLayout() {
   return (
-    <div className="overflow-x-hidden">
-      <div className="w-screen flex justify-center bg-blue-50">
-        <div className="max-w-[576px] min-h-screen w-full h-full bg-white relative">
-          <Outlet />
-          <GNB />
-        </div>
+    <div className="w-screen flex justify-center bg-blue-50">
+      <div className="max-w-[576px] min-h-screen w-full h-full bg-white relative">
+        <Outlet />
+        <GNB />
       </div>
     </div>
   );
