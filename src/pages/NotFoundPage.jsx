@@ -34,7 +34,6 @@ export default function NotFoundPage() {
           </Link>
         </div>
       </div>
-
       <GNBBOX />
     </div>
   );
