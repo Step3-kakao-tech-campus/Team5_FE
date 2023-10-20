@@ -9,13 +9,14 @@ import {
 } from "firebase/database";
 import { useSetAtom } from "jotai";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createChatRoom } from "../../apis/chat";
 import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
 import "../../firebase";
 import { paymentAtom } from "../../store";
 import { comma } from "../../utils/convert";
+import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
@@ -25,14 +26,27 @@ import PortfolioCarousel from "./PortfolioCarousel";
 import PriceInfoRow from "./PriceInfoRow";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
-  const { userInfo } = useSelector((state) => state.user);
+  const { isLogged, userInfo } = useSelector((state) => state.user);
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [historyBottomSheetOpen, setHistoryBottomSheetOpen] = useState(false);
   const setPayment = useSetAtom(paymentAtom);
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleOpenPaymentBottomSheet = () => {
+    if (!isLogged) {
+      openLoginBottomSheet(dispatch);
+      return;
+    }
+    setPaymentBottomSheetOpen(true);
+  };
 
   const handleOnCreateChatRoom = async () => {
+    if (!isLogged) {
+      openLoginBottomSheet(dispatch);
+      return;
+    }
     setIsSubmitting(true);
     const db = getDatabase();
     const userRef = ref(db, `users/${userInfo.userId}`);
@@ -186,9 +200,7 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
               </div>
               <div className="inline w-[120px]">
                 <Button
-                  onClick={() => {
-                    setPaymentBottomSheetOpen(true);
-                  }}
+                  onClick={handleOpenPaymentBottomSheet}
                   className="block w-full h-full rounded-[10px] font-normal text-sm text-black border-solid border-skyblue-sunsu border-2 hover:bg-blue-sunsu hover:text-white"
                 >
                   결제하기
