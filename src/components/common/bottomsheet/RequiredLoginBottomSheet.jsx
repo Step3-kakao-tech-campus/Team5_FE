@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import BottomSheet from "./BottomSheet";
 
-export default function RequiredLoginBottomSheet() {
+export default function RequiredLoginBottomSheet({ onClose }) {
   return (
-    <BottomSheet>
+    <BottomSheet onClose={onClose}>
       <div className="flex flex-col gap-12">
         <div className="flex flex-col font-semibold">
           <span>더 많은 서비스를 이용할려면</span>
@@ -12,6 +12,7 @@ export default function RequiredLoginBottomSheet() {
         </div>
         <Link
           to="/login"
+          onClick={onClose}
           className=" w-full h-[50px] rounded-[10px] text-sm
           bg-lightskyblue-sunsu flex justify-center items-center"
         >
