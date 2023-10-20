@@ -25,6 +25,7 @@ export default function GNB() {
 
   useEffect(() => {
     dispatch(closeBottomSheet());
+    window.scrollTo(0, 0);
   }, [dispatch, location.pathname]);
 
   return (
