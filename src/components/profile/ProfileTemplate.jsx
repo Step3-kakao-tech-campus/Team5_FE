@@ -64,7 +64,7 @@ export default function ProfileTemplate() {
           <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
           <Link
             className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-            to="/create/portfolio"
+            to="/profile/create/portfolio"
           >
             포트폴리오 등록 / 수정
           </Link>

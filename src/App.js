@@ -31,7 +31,10 @@ function App() {
           <Route path="/payments/fail" element={<PaymentFailPage />} />
           <Route path="/chat/list" element={<ChatListPage />} />
           <Route path="/chat/:chatId" element={<ChatRoomPage />} />
-          <Route path="/create/portfolio" element={<CreatePortfolioPage />} />
+          <Route
+            path="/profile/create/portfolio"
+            element={<CreatePortfolioPage />}
+          />
         </Route>
         <Route element={<OnlyOutletLayout />}>
           <Route path="/signup" element={<SignupPage />} />

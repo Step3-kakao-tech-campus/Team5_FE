@@ -49,7 +49,7 @@ export default function GNB() {
         to="/profile"
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname === "/profile" ? (
+        {location.pathname.startsWith("/profile") ? (
           <ProfileIcon className="w-6 h-6" />
         ) : (
           <ProfileOutlinedIcon className="w-6 h-6" />
