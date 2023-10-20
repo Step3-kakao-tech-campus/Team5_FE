@@ -1,7 +1,15 @@
 import { instance } from "./index";
 
-export const getPortfolioList = async (nextCursor) => {
-  const response = await instance.get(`/portfolios?cursor=${nextCursor}`);
+export const getPortfolioList = async (
+  nextCursor,
+  name,
+  location,
+  minPrice,
+  maxPrice,
+) => {
+  const response = await instance.get(
+    `/portfolios?cursor=${nextCursor}&name=${name}&location=${location}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
+  );
   return response.data.response;
 };
 

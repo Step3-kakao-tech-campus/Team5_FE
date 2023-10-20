@@ -1,11 +1,16 @@
 import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
 import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
 import PortfolioGrid from "./PortfolioGrid";
 
 const PortfolioTemplate = () => {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name");
+  const location = searchParams.get("location");
+  const minPrice = searchParams.get("minPrice");
+  const maxPrice = searchParams.get("maxPrice");
   const navigate = useNavigate();
   const bottomObserver = useRef(null);
   const {
@@ -16,7 +21,7 @@ const PortfolioTemplate = () => {
     fetchNextPage,
     portfolios,
     isFetching,
-  } = useFetchPortfolios();
+  } = useFetchPortfolios({ name, location, minPrice, maxPrice });
 
   useEffect(() => {
     // console.log("MainPortfolioTemplate portfolios", portfolios);
