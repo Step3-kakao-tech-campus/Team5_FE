@@ -1,26 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import Button from "./atoms/Button";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import Button from "./atoms/Button";
 
-export default function SearchBar({ handleCloseSearchBar }) {
-  const [name, setName] = useState("");
+export default function SearchBar({
+  handleCloseSearchBar,
+  setName,
+  name,
+  onKeyDownEnter,
+}) {
   const inputRef = useRef(null);
   const searchBarRef = useRef(null);
   const overlayRef = useRef(null);
-  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     setName(e.target.value);
-  };
-
-  const onKeyDownEnter = (e) => {
-    // 한글만 두 번 입력되는 문제가 발생 -> 한글은 자음과 모음의 조합으로 한 음절이 만들어지기 때문에 조합문자이고, 영어는 조합문자가 아니다.
-    if (e.isComposing || e.keyCode === 229) return;
-    if (e.key === "Enter") {
-      navigate(`/search?name=${name}`);
-    }
   };
 
   useOnClickOutside(searchBarRef, overlayRef, handleCloseSearchBar);
