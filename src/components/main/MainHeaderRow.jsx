@@ -8,7 +8,7 @@ const MainHeaderRow = ({ handleOpenSearchBar }) => {
         <div className="my-auto font-serif">Sunsu</div>
         <button onClick={() => {}}>
           <SearchOutlinedIcon
-            className="w-4 h-4"
+            className="w-[18px] h-[18px]"
             onClick={handleOpenSearchBar}
           />
         </button>
