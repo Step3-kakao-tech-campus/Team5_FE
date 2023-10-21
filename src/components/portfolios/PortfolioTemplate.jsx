@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
+import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
 import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
 import PortfolioGrid from "./PortfolioGrid";
@@ -8,11 +10,11 @@ import PortfolioSearchBar from "./PortfolioSearchBar";
 import SearchHeaderRow from "./SearchHeaderRow";
 
 const PortfolioTemplate = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const bottomObserver = useRef(null);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [searchParams] = useSearchParams();
-  const [name, setName] = useState("");
+  const [name, setName] = useState(searchParams.get("name") || "");
   // const [location, setLocation] = useState("");
   // const [minPrice, setMinPrice] = useState(1_000_000);
   // const [maxPrice, setMaxPrice] = useState(10_000_000);
@@ -72,8 +74,7 @@ const PortfolioTemplate = () => {
   useEffect(() => {
     if (error) {
       console.error(error.message);
-      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
-      navigate("/");
+      openSeverErrorBottomSheet(dispatch); // 현재 msw에서 가끔씩 404에러 발생을 서버에러로 대체 처리중
     }
   }, [error]);
 
@@ -92,6 +93,7 @@ const PortfolioTemplate = () => {
       {!isSearchBarOpen && (
         <SearchHeaderRow handleOpenSearchBar={handleOpenSearchBar} />
       )}
+      {/* <FilterForm /> */}
       <Container>
         <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
       </Container>
