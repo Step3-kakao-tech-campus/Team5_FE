@@ -10,8 +10,8 @@ async function sleep(ms) {
 export const chatHandlers = [
   rest.post("/chat", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({

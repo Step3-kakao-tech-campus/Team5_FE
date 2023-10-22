@@ -1,6 +1,6 @@
 import React from "react";
-import PortfolioTemplate from "../components/portfolios/PortfolioTemplate";
 import GNBBOX from "../components/common/GNBBOX";
+import PortfolioTemplate from "../components/portfolios/PortfolioTemplate";
 
 export default function SearchPage() {
   return (
