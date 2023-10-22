@@ -23,8 +23,8 @@ function ChatMessage({ message, isSender }) {
   return (
     <div className={`flex gap-1  ${isSender ? "flex-row-reverse" : ""}`}>
       <div
-        className={`max-w-[70%] border-solid border text-xs p-3 rounded-[20px] ${
-          isSender ? "bg-[#0073c2] text-white rounded-tr-sm" : "rounded-tl-sm"
+        className={`max-w-[70%] px-[14px] py-[10px] border border-lightgray-sunsu text-sm rounded-[20px] ${
+          isSender ? "bg-blue-sunsu text-white rounded-tr-sm" : "rounded-tl-sm"
         }`}
       >
         {message.content}
