@@ -38,3 +38,8 @@ export const isNonNegativeInteger = (str) => {
   const pattern = /^(0|[1-9]\d*)$/; // 0 또는 양의 정수를 확인하는 정규 표현식
   return pattern.test(str);
 };
+
+export const getReactAppApiUrl = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  return apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
+};

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getReactAppApiUrl } from "../utils/convert";
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -34,7 +35,7 @@ instance.interceptors.response.use(
         const refreshToken = localStorage.getItem("refreshToken");
         // refresh token으로 access token 재발급
         const res = await instance.put(
-          `${process.env.REACT_APP_API_URL}user/token`, // token refresh api
+          `${getReactAppApiUrl()}/user/token`, // token refresh api
           {},
           { headers: { Authorization: accessToken, Refresh: refreshToken } },
         );
