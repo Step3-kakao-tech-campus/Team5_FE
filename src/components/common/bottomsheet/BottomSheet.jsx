@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { IoMdClose } from "react-icons/io";
+import { ReactComponent as CloseIcon } from "../../../assets/close-01.svg";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
 
 export default function BottomSheet({ onClose, children }) {
@@ -18,7 +18,7 @@ export default function BottomSheet({ onClose, children }) {
         {/* 모달 상단 라운드 영역 */}
         <div className="bg-white w-full rounded-t-full h-8 flex flex-row-reverse">
           <button onClick={onClose}>
-            <IoMdClose className=" m-6 text-xl" />
+            <CloseIcon className="m-6 w-3 h-3" />
           </button>
         </div>
         {/* 모달 내용 */}

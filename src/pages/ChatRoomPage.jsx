@@ -1,4 +1,3 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import {
   get,
   getDatabase,
@@ -22,6 +21,7 @@ import DateSeperationLine from "../components/chat/DateSeperationLine";
 import "../firebase";
 import { convertToDate, isNonNegativeInteger } from "../utils/convert";
 import NotFoundPage from "./NotFoundPage";
+import Spinner from "../components/common/atoms/Spinner";
 
 export default function ChatRoomPage() {
   const [messages, setMessages] = useState([]);
@@ -178,19 +178,14 @@ export default function ChatRoomPage() {
   }, [messages.length]);
 
   if (!isValidChatId) return <NotFoundPage />;
-  if (isLoading)
-    return (
-      <div className="flex justify-center pt-8">
-        <CircularProgress color="primary" size={30} />
-      </div>
-    );
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="flex flex-col h-full w-full">
       {/* 헤더 */}
       <ChatHeader counterName={counterName} />
       {/* 메세지 영역 */}
-      <div className="px-10 pt-3 flex flex-col gap-2 relative mb-32">
+      <div className="px-[10px] pt-3 flex flex-col gap-[5px] relative mb-[120px]">
         {messages?.map((message) => {
           if (prevDate !== convertToDate(message.timestamp)) {
             prevDate = convertToDate(message.timestamp);
