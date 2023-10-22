@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { logOut } from "../../store/slices/userSlice";
+import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
-import PaymentBottomSheet from "./PaymentBottomSheet";
 import MembershipBottomSheet from "./MembershipBottomSheet";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [membershipBottomSheetOpen, setMembershipBottomSheetOpen] =
     useState(false);
@@ -16,6 +19,7 @@ export default function ProfileTemplate() {
 
   const handleLogout = () => {
     dispatch(logOut());
+    navigate("/");
   };
 
   const handleOnShowPaymentBottomSheet = () => {
@@ -58,8 +62,23 @@ export default function ProfileTemplate() {
         {/* 결제 영역 */}
         <div className="flex flex-col text-base pt-[15px]">
           <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
+          <Link
+            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+            to="/profile/create/portfolio"
+          >
+            포트폴리오 등록 / 수정
+          </Link>
+          <button className="w-fit pt-[5px] pb-[5px] text-lg hover:underline">
+            포트폴리오 삭제
+          </button>
+          <Link
+            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+            to="/"
+          >
+            견적서 모아보기
+          </Link>
           <button
-            className="w-fit pt-[5px] pb-[10px] text-lg"
+            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
             onClick={handleOnShowPaymentBottomSheet}
           >
             순수 멤버십
@@ -69,13 +88,13 @@ export default function ProfileTemplate() {
         <div className="flex flex-col text-base pt-[15px] pb-[10px]">
           <span className="pb-[5px] text-skyblue-sunsu">회원정보</span>
           <button
-            className="w-fit pt-[5px] pb-[10px] text-lg"
+            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
             onClick={handleLogout}
           >
             로그아웃
           </button>
           <button
-            className="w-fit pt-[5px] pb-[10px] text-lg"
+            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
             onClick={() => setDeleteAccountBottomSheetOpen(true)}
           >
             회원탈퇴

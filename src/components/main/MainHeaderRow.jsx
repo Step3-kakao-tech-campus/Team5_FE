@@ -1,8 +1,19 @@
-const MainHeaderRow = () => {
+import { ReactComponent as SearchOutlinedIcon } from "../../assets/search-01.svg";
+import HeaderRow from "../common/HeaderRow";
+
+const MainHeaderRow = ({ handleOpenSearchBar }) => {
   return (
-    <div className="header-row flex h-[50px] mx-4 text-lg">
-      <div className="my-auto">Sunsu</div>
-    </div>
+    <HeaderRow>
+      <div className="flex justify-between items-center w-full px-3">
+        <div className="my-auto font-serif">Sunsu</div>
+        <button onClick={() => {}}>
+          <SearchOutlinedIcon
+            className="w-[18px] h-[18px]"
+            onClick={handleOpenSearchBar}
+          />
+        </button>
+      </div>
+    </HeaderRow>
   );
 };
 

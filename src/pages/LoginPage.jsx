@@ -1,7 +1,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../apis/user";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
@@ -10,6 +10,7 @@ import Button from "../components/common/atoms/Button";
 import Container from "../components/common/atoms/Container";
 import useInput from "../hooks/useInput";
 import { fetchUserInfo, logIn } from "../store/slices/userSlice";
+import { validateEmail, validatePassword } from "../utils";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -23,15 +24,6 @@ export default function LoginPage() {
   const passwordInputRef = useRef(null);
   const dispatch = useDispatch();
 
-  const isValidValue = () => {
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
-
-    return emailRegex.test(values.email) && passwordRegex.test(values.password);
-  };
-
   const handleLogin = async () => {
     if (!values.email) {
       console.log(values.email);
@@ -44,21 +36,19 @@ export default function LoginPage() {
       passwordInputRef.current.focus();
       return;
     }
-    if (!isValidValue()) {
+    if (!validateEmail(values.email) || !validatePassword(values.password)) {
       // validation check fail시 api 호출하지 않음
       setErrorMessage("");
       setIsSubmitting(true);
-      await new Promise((resolve) => {
-        setTimeout(resolve, 500);
-      });
-      setErrorMessage("이메일 또는 비밀번호를 잘못 입력했습니다. ");
-      setIsSubmitting(false);
+      setTimeout(() => {
+        setErrorMessage("이메일 또는 비밀번호를 잘못 입력했습니다. ");
+        setIsSubmitting(false);
+      }, 500);
       return;
     }
     try {
       setIsSubmitting(true);
       const response = await login({
-        // 여기서 localstorage에 token 저장
         email: values.email,
         password: values.password,
       });
@@ -77,9 +67,7 @@ export default function LoginPage() {
 
   // 첫 렌더링 시 email input에 focus
   useEffect(() => {
-    if (emailInputRef.current) {
-      emailInputRef.current.focus();
-    }
+    emailInputRef.current?.focus();
   }, []);
 
   return (
@@ -134,15 +122,9 @@ export default function LoginPage() {
 
           <div className="flex items-center justify-center pt-5 tracking-tight gap-2">
             <span>아직 계정이 없으신가요?</span>
-            <button
-              type="button" // submit 방지
-              className=" underline font-bold"
-              onClick={() => {
-                navigate("/signup");
-              }}
-            >
+            <Link className=" underline font-bold" to="/signup">
               회원가입
-            </button>
+            </Link>
           </div>
         </form>
       </Box>

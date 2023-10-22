@@ -9,7 +9,7 @@ const useInput = (initialValues) => {
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 
-  return { values, handleChange };
+  return { values, handleChange, setValues };
 };
 
 export default useInput;

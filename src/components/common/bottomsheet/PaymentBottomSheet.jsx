@@ -1,41 +1,44 @@
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 import { nanoid } from "nanoid";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { sunsuMembershipPrice } from "../../utils/constants";
-import BottomSheet from "../common/BottomSheet";
-import Button from "../common/atoms/Button";
-import { savePayment } from "../../apis/payments";
-import { comma } from "../../utils/convert";
+import { savePayment } from "../../../apis/payments";
+import { sunsuMembershipPrice } from "../../../utils/constants";
+import { comma } from "../../../utils/convert";
+import Button from "../atoms/Button";
+import BottomSheet from "./BottomSheet";
 
 export default function PaymentBottomSheet({ onClose }) {
   const { userInfo } = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
   const tossPaymentsRef = useRef(null);
   const handleOnPayment = async () => {
     try {
+      setIsLoading(true);
       const tosspayments = await loadTossPayments(
         process.env.REACT_APP_TOSS_CLIENT_KEY,
       );
       tossPaymentsRef.current = tosspayments;
-
       // 요청을 보내기 전 결제정보를 DB에 저장하는 과정이 필요함
       const newOrderId = nanoid();
       await savePayment({
         amount: sunsuMembershipPrice,
         orderId: newOrderId,
       });
-
       await tosspayments.requestPayment("카드", {
         amount: sunsuMembershipPrice,
         orderId: newOrderId,
         orderName: "순수 멤버십",
-        successUrl: `${window.location.origin}/payments`,
+        successUrl: `${window.location.origin}/payments/complete`,
         failUrl: `${window.location.origin}/payments/fail`,
-        customerName: userInfo.name,
-        customerEmail: userInfo.email,
+        customerName: userInfo.username,
+        // 테스트에서는 email 정보X -> 결제 정보 날라옴
+        // customerEmail: userInfo.email,
       });
     } catch (error) {
       console.error("비동기 작업 중 오류 발생:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -66,6 +69,7 @@ export default function PaymentBottomSheet({ onClose }) {
           onClick={() => {
             handleOnPayment();
           }}
+          disabled={isLoading}
         >
           결제하기
         </Button>
