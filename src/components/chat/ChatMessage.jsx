@@ -23,8 +23,8 @@ function ChatMessage({ message, isSender }) {
   return (
     <div className={`flex gap-1  ${isSender ? "flex-row-reverse" : ""}`}>
       <div
-        className={`max-w-[70%] border-solid border text-xs p-3 rounded-2xl ${
-          isSender ? "bg-[#0073c2] text-white" : ""
+        className={`max-w-[70%] border-solid border text-xs p-3 rounded-[20px] ${
+          isSender ? "bg-[#0073c2] text-white rounded-tr-sm" : "rounded-tl-sm"
         }`}
       >
         {message.content}
@@ -34,7 +34,7 @@ function ChatMessage({ message, isSender }) {
           isSender ? "items-end" : ""
         }`}
       >
-        <span className=" text-zinc-500">{message.isRead ? "" : 1}</span>
+        <span className="text-zinc-500">{message.isRead ? "" : 1}</span>
         <span>{dayjs(message.timestamp).format("HH:mm")}</span>
       </div>
     </div>
