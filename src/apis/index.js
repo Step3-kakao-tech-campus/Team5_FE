@@ -34,7 +34,7 @@ instance.interceptors.response.use(
         const refreshToken = localStorage.getItem("refreshToken");
         // refresh token으로 access token 재발급
         const res = await instance.put(
-          `${process.env.REACT_APP_API_URL}/user/token`, // token refresh api
+          `${process.env.REACT_APP_API_URL}user/token`, // token refresh api
           {},
           { headers: { Authorization: accessToken, Refresh: refreshToken } },
         );
