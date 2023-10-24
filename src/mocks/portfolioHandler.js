@@ -6,6 +6,7 @@ import {
   portfolioList1,
   portfolioList2,
   portfolioList3,
+  portfolioSelfData,
 } from "./portfolioData";
 
 async function sleep(ms) {
@@ -18,17 +19,7 @@ export const portfolioHandlers = [
   // /portfolios?cursor={nextCursor}
   rest.get("/portfolios", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
     const nextCursor = req.url.searchParams.get("cursor");
-    if (!isAuthenticated) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          code: 403,
-          message: "Not authorized",
-        }),
-      );
-    }
     if (nextCursor === "-1") {
       return res(ctx.status(200), ctx.json(portfolioList1));
     }
@@ -41,16 +32,6 @@ export const portfolioHandlers = [
   // /portfolios/{portfolioId}
   rest.get("/portfolios/:portfolioId", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          code: 403,
-          message: "Not authorized",
-        }),
-      );
-    }
     if (req.params.portfolioId === "1") {
       return res(ctx.status(200), ctx.json(portfolioDetail1));
     }
@@ -61,8 +42,8 @@ export const portfolioHandlers = [
   // /portfolios
   rest.post("/portfolios", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -77,8 +58,8 @@ export const portfolioHandlers = [
   // /portfolios
   rest.put("/portfolios", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -93,8 +74,8 @@ export const portfolioHandlers = [
   // /portfolios
   rest.delete("/portfolios", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -104,5 +85,21 @@ export const portfolioHandlers = [
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
+  }),
+
+  // portfolios/self
+  rest.get("/portfolios/self", async (req, res, ctx) => {
+    await sleep(500);
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          code: 403,
+          message: "Not authorized",
+        }),
+      );
+    }
+    return res(ctx.status(200), ctx.json(portfolioSelfData));
   }),
 ];

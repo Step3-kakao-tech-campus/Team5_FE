@@ -1,6 +1,5 @@
 import { rest } from "msw";
 import { sucess } from "./commonData";
-import { paymentsConfirm } from "./paymentsData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -12,8 +11,8 @@ export const paymentHandlers = [
   // /payments/save
   rest.post("/payments/save", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -25,11 +24,11 @@ export const paymentHandlers = [
     return res(ctx.status(200), ctx.json(sucess));
   }),
 
-  // /payments/confirm
-  rest.post("/payments/confirm", async (req, res, ctx) => {
+  // /payments/approve
+  rest.post("/payments/approve", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -38,19 +37,18 @@ export const paymentHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(paymentsConfirm));
-  }),
-
-  // /payments/upgrade
-  rest.post("/payments/upgrade", async (req, res, ctx) => {
-    await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    // 토큰 만료 테스트
+    if (accessToken === "Bearer 1002") {
       return res(
-        ctx.status(403),
+        ctx.status(401),
         ctx.json({
-          code: 403,
-          message: "Not authorized",
+          success: false,
+          response: null,
+          error: {
+            code: "EXPIRED_TOKEN",
+            message:
+              "액세스 토큰이 만료되었습니다. 리프레시 토큰으로 다시 요청해주세요.",
+          },
         }),
       );
     }

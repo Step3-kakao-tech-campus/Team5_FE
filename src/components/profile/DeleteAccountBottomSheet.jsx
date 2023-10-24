@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteAccount } from "../../apis/user";
 import { logOut } from "../../store/slices/userSlice";
-import BottomSheet from "../common/BottomSheet";
 import Button from "../common/atoms/Button";
+import BottomSheet from "../common/bottomsheet/BottomSheet";
 
 export default function DeleteAccountBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const dispatch = useDispatch();
 
-  const handleAgreement = (e) => {
-    setAgreePolicy(e.target.checked);
+  const handleAgreement = () => {
+    setAgreePolicy(!agreePolicy);
   };
 
   const handleDeleteAccount = async () => {

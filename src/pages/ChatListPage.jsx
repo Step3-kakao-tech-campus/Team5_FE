@@ -9,6 +9,7 @@ import {
 } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import ChatListHeaderRow from "../components/chat/ChatListHeaderRow";
 import ChatRoomItem from "../components/chat/ChatRoomItem";
 import GNBBOX from "../components/common/GNBBOX";
 import Spinner from "../components/common/atoms/Spinner";
@@ -85,23 +86,22 @@ export default function ChatListPage() {
     );
   }
   return (
-    <div className="flex flex-col p-7 w-full h-full">
-      <h1 className=" font-bold text-xl pb-5">채팅</h1>
+    <div className="flex flex-col w-full h-full">
+      <ChatListHeaderRow />
       {/* 채팅 목록 영역 */}
-      <div className=" overflow-y-auto mb-16">
-        {chatList.length > 0 &&
-          chatList?.map((message) => (
-            <div key={message.timestamp}>
-              <ChatRoomItem
-                timestamp={message.timestamp}
-                counterName={message.counterName}
-                lastMessage={message.lastMessage}
-                chatId={message.chatId}
-                unreadCount={message.unreadCount}
-              />
-            </div>
-          ))}
-      </div>
+      {chatList.length > 0 &&
+        chatList?.map((message) => (
+          <div key={message.timestamp}>
+            <ChatRoomItem
+              timestamp={message.timestamp}
+              counterName={message.counterName}
+              lastMessage={message.lastMessage}
+              chatId={message.chatId}
+              unreadCount={message.unreadCount}
+            />
+          </div>
+        ))}
+      <GNBBOX />
     </div>
   );
 }

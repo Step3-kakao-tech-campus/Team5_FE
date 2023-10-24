@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
 import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import { getPortfolioDetail } from "../apis/portfolio";
-import PortfolioDetailTemplate from "../components/portfolios/PortfolioDetailTemplate";
 import GNBBOX from "../components/common/GNBBOX";
 import Spinner from "../components/common/atoms/Spinner";
+import PortfolioDetailHeader from "../components/portfoliodetail/PortfolioDetailHeader";
+import PortfolioDetailTemplate from "../components/portfoliodetail/PortfolioDetailTemplate";
 
 const PortfolioDetailPage = () => {
   const { id } = useParams();
@@ -24,7 +25,8 @@ const PortfolioDetailPage = () => {
 
   return (
     <div className="flex w-full h-full flex-col">
-      <div className="w-full h-full overflow-x-hidden">
+      <div className="w-full h-full">
+        <PortfolioDetailHeader />
         {portfolio && <PortfolioDetailTemplate portfolio={portfolio} />}
       </div>
       <GNBBOX />

@@ -1,5 +1,3 @@
-import ImageIcon from "@mui/icons-material/Image";
-import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import {
   Grid,
   IconButton,
@@ -16,11 +14,13 @@ import {
   set,
 } from "firebase/database";
 import React, { useCallback, useState } from "react";
-import { FiSend } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "../../firebase";
-import ImageModal from "../common/Modal/ImageModal";
+import ImageModal from "../common/modal/ImageModal";
+import { ReactComponent as SendIcon } from "../../assets/send-01.svg";
+import { ReactComponent as EmojiIcon } from "../../assets/emoji-01.svg";
+import { ReactComponent as GalleryIcon } from "../../assets/gallery-01.svg";
 
 function ChatInput() {
   const { userInfo } = useSelector((state) => state.user);
@@ -89,7 +89,7 @@ function ChatInput() {
   };
 
   return (
-    <Grid container sx={{ p: "20px" }}>
+    <Grid container sx={{ px: "10px", pb: "20px" }}>
       <Grid item xs={12} sx={{ position: "relative" }}>
         {showEmoji && (
           <EmojiPicker onEmojiClick={handleSelectEmoji} height={350} />
@@ -99,24 +99,24 @@ function ChatInput() {
             startAdornment: (
               <InputAdornment position="start">
                 <IconButton onClick={handleTogglePicker}>
-                  <InsertEmoticonIcon />
+                  <EmojiIcon className="w-6 h-6" />
                 </IconButton>
                 <IconButton onClick={handleOpenImageModal}>
-                  <ImageIcon />
+                  <GalleryIcon className="w-6 h-6" />
                 </IconButton>
               </InputAdornment>
             ),
             endAdornment: (
-              <InputAdornment position="start">
+              <InputAdornment position="end">
                 <IconButton onClick={onClickSendMessage} disabled={loading}>
-                  <FiSend className=" text-2xl" />
+                  <SendIcon className="w-6 h-6" />
                 </IconButton>
               </InputAdornment>
             ),
           }}
           autoComplete="off"
-          label="메세지 입력"
           fullWidth
+          multiline
           value={message}
           onChange={handleOnChange}
           onKeyDown={onKeyDownEnter}

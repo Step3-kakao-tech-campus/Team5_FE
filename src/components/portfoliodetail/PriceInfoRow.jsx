@@ -12,7 +12,7 @@ const PriceInfoRow = ({ priceInfo }) => {
           </div>
         </div>
       ))}
-      <div className="flex">
+      <div className="flex border-t mt-1 pt-1">
         <div className="inline text-blue-sunsu">합계</div>
         <div className="inline ml-auto">
           <em className="font-bold not-italic">
