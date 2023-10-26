@@ -112,6 +112,7 @@ export default function SignupPage() {
       if (res.success) {
         await set(ref(getDatabase(), `users/${res.response.userId}`), {
           name: values.username,
+          avartar: "/images/default-avartar.jpeg",
         });
         setIsCompletionSheetOpen(true);
       }

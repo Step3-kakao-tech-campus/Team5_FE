@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ChatListHeaderRow from "../components/chat/ChatListHeaderRow";
 import ChatRoomItem from "../components/chat/ChatRoomItem";
-import GNBBOX from "../components/common/GNBBOX";
 import Spinner from "../components/common/atoms/Spinner";
 import "../firebase";
 
@@ -81,7 +80,6 @@ export default function ChatListPage() {
     return (
       <div className="flex items-center justify-center w-full h-full flex-col">
         <Spinner />
-        <GNBBOX />
       </div>
     );
   }
@@ -101,7 +99,6 @@ export default function ChatListPage() {
             />
           </div>
         ))}
-      <GNBBOX />
     </div>
   );
 }

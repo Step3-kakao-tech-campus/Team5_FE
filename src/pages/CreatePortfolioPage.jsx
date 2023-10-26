@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { getPortfolioSelf } from "../apis/portfolio";
-import GNBBOX from "../components/common/GNBBOX";
 import CreatePortfolioTemplate from "../components/createportfolio/CreatePortfolioTemplate";
 
 export default function CreatePortfolioPage() {
@@ -15,10 +14,7 @@ export default function CreatePortfolioPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="w-full h-full">
-        <CreatePortfolioTemplate />
-      </div>
-      <GNBBOX />
+      <CreatePortfolioTemplate />
     </div>
   );
 }

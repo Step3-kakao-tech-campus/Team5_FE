@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import GNB from "../components/common/GNB";
+import GNBBOX from "../components/common/GNBBOX";
 
 export default function RequiredAuthLayout() {
   const { isLogged } = useSelector((state) => state.user);
@@ -17,6 +18,7 @@ export default function RequiredAuthLayout() {
       {isLogged && (
         <>
           <Outlet />
+          <GNBBOX />
           <GNB />
         </>
       )}

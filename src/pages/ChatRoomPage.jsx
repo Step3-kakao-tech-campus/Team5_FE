@@ -185,7 +185,7 @@ export default function ChatRoomPage() {
       {/* 헤더 */}
       <ChatHeader counterName={counterName} />
       {/* 메세지 영역 */}
-      <div className="px-[10px] pt-3 flex flex-col gap-[5px] relative mb-[120px]">
+      <div className="px-[10px] pt-3 flex flex-col gap-[6px] relative mb-[80px]">
         {messages?.map((message) => {
           if (prevDate !== convertToDate(message.timestamp)) {
             prevDate = convertToDate(message.timestamp);
