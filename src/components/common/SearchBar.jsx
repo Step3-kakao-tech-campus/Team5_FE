@@ -44,7 +44,10 @@ export default function SearchBar({
               placeholder="플래너 이름을 검색해보세요"
             />
           </div>
-          <CloseIcon className="w-4 h-4" onClick={handleCloseSearchBar} />
+          <CloseIcon
+            className="w-4 h-4 cursor-pointer"
+            onClick={handleCloseSearchBar}
+          />
         </div>
       </div>
     </>
