@@ -32,7 +32,13 @@ export const userHandlers = [
     if (req.body.email === "hj1@naver.com") {
       return res(
         ctx.status(200),
-        ctx.json(sucess),
+        ctx.json({
+          success: true,
+          response: {
+            userId: 1,
+          },
+          error: null,
+        }),
         ctx.set("Authorization", hjToken),
         ctx.set("Refresh", hjToken),
       );
@@ -40,7 +46,13 @@ export const userHandlers = [
     if (req.body.email === "ar2@naver.com") {
       return res(
         ctx.status(200),
-        ctx.json(sucess),
+        ctx.json({
+          success: true,
+          response: {
+            userId: 2,
+          },
+          error: null,
+        }),
         ctx.set("Authorization", arToken),
         ctx.set("Refresh", arToken),
       );
@@ -48,7 +60,13 @@ export const userHandlers = [
     if (req.body.email === "hn1001@naver.com") {
       return res(
         ctx.status(200),
-        ctx.json(sucess),
+        ctx.json({
+          success: true,
+          response: {
+            userId: 1001,
+          },
+          error: null,
+        }),
         ctx.set("Authorization", hnToken),
         ctx.set("Refresh", hnToken),
       );
@@ -56,7 +74,13 @@ export const userHandlers = [
 
     return res(
       ctx.status(200),
-      ctx.json(sucess),
+      ctx.json({
+        success: true,
+        response: {
+          userId: 1002,
+        },
+        error: null,
+      }),
       ctx.set("Authorization", dhToken),
       ctx.set("Refresh", dhToken),
     );
