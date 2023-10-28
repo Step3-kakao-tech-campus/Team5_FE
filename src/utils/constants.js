@@ -19,3 +19,5 @@ export const regions = [
   "광주",
   "전북",
 ];
+
+export const defaultAvatarUrl = "/images/default-avatar.jpeg";
