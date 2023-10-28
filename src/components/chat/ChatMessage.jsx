@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React from "react";
-import TextWithNewlines from "./TextWithNewlines";
+import TextWithNewlines from "../common/TextWithNewlines";
 import Photo from "../common/atoms/Photo";
 
 function ChatMessage({ message, isSender, counterAvatar }) {
