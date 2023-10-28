@@ -6,6 +6,7 @@ import { logOut } from "../../store/slices/userSlice";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
 import MembershipBottomSheet from "./MembershipBottomSheet";
+import ProfileImage from "./ProfileImage";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
@@ -31,7 +32,7 @@ export default function ProfileTemplate() {
   };
 
   return (
-    <div className="w-full h-full relative ">
+    <div className="relative w-full h-full ">
       {paymentBottomSheetOpen && (
         <PaymentBottomSheet onClose={() => setPaymentBottomSheetOpen(false)} />
       )}
@@ -47,17 +48,20 @@ export default function ProfileTemplate() {
       )}
       <div className="flex flex-col w-full h-full relative pl-[35px]">
         {/* 유저 정보 영역 */}
-        <div className="flex flex-col py-[50px]">
-          <span className="text-xl">안녕하세요</span>
-          <span className="text-xl">
-            <span className="font-bold text-blue-sunsu">
-              {userInfo.username}
+        <div className="flex pt-[50px] justify-between pr-[50px] pb-[25px]">
+          <div className="flex flex-col ">
+            <span className="text-xl">안녕하세요</span>
+            <span className="text-xl">
+              <span className="font-bold text-blue-sunsu">
+                {userInfo.username}
+              </span>
+              님
             </span>
-            님
-          </span>
-          <span className="pt-[5px] text-xs tracking-tight">
-            {userInfo.email}
-          </span>
+            <span className="pt-[5px] text-xs tracking-tight">
+              {userInfo.email}
+            </span>
+          </div>
+          <ProfileImage />
         </div>
         {/* 결제 영역 */}
         <div className="flex flex-col text-base pt-[15px]">

@@ -12,6 +12,7 @@ import Label from "../components/common/atoms/Label";
 import "../firebase";
 import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
+import { defaultAvatarUrl } from "../utils/constants";
 
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -112,6 +113,7 @@ export default function SignupPage() {
       if (res.success) {
         await set(ref(getDatabase(), `users/${res.response.userId}`), {
           name: values.username,
+          avatar: defaultAvatarUrl,
         });
         setIsCompletionSheetOpen(true);
       }
@@ -128,7 +130,7 @@ export default function SignupPage() {
   }, []);
 
   return (
-    <Container className="max-w-none h-full">
+    <Container className="h-full max-w-none">
       {isCompletionSheetOpen && (
         <SignupCompletionSheet
           onClose={() => {
@@ -137,7 +139,7 @@ export default function SignupPage() {
         />
       )}
       <Box className="relative h-full mx-auto px-[29px] pt-[45px] text-xs justify-center">
-        <h1 className="w-full text-center text-xl pb-10">회원가입</h1>
+        <h1 className="w-full pb-10 text-xl text-center">회원가입</h1>
         <form>
           <div className="pb-[5px]">
             <Label className="text-xs">회원 구분</Label>
