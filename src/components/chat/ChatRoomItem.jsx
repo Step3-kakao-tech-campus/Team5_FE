@@ -25,7 +25,7 @@ export default function ChatRoomItem({
         <Photo
           src={avatar}
           alt="avatar"
-          className="w-12 h-12 object-cover object-center rounded-2xl"
+          className="w-12 h-12 object-cover object-center rounded-2xl shrink-0"
         />
         <div className="flex flex-col grow">
           <div className="flex justify-between w-full">
@@ -35,7 +35,7 @@ export default function ChatRoomItem({
             </span>
           </div>
           <div className="flex justify-between w-full ">
-            <span className="w-[420px] overflow-hidden text-base text-left text-ellipsis whitespace-nowrap sm:w-[250px]">
+            <span className="w-[90%] text-left line-clamp-1">
               {lastMessage}
             </span>
             {unreadCount > 0 && (
