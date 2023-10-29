@@ -14,6 +14,8 @@ import PortfolioDetailPage from "./pages/PortfolioDetailPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
+import TermsPage from "./pages/TermsPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
           </Route>
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/policy" element={<PrivacyPolicyPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

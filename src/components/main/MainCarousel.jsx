@@ -29,6 +29,7 @@ const MainCarousel = () => {
       </div>
     ),
     dotsClass: "custom-dots",
+    arrows: false,
   };
 
   return (

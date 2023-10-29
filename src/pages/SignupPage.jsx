@@ -1,6 +1,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import { getDatabase, ref, set } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { signup } from "../apis/user";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
@@ -221,11 +222,18 @@ export default function SignupPage() {
                 ref={agreePolicyRef}
                 checked={agreePolicy}
                 onChange={handleAgreement}
-                className="w-[14px] h-[14px] mt-[3px] rounded-[4px] border-lightgray-sunsu cursor-pointer accent-blue-sunsu"
+                className="w-[14px] h-[14px] mt-[1px] rounded-[4px] border-lightgray-sunsu cursor-pointer accent-blue-sunsu"
               />
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="policy" className="text-xs">
-                이용약관, 개인정보 처리방침에 동의합니다.
+                <Link className="font-bold underline " to="/terms">
+                  이용약관
+                </Link>
+                ,{" "}
+                <Link className="font-bold underline " to="/policy">
+                  개인정보 처리방침
+                </Link>
+                에 동의합니다.
               </label>
             </span>
           </div>
