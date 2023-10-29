@@ -18,9 +18,7 @@ export const updateQuotation = async (quotationId, chatId) => {
 };
 
 export const confirmQuotationAll = async (chatId) => {
-  const response = await instance.post(
-    `/quotations/confirmAll?chatId=${chatId}`,
-  );
+  const response = await instance.post(`/match/confirmAll?chatId=${chatId}`);
   return response.data;
 };
 
