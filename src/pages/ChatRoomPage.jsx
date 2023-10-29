@@ -189,7 +189,7 @@ export default function ChatRoomPage() {
   return (
     <div className="flex flex-col w-full h-full">
       {/* 헤더 */}
-      <ChatHeader counterName={counterName} />
+      <ChatHeader counterName={counterName} chatId={chatId} />
       {/* 메세지 영역 */}
       <div className="px-[12px] pt-3 flex flex-col gap-[8px] relative mb-[80px]">
         {messages?.map((message) => {
