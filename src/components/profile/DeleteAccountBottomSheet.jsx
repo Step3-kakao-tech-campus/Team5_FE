@@ -7,6 +7,7 @@ import BottomSheet from "../common/bottomsheet/BottomSheet";
 
 export default function DeleteAccountBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
 
   const handleAgreement = () => {
@@ -15,6 +16,7 @@ export default function DeleteAccountBottomSheet({ onClose }) {
 
   const handleDeleteAccount = async () => {
     if (!agreePolicy) return;
+    setIsSubmitting(true);
     try {
       const response = await deleteAccount();
       console.log(response);
@@ -24,6 +26,7 @@ export default function DeleteAccountBottomSheet({ onClose }) {
     } catch (error) {
       console.log(error);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -52,10 +55,8 @@ export default function DeleteAccountBottomSheet({ onClose }) {
           className={`block w-full h-[50px] rounded-[10px] text-sm ${
             agreePolicy ? "bg-lightskyblue-sunsu" : "bg-zinc-300"
           }`}
-          onClick={() => {
-            handleDeleteAccount();
-          }}
-          disabled={!agreePolicy}
+          onClick={handleDeleteAccount}
+          disabled={isSubmitting}
         >
           탈퇴하기
         </Button>
