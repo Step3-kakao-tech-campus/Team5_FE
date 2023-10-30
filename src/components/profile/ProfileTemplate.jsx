@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { logOut } from "../../store/slices/userSlice";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
+import DeletePortfolioBottomSheet from "./DeletePortfolioBottomSheet";
 import MembershipBottomSheet from "./MembershipBottomSheet";
 import ProfileImage from "./ProfileImage";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
-  const navigate = useNavigate();
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [membershipBottomSheetOpen, setMembershipBottomSheetOpen] =
     useState(false);
   const [deleteAccountBottomSheetOpen, setDeleteAccountBottomSheetOpen] =
     useState(false);
+  const [deletePortfolioBottomSheetOpen, setDeletePortfolioBottomSheetOpen] =
+    useState(false);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logOut());
-    navigate("/");
   };
 
   const handleOnShowPaymentBottomSheet = () => {
@@ -44,6 +44,11 @@ export default function ProfileTemplate() {
       {deleteAccountBottomSheetOpen && (
         <DeleteAccountBottomSheet
           onClose={() => setDeleteAccountBottomSheetOpen(false)}
+        />
+      )}
+      {deletePortfolioBottomSheetOpen && (
+        <DeletePortfolioBottomSheet
+          onClose={() => setDeletePortfolioBottomSheetOpen(false)}
         />
       )}
       <div className="flex flex-col w-full h-full relative pl-[35px]">
@@ -74,7 +79,10 @@ export default function ProfileTemplate() {
               >
                 포트폴리오 등록 / 수정
               </Link>
-              <button className="w-fit pt-[5px] pb-[5px] text-lg hover:underline">
+              <button
+                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+                onClick={() => setDeletePortfolioBottomSheetOpen(true)}
+              >
                 포트폴리오 삭제
               </button>
             </>
