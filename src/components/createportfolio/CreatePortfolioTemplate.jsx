@@ -1,133 +1,247 @@
-import cn from "classnames";
-import React, { useState } from "react";
-import { BsCamera, BsChevronDown } from "react-icons/bs";
-import { useSelector } from "react-redux";
-import { regions } from "../../utils/constants";
+import React, { useRef, useState } from "react";
+import { createPortfolio, updatePortfolio } from "../../apis/portfolio";
+import useInput from "../../hooks/useInput";
+import TextareaGroup from "../common/TextareaGroup";
+import InputGroup from "../common/accounts/InputGroup";
 import Button from "../common/atoms/Button";
+import ItemsInfo from "./ItemsInfo";
+import PortfolioImage from "./PortfolioImage";
+import SelectRegion from "./SelectRegion";
+import SuccessBottomSheet from "./SuccessBottomSheet";
+import WarningBottomSheet from "./WarningBottomSheet";
 
-export default function CreatePortfolioTemplate() {
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const { userInfo } = useSelector((state) => state.user);
-  const handleSelectOpen = () => {
-    setIsSelectOpen(!isSelectOpen);
+export default function CreatePortfolioTemplate({ data }) {
+  const [isFirstSubmit, setIsFirstSubmit] = useState(data?.title === "");
+  const { handleChange, values } = useInput({
+    plannerName: data?.plannerName,
+    title: data?.title,
+    description: data?.description,
+    career: data?.career,
+    partnerCompany: data?.partnerCompany,
+  });
+  const [location, setLocation] = useState(data?.location);
+  const [items, setItems] = useState([...data.items]);
+  const [numberItems, setNumberItems] = useState([
+    ...data.items.map((item) => {
+      return {
+        itemTitle: item.itemTitle,
+        itemPrice: Number(item.itemPrice),
+      };
+    }),
+  ]);
+  const [imageItems, setImageItems] = useState([...data.imageItems]);
+  const [warningMessage, setWarningMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
+  const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
+    useState(false);
+  const [isOpenSuccessBottomSheet, setIsOpenSuccessBottomSheet] =
+    useState(false);
+
+  const nameRef = useRef(null);
+  const locationRef = useRef(null);
+  const itemRef = useRef(null);
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const careerRef = useRef(null);
+  const partnerCompanyRef = useRef(null);
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    if (!values.plannerName) {
+      setWarningMessage("이름을 입력해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      nameRef.current?.focus();
+      return;
+    }
+    if (!location) {
+      setWarningMessage("지역을 선택해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      locationRef.current?.focus();
+      return;
+    }
+    if (items.some((item) => !item.itemTitle)) {
+      setWarningMessage("가격 항목을 모두 입력해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      itemRef.current?.focus();
+      return;
+    }
+    if (items.some((item) => !item.itemPrice)) {
+      setWarningMessage("가격 항목을 모두 입력해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      itemRef.current?.focus();
+      return;
+    }
+    if (!values.title) {
+      setWarningMessage("한 줄 소개를 입력해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      titleRef.current?.focus();
+      return;
+    }
+    if (!values.description) {
+      setWarningMessage("소개를 입력해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      descriptionRef.current?.focus();
+      return;
+    }
+    if (!values.career) {
+      setWarningMessage("경력을 입력해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      careerRef.current?.focus();
+      return;
+    }
+    if (!values.partnerCompany) {
+      setWarningMessage("주요 제휴 업체를 입력해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      partnerCompanyRef.current?.focus();
+      return;
+    }
+    if (imageItems.length === 0) {
+      setWarningMessage("포트폴리오 사진을 추가해주세요.");
+      setIsOpenWarningBottomSheet(true);
+      setIsSubmitting(false);
+      return;
+    }
+    try {
+      if (isFirstSubmit) {
+        await createPortfolio({
+          plannerName: values.plannerName,
+          location,
+          numberItems,
+          title: values.title,
+          description: values.description,
+          career: values.career,
+          partnerCompany: values.partnerCompany,
+          imageItems,
+        });
+        setIsSubmitting(false);
+        setIsFirstSubmit(false);
+        setWarningMessage("포트폴리오가 성공적으로 저장되었습니다.");
+        setIsOpenSuccessBottomSheet(true);
+      } else {
+        await updatePortfolio({
+          plannerName: values.plannerName,
+          location,
+          numberItems,
+          title: values.title,
+          description: values.description,
+          career: values.career,
+          partnerCompany: values.partnerCompany,
+          imageItems,
+        });
+        setIsSubmitting(false);
+        setWarningMessage("포트폴리오가 성공적으로 수정되었습니다.");
+        setIsOpenSuccessBottomSheet(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsSubmitting(false);
+      setWarningMessage("포트폴리오를 수정하는데 실패했습니다.");
+      setIsOpenWarningBottomSheet(true);
+    }
   };
+
   return (
-    <div className="w-full h-full flex flex-col p-7 gap-5">
-      {/* 이름 */}
-      <label htmlFor="title" className=" text-xs">
-        이름
-        <input
-          type="text"
-          id="title"
-          className="w-full h-[50px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-white mt-1"
-          disabled
-          value={userInfo.username}
+    <>
+      {isOpenWarningBottomSheet && (
+        <WarningBottomSheet
+          message={warningMessage}
+          onClose={() => {
+            setIsOpenWarningBottomSheet(false);
+          }}
         />
-      </label>
-      {/* 지역 */}
-      <div className=" relative">
-        <h6 className="text-xs mb-1">지역</h6>
-        <button
-          id="region"
-          className={cn(
-            "flex w-full justify-between items-center h-[50px] text-zinc-500 rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm text-left hover:border-blue-sunsu",
-          )}
-          onClick={handleSelectOpen}
-        >
-          지역을 선택하세요
-          <BsChevronDown size={20} />
-          {/* <BsChevronUp /> */}
-        </button>
-        {isSelectOpen && (
-          <ul className="w-full rounded-[10px] border border-lightgray-sunsu p-1 absolute bg-white text-xs shadow-2xl">
-            {regions.map((region) => (
-              <li
-                key={region}
-                className="flex items-center justify-center p-2 cursor-pointer hover:bg-blue-50"
-              >
-                {region}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      {/* 가격 */}
-      <div className="flex flex-col gap-1">
-        <h6 className="text-xs">가격</h6>
-        <div
+      )}
+      {isOpenSuccessBottomSheet && (
+        <SuccessBottomSheet
+          message={warningMessage}
+          onClose={() => {
+            setIsOpenSuccessBottomSheet(false);
+            window.location.reload();
+          }}
+        />
+      )}
+      <div className="w-full h-full flex flex-col p-7 gap-5">
+        {/* 이름 */}
+        <InputGroup
+          id="plannerName"
+          name="plannerName"
           type="text"
-          id="price"
-          className="flex justify-between w-full h-[50px] rounded-[10px] px-[20px] py-[10px] border border-lightgray-sunsu text-sm hover:border-blue-sunsu"
-        >
-          <input type="text" className="border w-full" placeholder="항목" />
-          <input
-            type="text"
-            className="border text-right font-bold w-full"
-            placeholder="0원"
-          />
-        </div>
-        <button className="w-full h-[50px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm">
-          항목 추가하기
-        </button>
-      </div>
-      {/* 한 줄 소개 */}
-      <label htmlFor="oneline" className=" text-xs">
-        한 줄 소개
-        <textarea
-          id="oneline"
+          value={values.plannerName}
+          placeholder="이름을 입력해주세요."
+          label="이름"
+          ref={nameRef}
+          onChange={handleChange}
+        />
+        {/* 지역 */}
+        <SelectRegion
+          location={location}
+          setLocation={setLocation}
+          ref={locationRef}
+        />
+        {/* 가격 */}
+        <ItemsInfo
+          items={items}
+          ref={itemRef}
+          setItems={setItems}
+          numberItems={numberItems}
+          setNumberItems={setNumberItems}
+          setWarningMessage={setWarningMessage}
+          setIsOpenWarningBottomSheet={setIsOpenWarningBottomSheet}
+        />
+        <TextareaGroup
+          label="한 줄 소개"
+          ref={titleRef}
+          id="title"
+          name="title"
+          value={values?.title}
+          onChange={handleChange}
           rows={3}
-          className="w-full rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-white mt-1 resize-none hover:border-blue-sunsu"
           maxLength={120}
         />
-      </label>
-      {/* 소개 */}
-      <label htmlFor="description" className=" text-xs">
-        소개
-        <textarea
+        <TextareaGroup
+          label="소개"
+          ref={descriptionRef}
           id="description"
+          name="description"
+          value={values?.description}
+          onChange={handleChange}
           rows={8}
-          className="w-full rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-white mt-1 resize-none hover:border-blue-sunsu"
         />
-      </label>
-      {/* 경력 */}
-      <label htmlFor="career" className=" text-xs">
-        경력
-        <textarea
+        <TextareaGroup
+          label="경력"
+          ref={careerRef}
           id="career"
+          name="career"
+          value={values?.career}
+          onChange={handleChange}
           rows={3}
-          className="w-full rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-white mt-1 resize-none hover:border-blue-sunsu"
         />
-      </label>
-      {/* 주요 제휴 업체 */}
-      <label htmlFor="company" className=" text-xs">
-        주요 제휴 업체
-        <textarea
-          id="company"
+        <TextareaGroup
+          label="주요 제휴 업체"
+          ref={partnerCompanyRef}
+          id="partnerCompany"
+          name="partnerCompany"
+          value={values?.partnerCompany}
+          onChange={handleChange}
           rows={3}
-          className="w-full rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-white mt-1 resize-none hover:border-blue-sunsu"
         />
-      </label>
-      {/* 사진 */}
-      <div className="flex flex-col gap-1">
-        <h6 className="text-xs">
-          <span>사진 |</span>
-          <span className=" text-gray-sunsu"> 최대 5장</span>
-        </h6>
-        <label htmlFor="photo" className=" cursor-pointer w-fit h-fit">
-          <div className=" w-28 h-28 bg-lightgray-sunsu rounded-[10px] flex flex-col justify-center items-center gap-1">
-            <BsCamera size={25} />
-            <span className="text-xs">사진 추가</span>
-          </div>
-          <input type="file" className="w-0 h-0" id="photo" />
-        </label>
+        {/* 사진 */}
+        <PortfolioImage imageItems={imageItems} setImageItems={setImageItems} />
+        <Button
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+          className="block w-full h-[50px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
+        >
+          저장하기
+        </Button>
       </div>
-      <Button
-        // onClick={handleLogin}
-        // disabled={isSubmitting}
-        className="block w-full h-[50px] rounded-[10px] font-normal text-sm bg-[#A7CFFF]"
-      >
-        저장하기
-      </Button>
-    </div>
+    </>
   );
 }
