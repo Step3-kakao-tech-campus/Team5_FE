@@ -6,7 +6,7 @@ import {
   portfolioList1,
   portfolioList2,
   portfolioList3,
-  portfolioSelfData,
+  // portfolioSelfData,
 } from "./portfolioData";
 
 async function sleep(ms) {
@@ -27,6 +27,44 @@ export const portfolioHandlers = [
       return res(ctx.status(200), ctx.json(portfolioList2));
     }
     return res(ctx.status(200), ctx.json(portfolioList3));
+  }),
+
+  // portfolios/self
+  rest.get("/portfolios/self", async (req, res, ctx) => {
+    await sleep(500);
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          code: 403,
+          message: "Not authorized",
+        }),
+      );
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        sucess: true,
+        response: {
+          plannerName: "",
+          imageItems: [],
+          items: [
+            {
+              itemTitle: "",
+              itemPrice: 0,
+            },
+          ],
+          title: "",
+          description: "",
+          location: "",
+          career: "",
+          partnerCompany: "",
+        },
+        error: null,
+      }),
+    );
+    // return res(ctx.status(200), ctx.json(portfolioSelfData));
   }),
 
   // /portfolios/{portfolioId}
@@ -85,21 +123,5 @@ export const portfolioHandlers = [
       );
     }
     return res(ctx.status(200), ctx.json(sucess));
-  }),
-
-  // portfolios/self
-  rest.get("/portfolios/self", async (req, res, ctx) => {
-    await sleep(500);
-    const accessToken = req.headers.get("Authorization");
-    if (!accessToken) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          code: 403,
-          message: "Not authorized",
-        }),
-      );
-    }
-    return res(ctx.status(200), ctx.json(portfolioSelfData));
   }),
 ];
