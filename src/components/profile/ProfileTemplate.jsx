@@ -66,15 +66,31 @@ export default function ProfileTemplate() {
         {/* 결제 영역 */}
         <div className="flex flex-col text-base pt-[15px]">
           <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
-          <Link
-            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-            to="/profile/create/portfolio"
-          >
-            포트폴리오 등록 / 수정
-          </Link>
-          <button className="w-fit pt-[5px] pb-[5px] text-lg hover:underline">
-            포트폴리오 삭제
-          </button>
+          {userInfo.role === "planner" ? (
+            <>
+              <Link
+                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+                to="/profile/create/portfolio"
+              >
+                포트폴리오 등록 / 수정
+              </Link>
+              <button className="w-fit pt-[5px] pb-[5px] text-lg hover:underline">
+                포트폴리오 삭제
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+                to="/"
+              >
+                리뷰 작성 / 수정
+              </Link>
+              <button className="w-fit pt-[5px] pb-[5px] text-lg hover:underline">
+                리뷰 삭제
+              </button>
+            </>
+          )}
           <Link
             className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
             to="/"
