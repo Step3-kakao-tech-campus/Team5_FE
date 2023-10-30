@@ -45,6 +45,7 @@ const userSlice = createSlice({
       localStorage.clear();
       state.isLogged = false;
       state.userInfo = {};
+      window.location.href = "/";
     },
     updateAvatar: (state, action) => {
       state.avatar = action.payload;
