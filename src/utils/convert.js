@@ -16,6 +16,18 @@ export const comma = (num) => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export const convertPriceFormat = (num) => {
+  const commaA = (str) => {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+  };
+  const commaB = (str) => {
+    str = String(str);
+    return str.replace(/[^\d]+/g, "");
+  };
+  return commaA(commaB(num));
+};
+
 // timestamp를 받아서 "2021년 10월 10일 일요일" 형식으로 포맷팅하는 함수
 export const convertToDate = (timestamp) => {
   const daysOfWeek = [
