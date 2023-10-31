@@ -1,5 +1,5 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import QuotationCreateHeader from "../components/quotation/QuotationCreateHeader";
 import InputGroup from "../components/common/accounts/InputGroup";
@@ -9,6 +9,8 @@ import Box from "../components/common/atoms/Box";
 import useInput from "../hooks/useInput";
 import Label from "../components/common/atoms/Label";
 import { createQuotation } from "../apis/quotation";
+import AutoHeightTextarea from "../components/common/atoms/AutoHeightTextarea";
+import { convertPriceFormat } from "../utils/convert";
 
 const QuotationCreatePage = () => {
   const navigate = useNavigate();
@@ -18,30 +20,8 @@ const QuotationCreatePage = () => {
   const [price, setPrice] = useState();
   const titleInputRef = useRef(null);
   const companyInputRef = useRef(null);
+  const descriptionInputRef = useRef(null);
   const priceInputRef = useRef(null);
-  const descriptionInputRef = useRef();
-
-  useEffect(() => {
-    descriptionInputRef.current.style.height = "auto";
-    descriptionInputRef.current.style.height = `${descriptionInputRef.current.scrollHeight}px`;
-  }, []);
-
-  const handleResizeHeight = useCallback(() => {
-    descriptionInputRef.current.style.height = "auto";
-    descriptionInputRef.current.style.height = `${descriptionInputRef.current.scrollHeight}px`;
-  }, []);
-
-  const changePriceFormat = (num) => {
-    const comma = (str) => {
-      str = String(str);
-      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    };
-    const uncomma = (str) => {
-      str = String(str);
-      return str.replace(/[^\d]+/g, "");
-    };
-    return comma(uncomma(num));
-  };
 
   const { values, handleChange } = useInput({
     title: "",
@@ -137,13 +117,12 @@ const QuotationCreatePage = () => {
                 상세 설명
               </Label>
             </div>
-            <textarea
+            <AutoHeightTextarea
               ref={descriptionInputRef}
               id="description"
               name="description"
               value={values.description}
               onChange={handleChange}
-              onInput={handleResizeHeight}
               placeholder="민감한 정보는 작성하지 않도록 유의해주세요"
               className="relative w-full h-[70px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent overflow-hidden resize-none"
             />
@@ -163,18 +142,14 @@ const QuotationCreatePage = () => {
                 type="text"
                 value={price}
                 onChange={() =>
-                  setPrice(changePriceFormat(priceInputRef.current.value))
+                  setPrice(convertPriceFormat(priceInputRef.current.value))
                 }
-                placeholder="원"
-                className={`w-full h-[50px] rounded-[10px] pl-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent text-right ${
-                  price ? "pr-[34px]" : "pr-[20px]"
-                }`}
+                placeholder="0"
+                className="w-full h-[50px] rounded-[10px] pl-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent text-right pr-[34px]"
               />
-              {price && (
-                <p className="absolute right-[20px] text-sm text-gray-sunsu">
-                  원
-                </p>
-              )}
+              <p className="absolute right-[20px] text-sm text-gray-sunsu">
+                원
+              </p>
             </div>
           </Box>
 
