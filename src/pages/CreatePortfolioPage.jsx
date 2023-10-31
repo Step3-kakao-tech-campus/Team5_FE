@@ -1,20 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import { getPortfolioSelf } from "../apis/portfolio";
+import Spinner from "../components/common/atoms/Spinner";
+import CreatePortfolioHeader from "../components/createportfolio/CreatePortfolioHeader";
 import CreatePortfolioTemplate from "../components/createportfolio/CreatePortfolioTemplate";
 
 export default function CreatePortfolioPage() {
-  const { data } = useQuery("portfolios", () => {
-    getPortfolioSelf();
-  });
+  const { isLoading, data } = useQuery(["portfolios/self"], getPortfolioSelf);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <Spinner />
+      </div>
+    );
+  }
   return (
-    <div className="flex h-full flex-col">
-      <CreatePortfolioTemplate />
+    <div className="w-full h-full">
+      <CreatePortfolioHeader />
+      {data && <CreatePortfolioTemplate data={data} />}
     </div>
   );
 }
