@@ -10,7 +10,7 @@ export const quotationList = {
         title: "스튜디오",
         price: 1950000,
         company: "릴스튜디오",
-        description: "원데이 촬영 | 원본 구매 및 보장",
+        description: "원데이 촬영 | 원본 구매 및 보정",
         status: "완료",
         modifiedAt: "2023.09.14",
       },
