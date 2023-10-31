@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import React from "react";
-import TextWithNewlines from "../common/TextWithNewlines";
 import Photo from "../common/atoms/Photo";
 
 function ChatMessage({ message, isSender, counterAvatar }) {
@@ -41,9 +40,9 @@ function ChatMessage({ message, isSender, counterAvatar }) {
       <div
         className={`max-w-[70%] px-[14px] py-[10px] border border-lightgray-sunsu text-sm rounded-[20px] ${
           isSender ? "bg-blue-sunsu text-white rounded-tr-sm" : "rounded-tl-sm"
-        }`}
+        } whitespace-pre-line`}
       >
-        <TextWithNewlines text={message.content} />
+        {message.content}
       </div>
       <div
         className={`self-end text-xs flex flex-col ${

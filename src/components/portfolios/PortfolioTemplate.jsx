@@ -8,6 +8,7 @@ import Spinner from "../common/atoms/Spinner";
 import PortfolioGrid from "./PortfolioGrid";
 import PortfolioSearchBar from "./PortfolioSearchBar";
 import SearchHeaderRow from "./SearchHeaderRow";
+import FilterForm from "./FilterForm";
 
 const PortfolioTemplate = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const PortfolioTemplate = () => {
   // const [location, setLocation] = useState("");
   // const [minPrice, setMinPrice] = useState(1_000_000);
   // const [maxPrice, setMaxPrice] = useState(10_000_000);
-  const queryName = useRef(searchParams.get("name"));
+  const queryName = useRef(searchParams.get("name") || "");
   const queryLocation = useRef(searchParams.get("location"));
   const queryMinPrice = useRef(searchParams.get("minPrice"));
   const queryMaxPrice = useRef(searchParams.get("maxPrice"));
@@ -93,7 +94,7 @@ const PortfolioTemplate = () => {
       {!isSearchBarOpen && (
         <SearchHeaderRow handleOpenSearchBar={handleOpenSearchBar} />
       )}
-      {/* <FilterForm /> */}
+      <FilterForm />
       <Container>
         <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
       </Container>

@@ -34,6 +34,6 @@ export const deletePortfolio = async () => {
 };
 
 export const getPortfolioSelf = async () => {
-  const response = await instance.get("/portfolios/self");
-  return response.data;
+  const res = await instance.get("/portfolios/self");
+  return res.data.response;
 };
