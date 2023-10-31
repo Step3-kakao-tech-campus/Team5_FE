@@ -17,6 +17,8 @@ import SignupPage from "./pages/SignupPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import QuotationListPage from "./pages/QuotationListPage";
+import QuotationCreatePage from "./pages/QuotationCreatePage";
+import QuotationUpdatePage from "./pages/QuotationUpdatePage";
 
 function App() {
   return (
@@ -44,6 +46,14 @@ function App() {
               element={<CreatePortfolioPage />}
             />
             <Route path="/quotations/:chatId" element={<QuotationListPage />} />
+            <Route
+              path="/quotations/create/:chatId"
+              element={<QuotationCreatePage />}
+            />
+            <Route
+              path="/quotations/update/:quotationId"
+              element={<QuotationUpdatePage />}
+            />
           </Route>
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
