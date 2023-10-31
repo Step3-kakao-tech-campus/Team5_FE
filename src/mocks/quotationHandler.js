@@ -11,8 +11,8 @@ async function sleep(ms) {
 export const quotationHandlers = [
   rest.get("/quotations", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -26,8 +26,8 @@ export const quotationHandlers = [
 
   rest.post("/quotations", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -41,8 +41,8 @@ export const quotationHandlers = [
 
   rest.put("/quotations/:quotationId", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -56,8 +56,8 @@ export const quotationHandlers = [
 
   rest.post("/quotations/confirmAll", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({
@@ -71,8 +71,8 @@ export const quotationHandlers = [
 
   rest.post("/quotations/confirm/:quotationId", async (req, res, ctx) => {
     await sleep(500);
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
       return res(
         ctx.status(403),
         ctx.json({

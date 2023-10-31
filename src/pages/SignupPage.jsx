@@ -1,30 +1,31 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, set } from "firebase/database";
+import React, { useEffect, useRef, useState } from "react";
 import { signup } from "../apis/user";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
+import SignupCompletionSheet from "../components/common/accounts/SignupCompletionSheet";
 import Box from "../components/common/atoms/Box";
 import Button from "../components/common/atoms/Button";
 import Container from "../components/common/atoms/Container";
 import Label from "../components/common/atoms/Label";
 import "../firebase";
 import useInput from "../hooks/useInput";
+import { validateEmail, validatePassword } from "../utils";
 
 export default function SignupPage() {
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [activeButton, setActiveButton] = useState(1);
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCompletionSheetOpen, setIsCompletionSheetOpen] = useState(false); // 회원가입 완료 시 나타나는 bottom sheet
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const password2InputRef = useRef(null);
   const agreePolicyRef = useRef(null);
 
-  const { values, handleChange } = useInput({
+  const { values, handleChange, setValues } = useInput({
     role: "",
     email: "",
     password: "",
@@ -32,31 +33,20 @@ export default function SignupPage() {
     username: "",
   });
 
-  const handleButtonClick = (buttonNumber) => {
-    if (buttonNumber === 1) {
-      values.role = "couple";
-    } else if (buttonNumber === 2) {
-      values.role = "planner";
-    }
-    if (activeButton === buttonNumber) {
+  const setUserRole = (roleNumber) => {
+    setActiveButton(roleNumber);
+    if (roleNumber === 1) {
+      setValues({ ...values, role: "couple" });
       return;
     }
-    setActiveButton(buttonNumber);
+    setValues({ ...values, role: "planner" });
   };
 
-  const handleAgreement = (e) => {
-    const { name, checked } = e.target;
-    if (name === "policy-agree") {
-      setAgreePolicy(checked);
-    }
+  const handleAgreement = () => {
+    setAgreePolicy(!agreePolicy);
   };
 
   const validateInput = () => {
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
-
     if (!values.username) {
       setErrorMessage("이름을 입력해주세요.");
       nameInputRef.current.focus();
@@ -69,7 +59,7 @@ export default function SignupPage() {
       setIsSubmitting(false);
       return false;
     }
-    if (!emailRegex.test(values.email)) {
+    if (!validateEmail(values.email)) {
       setErrorMessage("이메일 형식으로 입력해주세요.");
       emailInputRef.current.focus();
       setIsSubmitting(false);
@@ -81,7 +71,7 @@ export default function SignupPage() {
       setIsSubmitting(false);
       return false;
     }
-    if (!passwordRegex.test(values.password)) {
+    if (!validatePassword(values.password)) {
       setErrorMessage("비밀번호 형식에 맞게 입력해주세요.");
       passwordInputRef.current.focus();
       setIsSubmitting(false);
@@ -123,25 +113,29 @@ export default function SignupPage() {
         await set(ref(getDatabase(), `users/${res.response.userId}`), {
           name: values.username,
         });
-        alert("회원가입이 완료되었습니다. 다시 로그인해주세요.");
-        navigate("/login");
+        setIsCompletionSheetOpen(true);
       }
-      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
-      setErrorMessage("에러가 발생했습니다.");
+      setErrorMessage(error.response.data.message);
+    } finally {
       setIsSubmitting(false);
     }
   };
 
   useEffect(() => {
-    if (nameInputRef.current) {
-      nameInputRef.current.focus();
-    }
+    nameInputRef.current?.focus();
   }, []);
 
   return (
-    <Container className="max-w-none">
+    <Container className="max-w-none h-full">
+      {isCompletionSheetOpen && (
+        <SignupCompletionSheet
+          onClose={() => {
+            setIsCompletionSheetOpen(false);
+          }}
+        />
+      )}
       <Box className="relative h-full mx-auto px-[29px] pt-[45px] text-xs justify-center">
         <h1 className="w-full text-center text-xl pb-10">회원가입</h1>
         <form>
@@ -152,7 +146,7 @@ export default function SignupPage() {
             <div className="flex-1">
               <button
                 type="button"
-                onClick={() => handleButtonClick(1)}
+                onClick={() => setUserRole(1)}
                 className={`${
                   activeButton === 1 ? "bg-lightskyblue-sunsu" : "bg-white"
                 } w-full h-[50px] rounded-[10px] text-sm text-gray-900 border border-lightgray-sunsu`}
@@ -163,7 +157,7 @@ export default function SignupPage() {
             <div className="flex-1">
               <button
                 type="button"
-                onClick={() => handleButtonClick(2)}
+                onClick={() => setUserRole(2)}
                 className={`${
                   activeButton === 2 ? "bg-lightskyblue-sunsu" : "bg-white"
                 } w-full h-[50px] rounded-[10px] text-sm text-gray-900 border border-lightgray-sunsu`}

@@ -9,30 +9,44 @@ import {
 } from "firebase/database";
 import { useSetAtom } from "jotai";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createChatRoom } from "../../apis/chat";
 import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
 import "../../firebase";
 import { paymentAtom } from "../../store";
 import { comma } from "../../utils/convert";
+import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
-import PaymentBottomSheet from "../profile/PaymentBottomSheet";
+import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import HistoryBottomSheet from "./HistoryBottomSheet";
 import PortfolioCarousel from "./PortfolioCarousel";
 import PriceInfoRow from "./PriceInfoRow";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
-  const { userInfo } = useSelector((state) => state.user);
+  const { isLogged, userInfo } = useSelector((state) => state.user);
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [historyBottomSheetOpen, setHistoryBottomSheetOpen] = useState(false);
   const setPayment = useSetAtom(paymentAtom);
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleOpenPaymentBottomSheet = () => {
+    if (!isLogged) {
+      openLoginBottomSheet(dispatch);
+      return;
+    }
+    setPaymentBottomSheetOpen(true);
+  };
 
   const handleOnCreateChatRoom = async () => {
+    if (!isLogged) {
+      openLoginBottomSheet(dispatch);
+      return;
+    }
     setIsSubmitting(true);
     const db = getDatabase();
     const userRef = ref(db, `users/${userInfo.userId}`);
@@ -179,16 +193,15 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
               </div>
             </>
           ) : (
-            <div className="flex h-[46px]">
-              <div className="inline text-sm mr-auto">
-                이전 매칭 내역을 확인하려면 순수 멤버십을 결제하셔야 합니다.
+            <div className="flex h-[46px] justify-between">
+              <div className="text-sm mr-[10px] flex flex-col">
+                <span>이전 매칭 내역을 확인하려면</span>
+                <span>순수 멤버십을 결제하셔야 합니다.</span>
               </div>
-              <div className="inline min-w-[100px] max-w-[110px] w-full">
+              <div className="inline w-[120px]">
                 <Button
-                  onClick={() => {
-                    setPaymentBottomSheetOpen(true);
-                  }}
-                  className="block w-full h-full rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
+                  onClick={handleOpenPaymentBottomSheet}
+                  className="block w-full h-full rounded-[10px] font-normal text-sm text-black border-solid border-skyblue-sunsu border-2 hover:bg-blue-sunsu hover:text-white"
                 >
                   결제하기
                 </Button>
@@ -197,18 +210,14 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
           )}
         </div>
       </div>
-      <DivideBar />
-      <div className=" w-full p-5 flex items-center justify-center flex-col gap-1">
-        <h4 className="text-sm">지금 바로 상담 받아보세요.</h4>
-        <Button
-          className="w-1/2 min-w-[240px] h-[30px] bg-skyblue-sunsu text-white p-1 rounded-md flex items-center justify-center"
-          onClick={handleOnCreateChatRoom}
-          disabled={isSubmitting}
-        >
-          {isSubmitting && <CircularProgress size={15} />}
-          {isSubmitting ? "" : "견적 상담받기"}
-        </Button>
-      </div>
+      <Button
+        className="w-full h-[50px] mt-3 items-center justify-center bg-lightskyblue-sunsu text-sm"
+        onClick={handleOnCreateChatRoom}
+        disabled={isSubmitting}
+      >
+        {isSubmitting && <CircularProgress size={15} />}
+        {isSubmitting ? "" : "채팅 상담 받기"}
+      </Button>
     </div>
   );
 };

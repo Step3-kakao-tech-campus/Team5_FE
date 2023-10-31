@@ -6,7 +6,7 @@ const PortfolioCard = ({ portfolio }) => {
   return (
     <Card to={`/portfolios/${portfolio.id}`} className="portfolio-card">
       <SquarePhoto
-        src={`${portfolio.image.substring(1, portfolio.image.length)}`}
+        src={portfolio.image.substring(1, portfolio.image.length)}
         alt={portfolio.plannerName}
         className="portfolio-image"
       />
@@ -20,7 +20,7 @@ const PortfolioCard = ({ portfolio }) => {
           </span>
           <span className="planner-location">{portfolio.location}</span>
         </div>
-        <div className="planner-title pt-[1px] text-xs text-gray-sunsu line-clamp-2">
+        <div className="planner-title pt-[1px] h-[33px] text-xs text-gray-sunsu line-clamp-2">
           {portfolio.title}
         </div>
         <div className="planner-price flex pt-[1px] text-xs">

@@ -31,7 +31,6 @@ const userSlice = createSlice({
       localStorage.clear();
       state.isLogged = false;
       state.userInfo = {};
-      window.location.reload();
     },
   },
   extraReducers: (builder) => {

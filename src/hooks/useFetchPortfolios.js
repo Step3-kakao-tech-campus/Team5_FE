@@ -1,10 +1,17 @@
 import { useInfiniteQuery } from "react-query";
 import { getPortfolioList } from "../apis/portfolio";
 
-export default function useFetchPortfolios() {
+export default function useFetchPortfolios({
+  name,
+  location,
+  minPrice,
+  maxPrice,
+}) {
   const infiniteQuery = useInfiniteQuery(
-    ["portfolios"],
-    ({ pageParam = -1 }) => getPortfolioList(pageParam),
+    // 의존성 배열 (쿼리 키)
+    ["portfolios", name, location, minPrice, maxPrice],
+    ({ pageParam = -1 }) =>
+      getPortfolioList(pageParam, name, location, minPrice, maxPrice),
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.cursor) {
