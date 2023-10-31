@@ -20,7 +20,7 @@ const InputGroup = forwardRef(
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className="relative w-full h-[50px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent"
+          className="relative w-full h-[50px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent hover:border-blue-sunsu"
         />
       </Box>
     );
