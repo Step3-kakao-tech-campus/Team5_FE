@@ -9,6 +9,7 @@ import PortfolioGrid from "./PortfolioGrid";
 import PortfolioSearchBar from "./PortfolioSearchBar";
 import SearchHeaderRow from "./SearchHeaderRow";
 import FilterForm from "./FilterForm";
+import EmptySearchResult from "./EmptySearchResult";
 
 const PortfolioTemplate = () => {
   const dispatch = useDispatch();
@@ -141,7 +142,11 @@ const PortfolioTemplate = () => {
         </div>
       )}
       <Container>
-        <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
+        {portfolios.length === 0 ? (
+          <EmptySearchResult />
+        ) : (
+          <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
+        )}
       </Container>
       <div ref={bottomObserver} />
     </>
