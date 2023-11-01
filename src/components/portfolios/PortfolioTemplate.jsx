@@ -14,11 +14,13 @@ const PortfolioTemplate = () => {
   const dispatch = useDispatch();
   const bottomObserver = useRef(null);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const [isFilterFormOpen, setIsFilterFormOpen] = useState(false);
   const [searchParams] = useSearchParams();
+
   const [name, setName] = useState(searchParams.get("name") || "");
-  // const [location, setLocation] = useState("");
-  // const [minPrice, setMinPrice] = useState(1_000_000);
-  // const [maxPrice, setMaxPrice] = useState(10_000_000);
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [prices, setPrices] = useState([0, 10_000_000]);
+
   const queryName = useRef(searchParams.get("name") || "");
   const queryLocation = useRef(searchParams.get("location"));
   const queryMinPrice = useRef(searchParams.get("minPrice"));
@@ -44,6 +46,22 @@ const PortfolioTemplate = () => {
   };
   const handleCloseSearchBar = () => {
     setIsSearchBarOpen(false);
+  };
+  const handleFilterForm = () => {
+    setIsFilterFormOpen((prev) => !prev);
+  };
+
+  const handleResetFilter = () => {
+    setSelectedRegion(null);
+    setPrices([0, 10_000_000]);
+  };
+  const handleApplyFilter = () => {
+    queryLocation.current = selectedRegion;
+    // eslint-disable-next-line prefer-destructuring
+    queryMinPrice.current = prices[0];
+    // eslint-disable-next-line prefer-destructuring
+    queryMaxPrice.current = prices[1];
+    handleFilterForm();
   };
 
   const onKeyDownEnter = (e) => {
@@ -92,9 +110,36 @@ const PortfolioTemplate = () => {
         />
       )}
       {!isSearchBarOpen && (
-        <SearchHeaderRow handleOpenSearchBar={handleOpenSearchBar} />
+        <SearchHeaderRow
+          handleOpenSearchBar={handleOpenSearchBar}
+          isFilterFormOpen={isFilterFormOpen}
+          handleFilterForm={handleFilterForm}
+        />
       )}
-      <FilterForm />
+      {isFilterFormOpen && (
+        <div className="flex flex-col w-full p-4 gap-4">
+          <FilterForm
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+            prices={prices}
+            setPrices={setPrices}
+          />
+          <div className="w-full flex items-center gap-3">
+            <button
+              className=" bg-lightgray-sunsu rounded-[10px] w-full h-[32px]"
+              onClick={handleResetFilter}
+            >
+              필터 초기화
+            </button>
+            <button
+              className=" rounded-[10px] w-full h-[32px] text-white bg-blue-sunsu"
+              onClick={handleApplyFilter}
+            >
+              적용
+            </button>
+          </div>
+        </div>
+      )}
       <Container>
         <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
       </Container>
