@@ -16,6 +16,13 @@ export const comma = (num) => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export const uncomma = (str) => {
+  if (!str || str.length === 0) {
+    return "";
+  }
+  return str.replace(/[^\d]+/g, "");
+};
+
 export const convertPriceFormat = (num) => {
   const commaA = (str) => {
     str = String(str);
