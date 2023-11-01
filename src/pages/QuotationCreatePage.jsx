@@ -10,7 +10,7 @@ import useInput from "../hooks/useInput";
 import Label from "../components/common/atoms/Label";
 import { createQuotation } from "../apis/quotation";
 import AutoHeightTextarea from "../components/common/atoms/AutoHeightTextarea";
-import { convertPriceFormat } from "../utils/convert";
+import { convertPriceFormat, uncomma } from "../utils/convert";
 
 const QuotationCreatePage = () => {
   const navigate = useNavigate();
@@ -65,10 +65,9 @@ const QuotationCreatePage = () => {
         title: values.title,
         company: values.company,
         description: values.description,
-        price,
+        price: uncomma(price),
       });
       if (res.success) {
-        alert("견적이 생성되었습니다.");
         navigate(`/quotations/${chatId}`);
       }
     } catch (error) {

@@ -12,24 +12,21 @@ import AlertBox from "../components/common/accounts/AlertBox";
 import Button from "../components/common/atoms/Button";
 import { quotationItemAtom } from "../store";
 import AutoHeightTextarea from "../components/common/atoms/AutoHeightTextarea";
-import { convertPriceFormat } from "../utils/convert";
+import { convertPriceFormat, uncomma } from "../utils/convert";
 
 const QuotationUpdatePage = () => {
   const navigate = useNavigate();
   const { quotationId } = useParams();
   const [searchParams] = useSearchParams();
   const chatId = searchParams.get("chatId");
-  const quotationItem = useAtomValue(quotationItemAtom);
-
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const quotationItem = useAtomValue(quotationItemAtom);
+  const [price, setPrice] = useState(convertPriceFormat(quotationItem.price));
   const titleInputRef = useRef(null);
   const companyInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
   const priceInputRef = useRef(null);
-
-  const [price, setPrice] = useState(convertPriceFormat(quotationItem.price));
 
   const { values, handleChange } = useInput({
     title: quotationItem.title,
@@ -73,10 +70,9 @@ const QuotationUpdatePage = () => {
         title: values.title,
         company: values.company,
         description: values.description,
-        price,
+        price: uncomma(price),
       });
       if (res.success) {
-        alert("견적이 수정되었습니다.");
         navigate(`/quotations/${chatId}`);
       }
     } catch (error) {
