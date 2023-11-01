@@ -15,7 +15,7 @@ const SelectRegion = forwardRef(({ setLocation, location }, ref) => {
 
   return (
     <div className=" relative">
-      <h6 className="text-xs mb-1">지역</h6>
+      <h6 className="text-xs mb-[5px]">지역</h6>
       <button
         id="region"
         ref={ref}

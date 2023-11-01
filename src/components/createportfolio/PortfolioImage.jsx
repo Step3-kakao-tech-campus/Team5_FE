@@ -22,7 +22,7 @@ export default function PortfolioImage({ imageItems, setImageItems }) {
 
   return (
     <>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-[5px]">
         <h6 className="text-xs">
           <span>사진 |</span>
           <span className=" text-gray-sunsu"> 최대 5장</span>
