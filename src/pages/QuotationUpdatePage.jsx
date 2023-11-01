@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useAtomValue } from "jotai";
 import useInput from "../hooks/useInput";
 import { updateQuotation } from "../apis/quotation";
-import QuotationCreateHeader from "../components/quotation/QuotationCreateHeader";
+import QuotationUpdateHeader from "../components/quotation/QuotationUpdateHeader";
 import Box from "../components/common/atoms/Box";
 import InputGroup from "../components/common/accounts/InputGroup";
 import Label from "../components/common/atoms/Label";
@@ -89,7 +89,7 @@ const QuotationUpdatePage = () => {
 
   return (
     <div className="flex w-full h-full flex-col">
-      <QuotationCreateHeader />
+      <QuotationUpdateHeader />
       <Box className="relative h-full px-[29px] pt-[30px] text-xs justify-center">
         <form>
           <InputGroup
