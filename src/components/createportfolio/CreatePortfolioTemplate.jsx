@@ -1,10 +1,11 @@
+import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { createPortfolio, updatePortfolio } from "../../apis/portfolio";
 import useInput from "../../hooks/useInput";
 import { comma } from "../../utils/convert";
-import TextareaGroup from "../common/TextareaGroup";
 import InputGroup from "../common/accounts/InputGroup";
+import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import ItemsInfo from "./ItemsInfo";
 import PortfolioImage from "./PortfolioImage";
@@ -201,26 +202,26 @@ export default function CreatePortfolioTemplate({ data }) {
           setWarningMessage={setWarningMessage}
           setIsOpenWarningBottomSheet={setIsOpenWarningBottomSheet}
         />
-        <TextareaGroup
+        <AutoHeightTextarea
           label="한 줄 소개"
           ref={titleRef}
           id="title"
           name="title"
           value={values?.title}
           onChange={handleChange}
-          rows={3}
-          maxLength={120}
+          maxLength={72}
+          rows={2}
         />
-        <TextareaGroup
+        <AutoHeightTextarea
           label="소개"
           ref={descriptionRef}
           id="description"
           name="description"
           value={values?.description}
           onChange={handleChange}
-          rows={8}
+          rows={7}
         />
-        <TextareaGroup
+        <AutoHeightTextarea
           label="경력"
           ref={careerRef}
           id="career"
@@ -229,23 +230,27 @@ export default function CreatePortfolioTemplate({ data }) {
           onChange={handleChange}
           rows={3}
         />
-        <TextareaGroup
+        <AutoHeightTextarea
           label="주요 제휴 업체"
           ref={partnerCompanyRef}
           id="partnerCompany"
           name="partnerCompany"
           value={values?.partnerCompany}
           onChange={handleChange}
-          rows={3}
+          rows={4}
         />
         {/* 사진 */}
         <PortfolioImage imageItems={imageItems} setImageItems={setImageItems} />
         <Button
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className="block w-full h-[50px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
+          className="flex justify-center items-center w-full h-[50px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
         >
-          저장하기
+          {isSubmitting ? (
+            <CircularProgress size={24} />
+          ) : (
+            <span>저장하기</span>
+          )}
         </Button>
       </div>
     </>
