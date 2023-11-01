@@ -34,7 +34,7 @@ const QuotationListTemplate = ({ quotation }) => {
         />
       )}
       {quotation.quotations.map((quotationItem) => (
-        <div className="pt-[30px] px-[29px]">
+        <div className="pt-[30px] px-[29px]" key={quotationItem.id}>
           <div className="flex">
             <span className="text-base text-blue-sunsu">
               {quotationItem.company}
