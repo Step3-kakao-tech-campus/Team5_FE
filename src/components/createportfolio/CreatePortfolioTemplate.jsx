@@ -1,13 +1,14 @@
 import React, { useRef, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { createPortfolio, updatePortfolio } from "../../apis/portfolio";
 import useInput from "../../hooks/useInput";
+import { comma } from "../../utils/convert";
 import TextareaGroup from "../common/TextareaGroup";
 import InputGroup from "../common/accounts/InputGroup";
 import Button from "../common/atoms/Button";
 import ItemsInfo from "./ItemsInfo";
 import PortfolioImage from "./PortfolioImage";
 import SelectRegion from "./SelectRegion";
-import SuccessBottomSheet from "./SuccessBottomSheet";
 import WarningBottomSheet from "./WarningBottomSheet";
 
 export default function CreatePortfolioTemplate({ data }) {
@@ -20,7 +21,14 @@ export default function CreatePortfolioTemplate({ data }) {
     partnerCompany: data?.partnerCompany,
   });
   const [location, setLocation] = useState(data?.location);
-  const [items, setItems] = useState([...data.items]);
+  const [items, setItems] = useState([
+    ...data.items.map((item) => {
+      return {
+        itemTitle: item.itemTitle,
+        itemPrice: comma(item.itemPrice),
+      };
+    }),
+  ]);
   const [numberItems, setNumberItems] = useState([
     ...data.items.map((item) => {
       return {
@@ -34,8 +42,6 @@ export default function CreatePortfolioTemplate({ data }) {
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
     useState(false);
-  const [isOpenSuccessBottomSheet, setIsOpenSuccessBottomSheet] =
-    useState(false);
 
   const nameRef = useRef(null);
   const locationRef = useRef(null);
@@ -44,6 +50,10 @@ export default function CreatePortfolioTemplate({ data }) {
   const descriptionRef = useRef(null);
   const careerRef = useRef(null);
   const partnerCompanyRef = useRef(null);
+
+  const { mutate: createMutate } = useMutation(createPortfolio);
+  const { mutate: updateMutate } = useMutation(updatePortfolio);
+  const queryClient = useQueryClient();
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -109,42 +119,47 @@ export default function CreatePortfolioTemplate({ data }) {
       setIsSubmitting(false);
       return;
     }
-    try {
-      if (isFirstSubmit) {
-        await createPortfolio({
-          plannerName: values.plannerName,
-          location,
-          numberItems,
-          title: values.title,
-          description: values.description,
-          career: values.career,
-          partnerCompany: values.partnerCompany,
-          imageItems,
-        });
-        setIsSubmitting(false);
-        setIsFirstSubmit(false);
-        setWarningMessage("포트폴리오가 성공적으로 저장되었습니다.");
-        setIsOpenSuccessBottomSheet(true);
-      } else {
-        await updatePortfolio({
-          plannerName: values.plannerName,
-          location,
-          numberItems,
-          title: values.title,
-          description: values.description,
-          career: values.career,
-          partnerCompany: values.partnerCompany,
-          imageItems,
-        });
-        setIsSubmitting(false);
-        setWarningMessage("포트폴리오가 성공적으로 수정되었습니다.");
-        setIsOpenSuccessBottomSheet(true);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsSubmitting(false);
-      setWarningMessage("포트폴리오를 수정하는데 실패했습니다.");
-      setIsOpenWarningBottomSheet(true);
+    const portfolioData = {
+      plannerName: values.plannerName,
+      location,
+      numberItems,
+      title: values.title,
+      description: values.description,
+      career: values.career,
+      partnerCompany: values.partnerCompany,
+      imageItems,
+    };
+    if (isFirstSubmit) {
+      createMutate(portfolioData, {
+        onSuccess: () => {
+          setIsSubmitting(false);
+          setIsFirstSubmit(false);
+          setWarningMessage("포트폴리오가 성공적으로 저장되었습니다.");
+          queryClient.invalidateQueries("portfolios/self");
+          setIsOpenWarningBottomSheet(true);
+        },
+        onError: (error) => {
+          console.log(error);
+          setIsSubmitting(false);
+          setWarningMessage("포트폴리오를 저장하는데 실패했습니다.");
+          setIsOpenWarningBottomSheet(true);
+        },
+      });
+    } else {
+      updateMutate(portfolioData, {
+        onSuccess: () => {
+          setIsSubmitting(false);
+          setWarningMessage("포트폴리오가 성공적으로 수정되었습니다.");
+          queryClient.invalidateQueries("portfolios/self");
+          setIsOpenWarningBottomSheet(true);
+        },
+        onError: (error) => {
+          console.log(error);
+          setIsSubmitting(false);
+          setWarningMessage("포트폴리오를 수정하는데 실패했습니다.");
+          setIsOpenWarningBottomSheet(true);
+        },
+      });
     }
   };
 
@@ -155,15 +170,6 @@ export default function CreatePortfolioTemplate({ data }) {
           message={warningMessage}
           onClose={() => {
             setIsOpenWarningBottomSheet(false);
-          }}
-        />
-      )}
-      {isOpenSuccessBottomSheet && (
-        <SuccessBottomSheet
-          message={warningMessage}
-          onClose={() => {
-            setIsOpenSuccessBottomSheet(false);
-            window.location.reload();
           }}
         />
       )}
