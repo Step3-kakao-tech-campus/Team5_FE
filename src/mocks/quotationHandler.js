@@ -54,7 +54,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(sucess));
   }),
 
-  rest.post("/quotations/confirmAll", async (req, res, ctx) => {
+  rest.post("/match/confirmAll", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
