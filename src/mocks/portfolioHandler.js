@@ -6,7 +6,7 @@ import {
   portfolioList1,
   portfolioList2,
   portfolioList3,
-  // portfolioSelfData,
+  portfolioSelfData,
 } from "./portfolioData";
 
 async function sleep(ms) {
@@ -42,29 +42,29 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(
-      ctx.status(200),
-      ctx.json({
-        sucess: true,
-        response: {
-          plannerName: "",
-          imageItems: [],
-          items: [
-            {
-              itemTitle: "",
-              itemPrice: 0,
-            },
-          ],
-          title: "",
-          description: "",
-          location: "",
-          career: "",
-          partnerCompany: "",
-        },
-        error: null,
-      }),
-    );
-    // return res(ctx.status(200), ctx.json(portfolioSelfData));
+    // return res(
+    //   ctx.status(200),
+    //   ctx.json({
+    //     sucess: true,
+    //     response: {
+    //       plannerName: "",
+    //       imageItems: [],
+    //       items: [
+    //         {
+    //           itemTitle: "",
+    //           itemPrice: 0,
+    //         },
+    //       ],
+    //       title: "",
+    //       description: "",
+    //       location: "",
+    //       career: "",
+    //       partnerCompany: "",
+    //     },
+    //     error: null,
+    //   }),
+    // );
+    return res(ctx.status(200), ctx.json(portfolioSelfData));
   }),
 
   // /portfolios/{portfolioId}
