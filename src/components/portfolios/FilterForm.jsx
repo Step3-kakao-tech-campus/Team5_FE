@@ -1,88 +1,59 @@
-import React, { useState } from "react";
+import cn from "classnames";
+import React from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { regions } from "../../utils/constants";
+import RangeSlider from "./RangeSlider";
 
-export default function FilterForm() {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
-  const [minPercent, setMinPercent] = useState(0);
-  const [maxPercent, setMaxPercent] = useState(100);
-
-  const [selectedRegion, setSelectedRegion] = useState("");
-
+export default function FilterForm({
+  selectedRegion,
+  setSelectedRegion,
+  prices,
+  setPrices,
+}) {
   const handleRegionChange = (event) => {
+    if (selectedRegion === event.target.value) {
+      setSelectedRegion(null);
+      return;
+    }
     setSelectedRegion(event.target.value);
   };
 
-  const handleMinPriceChange = (e) => {
-    console.log((e.target.value / 1000) * 100);
-    setMinPrice(e.target.value);
-    setMinPercent((e.target.value / 1000) * 100);
-  };
-
-  const handleMaxPriceChange = (e) => {
-    console.log((e.target.value / 1000) * 100);
-    setMaxPrice(e.target.value);
-    setMaxPercent((e.target.value / 1000) * 100);
-  };
-
-  // console.log(minPercent, 100 - maxPercent);
-
   return (
-    <div>
-      <h2>검색 필터</h2>
-      {regions.map((region) => (
-        <label htmlFor={region} key={region}>
-          <input
-            type="radio"
-            name="region"
-            value={region}
-            checked={selectedRegion === region}
-            onChange={handleRegionChange}
-            className="w-0"
-          />
-          {region}
-        </label>
-      ))}
-
-      <div className=" relative h-2 w-80 rounded bg-zinc-300">
-        <div
-          className={`absolute left-[${minPercent}%] right-[${
-            100 - maxPercent
-          }%] h-2 rounded bg-blue-300`}
-        />
-      </div>
-      <div className=" h-1" />
-      <div className=" relative h-2 w-80 rounded bg-zinc-300">
-        <div className="absolute left-[0%] right-[35%] h-2 rounded bg-blue-300" />
+    <>
+      <div>
+        <h4 className="text-xs text-gray-sunsu pb-1">지역</h4>
+        <div className=" grid grid-cols-2 text-[14px] gap-2">
+          {regions.map((region) => (
+            <label
+              htmlFor={region}
+              key={region}
+              className={cn(
+                " hover:underline cursor-pointer w-fit flex items-center",
+                {
+                  "text-blue-sunsu": selectedRegion === region,
+                },
+              )}
+            >
+              <input
+                id={region}
+                type="radio"
+                name="region"
+                value={region}
+                onClick={handleRegionChange}
+                className="w-0"
+              />
+              {region}
+              {selectedRegion === region && (
+                <AiOutlineClose size={14} className=" text-blue-sunsu" />
+              )}
+            </label>
+          ))}
+        </div>
       </div>
       <div>
-        <input
-          className="w-80"
-          type="range"
-          id="minPrice"
-          value={minPrice}
-          min={0}
-          max={maxPrice}
-          step={10}
-          onChange={handleMinPriceChange}
-        />
+        <h4 className="text-xs text-gray-sunsu mb-1">가격</h4>
+        <RangeSlider prices={prices} setPrices={setPrices} />
       </div>
-      <div>
-        <input
-          className="w-80"
-          type="range"
-          id="maxPrice"
-          value={maxPrice}
-          min={minPrice}
-          max={1000}
-          step={10}
-          onChange={handleMaxPriceChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="minPrice">최소 가격: {minPrice}</label>
-        <label htmlFor="maxPrice">최대 가격: {maxPrice}</label>
-      </div>
-    </div>
+    </>
   );
 }
