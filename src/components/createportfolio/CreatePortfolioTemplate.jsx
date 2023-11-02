@@ -10,7 +10,7 @@ import Button from "../common/atoms/Button";
 import ItemsInfo from "./ItemsInfo";
 import PortfolioImage from "./PortfolioImage";
 import SelectRegion from "./SelectRegion";
-import WarningBottomSheet from "./WarningBottomSheet";
+import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 
 export default function CreatePortfolioTemplate({ data }) {
   const [isFirstSubmit, setIsFirstSubmit] = useState(data?.title === "");
