@@ -122,7 +122,6 @@ export default function CreatePortfolioTemplate({ data }) {
       partnerCompany: partnerCompanyRef.current.value,
       imageItems,
     };
-    console.log(portfolioData);
     if (isFirstSubmit) {
       createMutate(portfolioData, {
         onSuccess: () => {
