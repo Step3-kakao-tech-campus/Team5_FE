@@ -1,7 +1,7 @@
 import React from "react";
 import { BsCamera } from "react-icons/bs";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
-import Photo from "../common/atoms/Photo";
+import Photo from "./atoms/Photo";
 
 export default function PortfolioImage({ imageItems, setImageItems }) {
   const onChangeAddFile = (e) => {

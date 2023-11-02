@@ -8,7 +8,7 @@ import InputGroup from "../common/accounts/InputGroup";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import ItemsInfo from "./ItemsInfo";
-import PortfolioImage from "./PortfolioImage";
+import ImageUploadZone from "../common/ImageUploadZone";
 import SelectRegion from "./SelectRegion";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 
@@ -240,7 +240,10 @@ export default function CreatePortfolioTemplate({ data }) {
           rows={4}
         />
         {/* 사진 */}
-        <PortfolioImage imageItems={imageItems} setImageItems={setImageItems} />
+        <ImageUploadZone
+          imageItems={imageItems}
+          setImageItems={setImageItems}
+        />
         <Button
           onClick={handleSubmit}
           disabled={isSubmitting}

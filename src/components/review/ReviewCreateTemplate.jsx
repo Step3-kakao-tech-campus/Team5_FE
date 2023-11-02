@@ -4,8 +4,8 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { createReview } from "../../apis/review";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
-import PortfolioImage from "../createportfolio/PortfolioImage";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
+import ImageUploadZone from "../common/ImageUploadZone";
 
 export default function ReviewCreateTemplate() {
   const { chatId } = useParams();
@@ -115,7 +115,10 @@ export default function ReviewCreateTemplate() {
           ref={contentRef}
           rows={7}
         />
-        <PortfolioImage imageItems={imageItems} setImageItems={setImageItems} />
+        <ImageUploadZone
+          imageItems={imageItems}
+          setImageItems={setImageItems}
+        />
         <div className="grow flex flex-col justify-end pt-[10px]">
           <Button
             onClick={handleSubmit}
