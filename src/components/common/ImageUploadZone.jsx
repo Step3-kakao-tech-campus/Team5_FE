@@ -1,7 +1,7 @@
 import React from "react";
 import { BsCamera } from "react-icons/bs";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
-import Photo from "../common/atoms/Photo";
+import Photo from "./atoms/Photo";
 
 export default function PortfolioImage({ imageItems, setImageItems }) {
   const onChangeAddFile = (e) => {
@@ -29,7 +29,7 @@ export default function PortfolioImage({ imageItems, setImageItems }) {
         </h6>
         {imageItems.length < 5 && (
           <label htmlFor="photo" className=" cursor-pointer w-fit h-fit">
-            <div className=" w-28 h-28 bg-lightgray-sunsu rounded-[10px] flex flex-col justify-center items-center gap-1 hover:border-2">
+            <div className=" w-28 h-28 bg-lightgray-sunsu rounded-[10px] flex flex-col justify-center items-center gap-1 hover:border-2 xs:w-24 xs:h-24">
               <BsCamera size={25} />
               <span className="text-xs">사진 추가</span>
               <input

@@ -8,7 +8,13 @@ export default function ChatHeader({ counterName, chatId }) {
       <>
         <span className="text-sm pl-10 mr-auto">{counterName}</span>
         <span className="text-sm pr-[15px] text-blue-sunsu font-medium">
-          <Link to={`/quotations/${chatId}`}>견적서 조회</Link>
+          <Link
+            to={`/quotations/${chatId}?partnerName=${encodeURIComponent(
+              counterName,
+            )}`}
+          >
+            견적서 조회
+          </Link>
         </span>
       </>
     </BackButtonHeader>

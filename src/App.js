@@ -19,6 +19,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import QuotationListPage from "./pages/QuotationListPage";
 import QuotationCreatePage from "./pages/QuotationCreatePage";
 import QuotationUpdatePage from "./pages/QuotationUpdatePage";
+import ReviewCreatePage from "./pages/ReviewCreatePage";
 
 function App() {
   return (
@@ -53,6 +54,10 @@ function App() {
             <Route
               path="/quotations/update/:quotationId"
               element={<QuotationUpdatePage />}
+            />
+            <Route
+              path="/profile/reviews/create/:chatId"
+              element={<ReviewCreatePage />}
             />
           </Route>
           <Route path="/signup" element={<SignupPage />} />

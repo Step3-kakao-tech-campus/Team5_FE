@@ -2,11 +2,13 @@ import React from "react";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
 import Button from "../common/atoms/Button";
 
-export default function WarningBottomSheet({ message, onClose }) {
+export default function RequiredConfirmBottomSheet({ onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div className="flex flex-col gap-10">
-        <p className=" font-semibold">{message}</p>
+        <p className=" font-semibold">
+          확정되지 않은 견적서 항목이 존재합니다.
+        </p>
         <Button
           onClick={onClose}
           className="block w-full h-[50px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"

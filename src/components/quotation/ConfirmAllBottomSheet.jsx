@@ -1,9 +1,13 @@
+import { CircularProgress } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { confirmQuotationAll } from "../../apis/quotation";
-import BottomSheet from "../common/bottomsheet/BottomSheet";
+import { openNavigateReviewBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
+import BottomSheet from "../common/bottomsheet/BottomSheet";
 
 const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
+  const dispatch = useDispatch();
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -16,9 +20,9 @@ const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
     setIsSubmitting(true);
     try {
       const response = await confirmQuotationAll(chatId);
-      console.log(response);
       if (response.success) {
         onClose();
+        openNavigateReviewBottomSheet(dispatch);
       }
     } catch (error) {
       console.log(error);
@@ -55,7 +59,11 @@ const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
           onClick={handleConfirmAll}
           disabled={isSubmitting}
         >
-          모든 결제 확정하기
+          {isSubmitting ? (
+            <CircularProgress size={24} />
+          ) : (
+            <span>모든 결제 확정하기</span>
+          )}
         </Button>
       </div>
     </BottomSheet>

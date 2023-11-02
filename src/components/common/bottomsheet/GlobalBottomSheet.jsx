@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeBottomSheet } from "../../../store/slices/bottomSheetSlice";
 import RequiredLoginBottomSheet from "./RequiredLoginBottomSheet";
 import ServerErrorBottomSheet from "./ServerErrorBottomSheet";
+import NavigateReviewBottomSheet from "./NavigateReviewBottomSheet";
 
 export default function GlobalBottomSheet() {
   const { bottomSheetType, isOpen } = useSelector((state) => state.bottomSheet);
@@ -11,6 +12,7 @@ export default function GlobalBottomSheet() {
   const BOTTOMSHEET_TYPES = {
     LOGIN: "loginBottomSheet",
     SERVERERROR: "serverErrorBottomSheet",
+    NAVIGATEREVIEW: "navigateReviewBottomSheet",
   };
 
   const BOTTOMSHEET_COMPONENTS = [
@@ -26,6 +28,14 @@ export default function GlobalBottomSheet() {
       type: BOTTOMSHEET_TYPES.SERVERERROR,
       component: (
         <ServerErrorBottomSheet onClose={() => dispatch(closeBottomSheet())} />
+      ),
+    },
+    {
+      type: BOTTOMSHEET_TYPES.NAVIGATEREVIEW,
+      component: (
+        <NavigateReviewBottomSheet
+          onClose={() => dispatch(closeBottomSheet())}
+        />
       ),
     },
   ];
