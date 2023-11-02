@@ -1,7 +1,21 @@
 import React, { forwardRef, useCallback, useEffect } from "react";
+import Label from "./Label";
 
 const AutoHeightTextarea = forwardRef(
-  ({ id, name, value, placeholder, className = "", onChange }, ref) => {
+  (
+    {
+      id,
+      name,
+      rows,
+      value,
+      placeholder,
+      className = "",
+      onChange,
+      label,
+      maxLength,
+    },
+    ref,
+  ) => {
     useEffect(() => {
       ref.current.style.height = "auto";
       ref.current.style.height = `${ref.current.scrollHeight + 2}px`;
@@ -13,16 +27,21 @@ const AutoHeightTextarea = forwardRef(
     }, []);
 
     return (
-      <textarea
-        id={id}
-        name={name}
-        className={`textarea ${className}`}
-        value={value}
-        onChange={onChange}
-        onInput={handleResizeHeight}
-        placeholder={placeholder}
-        ref={ref}
-      />
+      <Label htmlFor={id} className="text-xs">
+        {label}
+        <textarea
+          id={id}
+          rows={rows}
+          maxLength={maxLength}
+          name={name}
+          className={`textarea w-full rounded-[10px] px-[20px] py-[15px] mt-[5px] border border-lightgray-sunsu text-sm bg-transparent overflow-hidden resize-none ${className} hover:border-blue-sunsu`}
+          value={value}
+          onChange={onChange}
+          onInput={handleResizeHeight}
+          placeholder={placeholder}
+          ref={ref}
+        />
+      </Label>
     );
   },
 );

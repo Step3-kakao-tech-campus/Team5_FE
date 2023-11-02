@@ -111,19 +111,15 @@ const QuotationCreatePage = () => {
           />
 
           <Box className="relative pt-[15px]">
-            <div className="pb-[5px]">
-              <Label htmlFor="description" className="text-xs">
-                상세 설명
-              </Label>
-            </div>
             <AutoHeightTextarea
+              label="상세 설명"
               ref={descriptionInputRef}
               id="description"
               name="description"
               value={values.description}
               onChange={handleChange}
               placeholder="민감한 정보는 작성하지 않도록 유의해주세요"
-              className="relative w-full h-[70px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent overflow-hidden resize-none"
+              className="h-[70px]"
             />
           </Box>
 
@@ -144,7 +140,7 @@ const QuotationCreatePage = () => {
                   setPrice(convertPriceFormat(priceInputRef.current.value))
                 }
                 placeholder="0"
-                className="w-full h-[50px] rounded-[10px] pl-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent text-right pr-[34px]"
+                className="w-full h-[50px] rounded-[10px] pl-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent text-right pr-[34px] hover:border-blue-sunsu"
               />
               <p className="absolute right-[20px] text-sm text-gray-sunsu">
                 원
