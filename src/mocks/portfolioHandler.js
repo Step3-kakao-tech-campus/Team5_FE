@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
+import { success } from "./commonData";
 import {
   portfolioDetail1,
   portfolioDetail2,
@@ -45,7 +45,7 @@ export const portfolioHandlers = [
     // return res(
     //   ctx.status(200),
     //   ctx.json({
-    //     sucess: true,
+    //     success: true,
     //     response: {
     //       plannerName: "",
     //       imageItems: [],
@@ -90,7 +90,7 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /portfolios
@@ -106,7 +106,7 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /portfolios
@@ -122,6 +122,6 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];
