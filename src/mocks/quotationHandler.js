@@ -111,6 +111,9 @@ export const quotationHandlers = [
     if (page === "3") {
       return res(ctx.status(200), ctx.json(quotationCollectList3));
     }
-    return res(ctx.status(200), ctx.json(success));
+    return res(
+      ctx.status(200),
+      ctx.json({ success: true, response: [], error: null }),
+    );
   }),
 ];
