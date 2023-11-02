@@ -20,6 +20,7 @@ import QuotationListPage from "./pages/QuotationListPage";
 import QuotationCreatePage from "./pages/QuotationCreatePage";
 import QuotationUpdatePage from "./pages/QuotationUpdatePage";
 import ReviewCreatePage from "./pages/ReviewCreatePage";
+import QuotationCollectPage from "./pages/QuotationCollectPage";
 
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
             <Route
               path="/quotations/update/:quotationId"
               element={<QuotationUpdatePage />}
+            />
+            <Route
+              path="/quotations/collect"
+              element={<QuotationCollectPage />}
             />
             <Route
               path="/profile/reviews/create/:chatId"

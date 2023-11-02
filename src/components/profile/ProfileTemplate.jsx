@@ -101,7 +101,7 @@ export default function ProfileTemplate() {
           )}
           <Link
             className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-            to="/"
+            to="/quotations/collect"
           >
             견적서 모아보기
           </Link>
