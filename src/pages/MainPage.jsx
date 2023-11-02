@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import MainCarousel from "../components/main/MainCarousel";
 import MainHeaderRow from "../components/main/MainHeaderRow";
 import MainSearchBar from "../components/main/MainSearchBar";
+import InProgressQuotationBanner from "../components/main/InProgressQuotationBanner";
 
 export default function MainPage() {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const { userInfo } = useSelector((state) => state.user);
 
   const handleOpenSearchBar = () => {
     setIsSearchBarOpen(true);
@@ -21,6 +24,7 @@ export default function MainPage() {
       {!isSearchBarOpen && (
         <MainHeaderRow handleOpenSearchBar={handleOpenSearchBar} />
       )}
+      {userInfo.role === "couple" && <InProgressQuotationBanner />}
       <MainCarousel />
     </div>
   );
