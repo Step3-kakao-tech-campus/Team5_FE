@@ -43,6 +43,7 @@ export const quotationCollectList1 = {
     quotations: [
       {
         id: 1,
+        chatId: 11001,
         partnerName: "유희정",
         title: "스튜디오",
         price: 1950000,
@@ -53,6 +54,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 2,
+        chatId: 11002,
         partnerName: "유희정",
         title: "드레스",
         price: 1900000,
@@ -63,6 +65,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 3,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -73,6 +76,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 4,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -83,6 +87,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 5,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -93,6 +98,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 6,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -103,6 +109,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 7,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -113,6 +120,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 8,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -123,6 +131,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 9,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -133,6 +142,7 @@ export const quotationCollectList1 = {
       },
       {
         id: 10,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -152,6 +162,7 @@ export const quotationCollectList2 = {
     quotations: [
       {
         id: 11,
+        chatId: 11002,
         partnerName: "유희정",
         title: "스튜디오",
         price: 1950000,
@@ -162,6 +173,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 12,
+        chatId: 11002,
         partnerName: "유희정",
         title: "드레스",
         price: 1900000,
@@ -172,6 +184,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 13,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -182,6 +195,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 14,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -192,6 +206,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 15,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -202,6 +217,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 16,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -212,6 +228,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 17,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -222,6 +239,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 18,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -232,6 +250,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 19,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -242,6 +261,7 @@ export const quotationCollectList2 = {
       },
       {
         id: 20,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -261,6 +281,7 @@ export const quotationCollectList3 = {
     quotations: [
       {
         id: 21,
+        chatId: 11002,
         partnerName: "유희정",
         title: "스튜디오",
         price: 1950000,
@@ -271,6 +292,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 22,
+        chatId: 11002,
         partnerName: "유희정",
         title: "드레스",
         price: 1900000,
@@ -281,6 +303,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 23,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -291,6 +314,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 24,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -301,6 +325,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 25,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -311,6 +336,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 26,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -321,6 +347,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 27,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -331,6 +358,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 28,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -341,6 +369,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 29,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
@@ -351,6 +380,7 @@ export const quotationCollectList3 = {
       },
       {
         id: 30,
+        chatId: 11002,
         partnerName: "유희정",
         title: "헤어/메이크업",
         price: 1000000,
