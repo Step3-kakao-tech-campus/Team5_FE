@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSetAtom } from "jotai";
 import useFetchQuotationCollect from "../../hooks/useFetchQuotationCollect";
 import Spinner from "../common/atoms/Spinner";
 import Container from "../common/atoms/Container";
 import ConfirmOneBottomSheet from "./ConfirmOneBottomSheet";
 import { comma } from "../../utils/convert";
+import { quotationItemAtom } from "../../store";
+import SkeletonQuotationItem from "./SkeletonQuotationItem";
 
 const QuotationCollectTemplate = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [confirmOneSheetOpen, setConfirmOneSheetOpen] = useState(false);
   const [quotationId, setQuotationId] = useState(null);
-  // const setQuotationItem = useSetAtom(quotationItemAtom);
+  const [chatId, setChatId] = useState(null);
+  const setQuotationItem = useSetAtom(quotationItemAtom);
   const { userInfo } = useSelector((state) => state.user);
   const bottomObserver = useRef(null);
   const {
@@ -24,7 +29,6 @@ const QuotationCollectTemplate = () => {
   } = useFetchQuotationCollect();
 
   useEffect(() => {
-    console.log("MainPortfolioTemplate portfolios", quotations);
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
@@ -57,72 +61,96 @@ const QuotationCollectTemplate = () => {
           <ConfirmOneBottomSheet
             onClose={() => setConfirmOneSheetOpen(false)}
             quotationId={quotationId}
-            // chatId={chatId}
+            chatId={chatId}
           />
         )}
-        {quotations?.map((quotationItem) => (
-          <div className="pt-[30px] px-[29px]">
-            <div className="flex">
-              <span className="text-base text-blue-sunsu">
-                {quotationItem?.company}
-              </span>
-              <span className="mr-auto ml-[4px] mt-[4px] text-xs text-gray-sunsu">
-                {"| "}
-                {quotationItem?.title}
-              </span>
-              <span className="text-base font-bold">
-                {comma(quotationItem?.price)}
-              </span>
-              <span className="text-base">원</span>
-            </div>
-            <div className="pt-[5px] text-sm">{quotationItem?.description}</div>
-            <div className="pt-[5px] text-xs text-gray-sunsu">
-              {quotationItem?.status === "완료" ? (
-                <span>결제완료</span>
-              ) : (
-                <span>
-                  결제미완료
-                  {userInfo.role === "planner" && (
-                    <>
-                      <span> | </span>
-                      <button
-                        className="underline text-red-sunsu font-bold"
-                        onClick={() => {
-                          console.log(quotations);
-                          setConfirmOneSheetOpen(true);
-                          setQuotationId(quotationItem?.id);
-                        }}
-                      >
-                        결제완료로 변경
-                      </button>
-                    </>
-                  )}
-                </span>
+        <div className="my-[15px]">
+          {quotations?.map((quotationItem) => (
+            // eslint-disable-next-line react/jsx-no-useless-fragment
+            <>
+              {quotationItem && (
+                <div className="py-[15px] mx-[29px] border-b border-lightgray-sunsu">
+                  <div className="text-xs text-darkgray-sunsu">
+                    <span className="font-bold">
+                      {quotationItem.partnerName}
+                    </span>
+                    {userInfo.role === "planner" ? (
+                      <span>님</span>
+                    ) : (
+                      <span> 플래너님</span>
+                    )}
+                  </div>
+                  <div className="flex">
+                    <span className="text-base text-blue-sunsu">
+                      {quotationItem.company}
+                    </span>
+                    <span className="mr-auto ml-[4px] mt-[4px] text-xs text-gray-sunsu">
+                      {"| "}
+                      {quotationItem.title}
+                    </span>
+                    <span className="text-base font-bold">
+                      {comma(quotationItem.price)}
+                    </span>
+                    <span className="text-base">원</span>
+                  </div>
+                  <div className="pt-[5px] text-sm">
+                    {quotationItem.description}
+                  </div>
+                  <div className="pt-[5px] text-xs text-gray-sunsu">
+                    {quotationItem.status === "완료" ? (
+                      <span>결제완료</span>
+                    ) : (
+                      <span>
+                        결제미완료
+                        {userInfo.role === "planner" && (
+                          <>
+                            <span> | </span>
+                            <button
+                              className="underline text-red-sunsu font-bold"
+                              onClick={() => {
+                                setConfirmOneSheetOpen(true);
+                                setQuotationId(quotationItem.id);
+                                setChatId(quotationItem.chatId);
+                              }}
+                            >
+                              결제완료로 변경
+                            </button>
+                          </>
+                        )}
+                      </span>
+                    )}
+                  </div>
+                  <div className="pt-[2px] text-xs text-gray-sunsu">
+                    <span>최종 수정일 {quotationItem.modifiedAt}</span>
+                    {quotationItem.status === "미완료" &&
+                      userInfo.role === "planner" && (
+                        <>
+                          <span> | </span>
+                          <button
+                            className="underline text-black font-bold"
+                            onClick={() => {
+                              setQuotationItem(quotationItem);
+                              navigate(
+                                `/quotations/update/${quotationItem.id}?chatId=${quotationItem.chatId}`,
+                              );
+                            }}
+                          >
+                            수정하기
+                          </button>
+                        </>
+                      )}
+                  </div>
+                </div>
               )}
-            </div>
-            <div className="pt-[2px] text-xs text-gray-sunsu">
-              <span>최종 수정일 {quotationItem?.modifiedAt}</span>
-              {/* {quotationItem.status === "미완료" && */}
-              {/*  userInfo.role === "planner" && ( */}
-              {/*    <> */}
-              {/*      <span> | </span> */}
-              {/*      <button */}
-              {/*        className="underline text-black font-bold" */}
-              {/*        onClick={() => { */}
-              {/*          setQuotationItem(quotationItem); */}
-              {/*          navigate( */}
-              {/*            `/quotations/update/${quotationItem.id}?chatId=${chatId}`, */}
-              {/*          ); */}
-              {/*        }} */}
-              {/*      > */}
-              {/*        수정하기 */}
-              {/*      </button> */}
-              {/*    </> */}
-              {/*  )} */}
-            </div>
-          </div>
-        ))}
-        {isFetching && <div>로딩중</div>}
+            </>
+          ))}
+          {isFetching && (
+            <>
+              <SkeletonQuotationItem />
+              <SkeletonQuotationItem />
+            </>
+          )}
+        </div>
       </Container>
       <div ref={bottomObserver} />
     </>
