@@ -1,6 +1,11 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
-import { quotationList } from "./quotationData";
+import { success } from "./commonData";
+import {
+  quotationCollectList1,
+  quotationCollectList2,
+  quotationCollectList3,
+  quotationList,
+} from "./quotationData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -84,7 +89,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(success));
   }),
 
-  rest.get("quotations/collect", async (req, res, ctx) => {
+  rest.get("/quotations/collect", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     const page = req.url.searchParams.get("page");
@@ -106,9 +111,6 @@ export const quotationHandlers = [
     if (page === "3") {
       return res(ctx.status(200), ctx.json(quotationCollectList3));
     }
-    return res(
-      ctx.status(200),
-      ctx.json({ success: true, response: [], error: null }),
-    );
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];

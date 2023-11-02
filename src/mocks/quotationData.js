@@ -143,6 +143,7 @@ export const quotationCollectList1 = {
       },
     ],
   },
+  error: null,
 };
 
 export const quotationCollectList2 = {
@@ -251,6 +252,7 @@ export const quotationCollectList2 = {
       },
     ],
   },
+  error: null,
 };
 
 export const quotationCollectList3 = {
@@ -359,4 +361,5 @@ export const quotationCollectList3 = {
       },
     ],
   },
+  error: null,
 };
