@@ -73,7 +73,7 @@ const QuotationUpdatePage = () => {
         price: uncomma(price),
       });
       if (res.success) {
-        navigate(`/quotations/${chatId}`);
+        navigate(-1);
       }
     } catch (error) {
       console.log(error);
