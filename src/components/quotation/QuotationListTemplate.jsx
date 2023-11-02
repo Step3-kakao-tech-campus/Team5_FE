@@ -1,25 +1,51 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 import { useSetAtom } from "jotai";
-import { useSelector } from "react-redux";
-import ConfirmOneBottomSheet from "./ConfirmOneBottomSheet";
-import { comma } from "../../utils/convert";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as AddIcon } from "../../assets/add-01.svg";
 import { ReactComponent as StarIcon } from "../../assets/star-01.svg";
 import { quotationItemAtom } from "../../store";
+import { comma } from "../../utils/convert";
 import ConfirmAllBottomSheet from "./ConfirmAllBottomSheet";
+import ConfirmOneBottomSheet from "./ConfirmOneBottomSheet";
+import RequiredConfirmBottomSheet from "./RequiredConfirmBottomSheet";
+import { openNavigateReviewBottomSheet } from "../../utils/handleBottomSheet";
 
 const QuotationListTemplate = ({ quotation }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { chatId } = useParams();
   const [confirmOneSheetOpen, setConfirmOneSheetOpen] = useState(false);
   const [confirmAllSheetOpen, setConfirmAllSheetOpen] = useState(false);
+  const [requiredConfirmBottomSheetOpen, setRequiredConfirmBottomSheetOpen] =
+    useState(false);
   const [quotationId, setQuotationId] = useState(null);
   const setQuotationItem = useSetAtom(quotationItemAtom);
   const { userInfo } = useSelector((state) => state.user);
 
+  const handleOnConfirmAll = () => {
+    if (quotation.status === "완료") {
+      openNavigateReviewBottomSheet(dispatch);
+      return;
+    }
+    // 전체 확정을 안 한 경우
+    const isConfirmedAll = quotation.quotations.every(
+      (quotationItem) => quotationItem.status === "완료",
+    );
+    if (isConfirmedAll) {
+      setConfirmAllSheetOpen(true);
+    } else {
+      setRequiredConfirmBottomSheetOpen(true);
+    }
+  };
+
   return (
     <div>
+      {requiredConfirmBottomSheetOpen && (
+        <RequiredConfirmBottomSheet
+          onClose={() => setRequiredConfirmBottomSheetOpen(false)}
+        />
+      )}
       {confirmOneSheetOpen && (
         <ConfirmOneBottomSheet
           onClose={() => setConfirmOneSheetOpen(false)}
@@ -105,7 +131,7 @@ const QuotationListTemplate = ({ quotation }) => {
       ) : (
         <button
           className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
-          onClick={() => setConfirmAllSheetOpen(true)}
+          onClick={handleOnConfirmAll}
         >
           <StarIcon className="w-4 h-4 mr-2" />
           확정하기
