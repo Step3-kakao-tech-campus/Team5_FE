@@ -1,11 +1,6 @@
 import { rest } from "msw";
 import { sucess } from "./commonData";
-import {
-  quotationCollectList1,
-  quotationCollectList2,
-  quotationCollectList3,
-  quotationList,
-} from "./quotationData";
+import { quotationList } from "./quotationData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -41,7 +36,7 @@ export const quotationHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   rest.put("/quotations/:quotationId", async (req, res, ctx) => {
@@ -56,7 +51,7 @@ export const quotationHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   rest.post("/match/confirmAll", async (req, res, ctx) => {
@@ -71,7 +66,7 @@ export const quotationHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   rest.post("/quotations/confirm/:quotationId", async (req, res, ctx) => {
@@ -86,7 +81,7 @@ export const quotationHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   rest.get("quotations/collect", async (req, res, ctx) => {

@@ -2,25 +2,17 @@ import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { createPortfolio, updatePortfolio } from "../../apis/portfolio";
-import useInput from "../../hooks/useInput";
 import { comma } from "../../utils/convert";
+import ImageUploadZone from "../common/ImageUploadZone";
 import InputGroup from "../common/accounts/InputGroup";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
+import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 import ItemsInfo from "./ItemsInfo";
-import PortfolioImage from "./PortfolioImage";
 import SelectRegion from "./SelectRegion";
-import WarningBottomSheet from "./WarningBottomSheet";
 
 export default function CreatePortfolioTemplate({ data }) {
   const [isFirstSubmit, setIsFirstSubmit] = useState(data?.title === "");
-  const { handleChange, values } = useInput({
-    plannerName: data?.plannerName,
-    title: data?.title,
-    description: data?.description,
-    career: data?.career,
-    partnerCompany: data?.partnerCompany,
-  });
   const [location, setLocation] = useState(data?.location);
   const [items, setItems] = useState([
     ...data.items.map((item) => {
@@ -58,7 +50,7 @@ export default function CreatePortfolioTemplate({ data }) {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    if (!values.plannerName) {
+    if (!nameRef.current?.value) {
       setWarningMessage("이름을 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
       setIsSubmitting(false);
@@ -86,28 +78,28 @@ export default function CreatePortfolioTemplate({ data }) {
       itemRef.current?.focus();
       return;
     }
-    if (!values.title) {
+    if (!titleRef.current?.value) {
       setWarningMessage("한 줄 소개를 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
       setIsSubmitting(false);
       titleRef.current?.focus();
       return;
     }
-    if (!values.description) {
+    if (!descriptionRef.current?.value) {
       setWarningMessage("소개를 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
       setIsSubmitting(false);
       descriptionRef.current?.focus();
       return;
     }
-    if (!values.career) {
+    if (!careerRef.current?.value) {
       setWarningMessage("경력을 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
       setIsSubmitting(false);
       careerRef.current?.focus();
       return;
     }
-    if (!values.partnerCompany) {
+    if (!partnerCompanyRef.current?.value) {
       setWarningMessage("주요 제휴 업체를 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
       setIsSubmitting(false);
@@ -121,13 +113,13 @@ export default function CreatePortfolioTemplate({ data }) {
       return;
     }
     const portfolioData = {
-      plannerName: values.plannerName,
+      plannerName: nameRef.current.value,
       location,
       numberItems,
-      title: values.title,
-      description: values.description,
-      career: values.career,
-      partnerCompany: values.partnerCompany,
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      career: careerRef.current.value,
+      partnerCompany: partnerCompanyRef.current.value,
       imageItems,
     };
     if (isFirstSubmit) {
@@ -180,11 +172,10 @@ export default function CreatePortfolioTemplate({ data }) {
           id="plannerName"
           name="plannerName"
           type="text"
-          value={values.plannerName}
           placeholder="이름을 입력해주세요."
           label="이름"
           ref={nameRef}
-          onChange={handleChange}
+          defaultValue={data?.plannerName}
         />
         {/* 지역 */}
         <SelectRegion
@@ -207,40 +198,39 @@ export default function CreatePortfolioTemplate({ data }) {
           ref={titleRef}
           id="title"
           name="title"
-          value={values?.title}
-          onChange={handleChange}
           maxLength={72}
           rows={2}
+          defaultValue={data?.title}
         />
         <AutoHeightTextarea
           label="소개"
           ref={descriptionRef}
           id="description"
           name="description"
-          value={values?.description}
-          onChange={handleChange}
           rows={7}
+          defaultValue={data?.description}
         />
         <AutoHeightTextarea
           label="경력"
           ref={careerRef}
           id="career"
           name="career"
-          value={values?.career}
-          onChange={handleChange}
           rows={3}
+          defaultValue={data?.career}
         />
         <AutoHeightTextarea
           label="주요 제휴 업체"
           ref={partnerCompanyRef}
           id="partnerCompany"
           name="partnerCompany"
-          value={values?.partnerCompany}
-          onChange={handleChange}
           rows={4}
+          defaultValue={data?.partnerCompany}
         />
         {/* 사진 */}
-        <PortfolioImage imageItems={imageItems} setImageItems={setImageItems} />
+        <ImageUploadZone
+          imageItems={imageItems}
+          setImageItems={setImageItems}
+        />
         <Button
           onClick={handleSubmit}
           disabled={isSubmitting}

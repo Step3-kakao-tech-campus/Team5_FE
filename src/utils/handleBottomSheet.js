@@ -14,3 +14,12 @@ export function openSeverErrorBottomSheet(dispatch) {
     }),
   );
 }
+
+export function openNavigateReviewBottomSheet(dispatch) {
+  dispatch(
+    openBottomSheet({
+      bottomSheetType: "navigateReviewBottomSheet",
+      isOpen: true,
+    }),
+  );
+}

@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
+import { success } from "./commonData";
 import {
   infoResponseAR,
   infoResponseDH,
@@ -99,7 +99,7 @@ export const userHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /user/info
@@ -133,7 +133,7 @@ export const userHandlers = [
     const refreshToken = req.headers.get("Refresh");
     return res(
       ctx.status(200),
-      ctx.json(sucess),
+      ctx.json(success),
       ctx.set("Authorization", `NEW ${refreshToken}`),
       ctx.set("Refresh", refreshToken),
     );

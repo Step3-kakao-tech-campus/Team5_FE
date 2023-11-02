@@ -13,6 +13,7 @@ const AutoHeightTextarea = forwardRef(
       onChange,
       label,
       maxLength,
+      defaultValue = "",
     },
     ref,
   ) => {
@@ -39,6 +40,7 @@ const AutoHeightTextarea = forwardRef(
           onChange={onChange}
           onInput={handleResizeHeight}
           placeholder={placeholder}
+          defaultValue={defaultValue}
           ref={ref}
         />
       </Label>
