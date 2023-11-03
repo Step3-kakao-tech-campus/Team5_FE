@@ -1,4 +1,5 @@
-import { HiFilter, HiOutlineFilter } from "react-icons/hi";
+import { ReactComponent as FilterIcon } from "../../assets/filter-02.svg";
+import { ReactComponent as FilterOutlinedIcon } from "../../assets/filter-01.svg";
 import { ReactComponent as SearchOutlinedIcon } from "../../assets/search-03.svg";
 import HeaderRow from "../common/HeaderRow";
 
@@ -11,12 +12,12 @@ const SearchHeaderRow = ({
     <HeaderRow>
       <div className="flex justify-between items-center w-full px-1">
         <div className="my-auto font-medium">웨딩플래너 탐색</div>
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-3 items-center">
           <button onClick={handleFilterForm}>
             {isFilterFormOpen ? (
-              <HiFilter size={20} />
+              <FilterIcon className="w-[16px] h-[18px]" />
             ) : (
-              <HiOutlineFilter size={20} />
+              <FilterOutlinedIcon className="w-[16px] h-[18px]" />
             )}
           </button>
           <button onClick={handleOpenSearchBar}>

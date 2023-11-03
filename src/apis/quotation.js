@@ -41,3 +41,8 @@ export const confirmQuotationDetail = async (quotationId, chatId) => {
   );
   return response.data;
 };
+
+export const getQuotationCollectList = async (page) => {
+  const response = await instance.get(`/quotations/collect?page=${page}`);
+  return response.data.response;
+};

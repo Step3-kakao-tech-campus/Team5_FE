@@ -58,7 +58,7 @@ export default function RangeSlider({ prices, setPrices }) {
       </div>
       <div className="w-full flex justify-center">
         <div className="flex items-center justify-between w-5/6 sm:w-[90%] xs:w-full">
-          <div className="flex flex-col border-lightgray-sunsu border rounded-[10px] p-1">
+          <div className="flex flex-col border-lightgray-sunsu border rounded-[10px] px-2 py-1">
             <div className="text-[10px] text-gray-sunsu">최저 요금</div>
             <div className="flex items-center justify-between gap-1">
               <BiWon size={16} />
@@ -71,7 +71,7 @@ export default function RangeSlider({ prices, setPrices }) {
             </div>
           </div>
           <BsDashLg size={28} />
-          <div className="flex flex-col border-lightgray-sunsu border rounded-[10px] p-1">
+          <div className="flex flex-col border-lightgray-sunsu border rounded-[10px] px-2 py-1">
             <div className="text-[10px] text-gray-sunsu">최대 요금</div>
             <div className="flex items-center justify-between gap-1">
               <BiWon size={16} />

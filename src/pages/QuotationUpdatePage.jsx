@@ -73,7 +73,7 @@ const QuotationUpdatePage = () => {
         price: uncomma(price),
       });
       if (res.success) {
-        navigate(`/quotations/${chatId}`);
+        navigate(-1);
       }
     } catch (error) {
       console.log(error);
@@ -116,13 +116,10 @@ const QuotationUpdatePage = () => {
           />
 
           <Box className="relative pt-[15px]">
-            <div className="pb-[5px]">
-              <Label htmlFor="description" className="text-xs">
-                상세 설명
-              </Label>
-            </div>
             <AutoHeightTextarea
+              label="상세 설명"
               ref={descriptionInputRef}
+              maxLength={100}
               id="description"
               name="description"
               value={values.description}
