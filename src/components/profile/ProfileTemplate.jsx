@@ -71,6 +71,18 @@ export default function ProfileTemplate() {
         {/* 결제 영역 */}
         <div className="flex flex-col text-base pt-[15px]">
           <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
+          <Link
+            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+            to="/favorites"
+          >
+            찜한 플래너 모아보기
+          </Link>
+          <Link
+            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+            to="/quotations/collect"
+          >
+            견적서 모아보기
+          </Link>
           {userInfo.role === "planner" ? (
             <>
               <Link
@@ -90,27 +102,15 @@ export default function ProfileTemplate() {
             <>
               <Link
                 className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-                to="/"
+                to="/profile/reviews/writable"
               >
-                리뷰 작성 / 수정
+                리뷰 작성
               </Link>
               <button className="w-fit pt-[5px] pb-[5px] text-lg hover:underline">
-                리뷰 삭제
+                리뷰 수정 / 삭제
               </button>
             </>
           )}
-          <Link
-            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-            to="/favorites"
-          >
-            찜한 플래너 모아보기
-          </Link>
-          <Link
-            className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-            to="/quotations/collect"
-          >
-            견적서 모아보기
-          </Link>
           <button
             className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
             onClick={handleOnShowPaymentBottomSheet}
