@@ -22,6 +22,7 @@ import QuotationUpdatePage from "./pages/QuotationUpdatePage";
 import ReviewCreatePage from "./pages/ReviewCreatePage";
 import QuotationCollectPage from "./pages/QuotationCollectPage";
 import FavoriteListPage from "./pages/FavoriteListPage";
+import WritableReviewListPage from "./pages/WritableReviewListPage";
 
 function App() {
   return (
@@ -64,6 +65,10 @@ function App() {
             <Route
               path="/profile/reviews/create/:chatId"
               element={<ReviewCreatePage />}
+            />
+            <Route
+              path="/profile/reviews/writable"
+              element={<WritableReviewListPage />}
             />
             <Route path="/favorites" element={<FavoriteListPage />} />
           </Route>
