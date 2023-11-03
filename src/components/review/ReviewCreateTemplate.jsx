@@ -11,9 +11,9 @@ export default function ReviewCreateTemplate() {
   const { chatId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const partnerName = searchParams.get("partnerName");
+  const plannerName = searchParams.get("plannerName");
   const [imageItems, setImageItems] = useState([]);
-  const [stars, setStars] = useState(2.5);
+  const [stars, setStars] = useState(3);
   const heightRef = useRef(null);
   const contentRef = useRef(null);
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
@@ -58,7 +58,7 @@ export default function ReviewCreateTemplate() {
 
   useEffect(() => {
     // url 접근 차단
-    if (partnerName === null) {
+    if (plannerName === null) {
       navigate("/404", { replace: true });
     }
   }, []);
@@ -93,11 +93,11 @@ export default function ReviewCreateTemplate() {
       )}
       <div className="w-full flex flex-col p-7 gap-[5px] " ref={heightRef}>
         <div className="w-full flex flex-col items-center justify-center h-[170px] ">
-          <span className="text-2xl font-medium">{`${partnerName} 플래너님은 어땠나요?`}</span>
+          <span className="text-2xl font-medium">{`${plannerName} 플래너님은 어땠나요?`}</span>
           <Rating
             value={stars}
             defaultValue={stars}
-            precision={0.5}
+            precision={1}
             getLabelText={(value) => `${value} Star${value !== 1 ? "s" : ""}`}
             onChange={(event, newValue) => {
               setStars(newValue);

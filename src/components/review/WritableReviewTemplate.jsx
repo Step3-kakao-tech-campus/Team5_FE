@@ -12,7 +12,7 @@ export default function WritableReviewTemplate({ matches, avatars }) {
           className="flex gap-2 hover:bg-zinc-100 w-full hover:rounded-[10px] p-2 border-b"
           to={`/profile/reviews/create/${
             match.chatId
-          }?partnerName=${encodeURIComponent(match.plannerName)}`}
+          }?plannerName=${encodeURIComponent(match.plannerName)}`}
           key={match.plannerId}
         >
           <Photo
