@@ -67,7 +67,9 @@ export default function GNB() {
         onClick={checkLoginStatus}
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname.startsWith("/profile") ? (
+        {location.pathname.startsWith("/profile") ||
+        location.pathname.startsWith("/payments") ||
+        location.pathname.startsWith("/quotations") ? (
           <ProfileIcon className="w-6 h-6" />
         ) : (
           <ProfileOutlinedIcon className="w-6 h-6" />
