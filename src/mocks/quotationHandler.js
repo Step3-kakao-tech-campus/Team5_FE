@@ -1,9 +1,9 @@
 import { rest } from "msw";
 import { success } from "./commonData";
 import {
+  quotationCollectList0,
   quotationCollectList1,
   quotationCollectList2,
-  quotationCollectList3,
   quotationList,
 } from "./quotationData";
 
@@ -102,18 +102,18 @@ export const quotationHandlers = [
         }),
       );
     }
+    if (page === "0") {
+      return res(ctx.status(200), ctx.json(quotationCollectList0));
+    }
     if (page === "1") {
       return res(ctx.status(200), ctx.json(quotationCollectList1));
     }
     if (page === "2") {
       return res(ctx.status(200), ctx.json(quotationCollectList2));
     }
-    if (page === "3") {
-      return res(ctx.status(200), ctx.json(quotationCollectList3));
-    }
     return res(
       ctx.status(200),
-      ctx.json({ success: true, response: [], error: null }),
+      ctx.json({ success: true, response: { chats: [] }, error: null }),
     );
   }),
 ];
