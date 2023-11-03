@@ -114,6 +114,7 @@ const QuotationCreatePage = () => {
             <AutoHeightTextarea
               label="상세 설명"
               ref={descriptionInputRef}
+              maxLength={100}
               id="description"
               name="description"
               value={values.description}
