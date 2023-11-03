@@ -25,7 +25,6 @@ export default function WritableReviewListPage() {
           return res;
         }),
       );
-      console.log(avatarRef.current);
       setIsFetching(false);
     };
     getAvatar();

@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 import Photo from "../common/atoms/Photo";
 
 export default function WritableReviewTemplate({ matches, avatars }) {
+  console.log(matches);
   return (
     <div className="w-full h-full p-5 flex flex-col gap-3">
       {matches.map((match, idx) => (
         <Link
           className="flex gap-2 hover:bg-zinc-100 w-full hover:rounded-[10px] p-2 border-b"
-          to="/"
+          to={`/profile/reviews/create/${
+            match.chatId
+          }?partnerName=${encodeURIComponent(match.plannerName)}`}
           key={match.plannerId}
         >
           <Photo

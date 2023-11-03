@@ -59,7 +59,7 @@ export default function ReviewCreateTemplate() {
   useEffect(() => {
     // url 접근 차단
     if (partnerName === null) {
-      navigate("/404");
+      navigate("/404", { replace: true });
     }
   }, []);
 
