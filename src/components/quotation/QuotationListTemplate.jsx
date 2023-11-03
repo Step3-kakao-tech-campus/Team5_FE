@@ -130,7 +130,7 @@ const QuotationListTemplate = ({ quotation }) => {
         </button>
       ) : (
         <button
-          className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
+          className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center hover:shadow-lg"
           onClick={handleOnConfirmAll}
         >
           <StarIcon className="w-4 h-4 mr-2" />
