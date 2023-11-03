@@ -4,13 +4,13 @@ import _ from "lodash";
 import { getQuotationCollectList } from "../apis/quotation";
 
 const UseFetchQuotationCollect = () => {
-  const [quotations, setQuotations] = useState([]);
+  const [chats, setChats] = useState([]);
   const infiniteQuery = useInfiniteQuery(
-    ["quotations"],
-    ({ pageParam = 1 }) => getQuotationCollectList(pageParam),
+    ["chats"],
+    ({ pageParam = 0 }) => getQuotationCollectList(pageParam),
     {
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.length < 10) {
+        if (lastPage.chats.length < 10) {
           return undefined;
         }
         return allPages.length;
@@ -21,17 +21,15 @@ const UseFetchQuotationCollect = () => {
 
   useEffect(() => {
     if (infiniteQuery.data) {
-      const allFetchedPortfolios = infiniteQuery.data?.pages.flatMap(
-        (page) => page.quotations,
+      const allFetchedChats = infiniteQuery.data?.pages.flatMap(
+        (page) => page.chats,
       );
-      setQuotations((prev) =>
-        _.unionBy([...prev, ...allFetchedPortfolios], "id"),
-      );
+      setChats((prev) => _.unionBy([...prev, ...allFetchedChats], "chatId"));
     }
   }, [infiniteQuery.data]);
 
   return {
-    quotations,
+    chats,
     ...infiniteQuery,
   };
 };

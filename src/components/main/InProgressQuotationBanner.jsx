@@ -1,22 +1,23 @@
 import { useQuery } from "react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getQuotationCollectList } from "../../apis/quotation";
 import Button from "../common/atoms/Button";
 
 const InProgressQuotationBanner = () => {
   const navigate = useNavigate();
+  const [firstInProgressChat, setFirstInProgressChat] = useState(null);
   const { data, error } = useQuery(`/quotations/collect`, () =>
-    getQuotationCollectList(1),
+    getQuotationCollectList(0),
   );
 
-  const hasInProgressQuotation =
-    data?.quotations &&
-    data?.quotations?.some((quotation) => quotation.status === "미완료");
-
-  const firstInProgressQuotation = data?.quotations?.find(
-    (quotation) => quotation.status === "미완료",
-  );
+  useEffect(() => {
+    if (data?.chats && data?.chats?.some((chat) => chat.status === "미완료")) {
+      setFirstInProgressChat(
+        data?.chats?.find((chat) => chat.status === "미완료"),
+      );
+    }
+  }, [data]);
 
   useEffect(() => {
     if (error) {
@@ -26,22 +27,22 @@ const InProgressQuotationBanner = () => {
   }, [error]);
 
   return (
-    hasInProgressQuotation && (
+    firstInProgressChat && (
       <Button
         onClick={() =>
           navigate(
             `/quotations/${
-              firstInProgressQuotation.chatId
+              firstInProgressChat.chatId
             }?partnerName=${encodeURIComponent(
-              firstInProgressQuotation.partnerName,
+              firstInProgressChat.partnerName,
             )}`,
           )
         }
       >
-        <div className="fixed flex flex-col w-[calc(100%-40px)] max-w-[536px] h-[70px] px-[25px] pt-[13px] bottom-[70px] left-1/2 translate-x-[-50%] rounded-lg border border-lightgray-sunsu z-30 bg-white opacity-95">
+        <div className="fixed flex flex-col w-[calc(100%-40px)] max-w-[536px] h-[70px] px-[25px] pt-[14px] bottom-[70px] left-1/2 translate-x-[-50%] rounded-lg border border-lightgray-sunsu z-30 bg-white opacity-95">
           <div className="flex text-sm">
             <span className="mr-[3px] text-blue-sunsu font-bold">
-              {firstInProgressQuotation.partnerName}
+              {firstInProgressChat.partnerName}
             </span>
             플래너와
           </div>

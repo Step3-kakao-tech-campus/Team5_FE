@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSetAtom } from "jotai";
 import useFetchQuotationCollect from "../../hooks/useFetchQuotationCollect";
 import Spinner from "../common/atoms/Spinner";
@@ -24,7 +24,7 @@ const QuotationCollectTemplate = () => {
     hasNextPage,
     isLoading,
     fetchNextPage,
-    quotations,
+    chats,
     isFetching,
   } = useFetchQuotationCollect();
 
@@ -64,22 +64,33 @@ const QuotationCollectTemplate = () => {
             chatId={chatId}
           />
         )}
-        <div className="my-[15px]">
-          {quotations?.map((quotationItem) => (
-            // eslint-disable-next-line react/jsx-no-useless-fragment
-            <>
-              {quotationItem && (
-                <div className="py-[15px] mx-[29px] border-b border-lightgray-sunsu">
-                  <div className="text-xs text-darkgray-sunsu">
-                    <span className="font-bold">
-                      {quotationItem.partnerName}
-                    </span>
-                    {userInfo.role === "planner" ? (
-                      <span>님</span>
-                    ) : (
-                      <span> 플래너님</span>
-                    )}
-                  </div>
+        <div className="mb-[24px]">
+          {chats.map((chat) => (
+            <div
+              className="py-[24px] mx-[29px] border-b border-lightgray-sunsu"
+              key={chat.chatId}
+            >
+              <div className="flex text-base text-darkgray-sunsu">
+                <span className="font-bold">{chat.partnerName}</span>
+                {userInfo.role === "planner" ? (
+                  <span className="mr-[3px]">님 |</span>
+                ) : (
+                  <span className="mx-[3px]">플래너님 |</span>
+                )}
+                {chat.status === "완료" ? (
+                  <span className="text-gray-sunsu">확정 완료</span>
+                ) : (
+                  <span className="text-blue-sunsu font-bold">진행 중</span>
+                )}
+                <Link
+                  to={`/chat/${chat.chatId}`}
+                  className="ml-auto text-sm text-darkgray-sunsu font-bold underline"
+                >
+                  채팅방으로 이동
+                </Link>
+              </div>
+              {chat.quotations?.map((quotationItem) => (
+                <div className="pt-[15px]" key={quotationItem.id}>
                   <div className="flex">
                     <span className="text-base text-blue-sunsu">
                       {quotationItem.company}
@@ -110,7 +121,7 @@ const QuotationCollectTemplate = () => {
                               onClick={() => {
                                 setConfirmOneSheetOpen(true);
                                 setQuotationId(quotationItem.id);
-                                setChatId(quotationItem.chatId);
+                                setChatId(chat.chatId);
                               }}
                             >
                               결제완료로 변경
@@ -131,7 +142,7 @@ const QuotationCollectTemplate = () => {
                             onClick={() => {
                               setQuotationItem(quotationItem);
                               navigate(
-                                `/quotations/update/${quotationItem.id}?chatId=${quotationItem.chatId}`,
+                                `/quotations/update/${quotationItem.id}?chatId=${chat.chatId}`,
                               );
                             }}
                           >
@@ -141,15 +152,10 @@ const QuotationCollectTemplate = () => {
                       )}
                   </div>
                 </div>
-              )}
-            </>
+              ))}
+            </div>
           ))}
-          {isFetching && (
-            <>
-              <SkeletonQuotationItem />
-              <SkeletonQuotationItem />
-            </>
-          )}
+          {isFetching && <SkeletonQuotationItem />}
         </div>
       </Container>
       <div ref={bottomObserver} />
