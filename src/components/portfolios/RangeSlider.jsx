@@ -79,7 +79,11 @@ export default function RangeSlider({ prices, setPrices }) {
                 type="text"
                 className="w-full bg-white text-[14px]"
                 disabled
-                value={comma(Math.max(...prices))}
+                value={
+                  Math.max(...prices) === 10_000_000
+                    ? "10,000,000 +"
+                    : comma(Math.max(...prices))
+                }
               />
             </div>
           </div>

@@ -43,6 +43,9 @@ const PortfolioTemplate = () => {
   });
 
   const handleOpenSearchBar = () => {
+    if (isFilterFormOpen) {
+      setIsFilterFormOpen(false);
+    }
     setIsSearchBarOpen(true);
   };
   const handleCloseSearchBar = () => {
@@ -60,6 +63,11 @@ const PortfolioTemplate = () => {
     queryLocation.current = selectedRegion;
     // eslint-disable-next-line prefer-destructuring
     queryMinPrice.current = prices[0];
+    if (prices[1] === 10_000_000) {
+      queryMaxPrice.current = null;
+      handleFilterForm();
+      return;
+    }
     // eslint-disable-next-line prefer-destructuring
     queryMaxPrice.current = prices[1];
     handleFilterForm();
@@ -118,28 +126,31 @@ const PortfolioTemplate = () => {
         />
       )}
       {isFilterFormOpen && (
-        <div className="flex flex-col w-full p-4 gap-4">
-          <FilterForm
-            selectedRegion={selectedRegion}
-            setSelectedRegion={setSelectedRegion}
-            prices={prices}
-            setPrices={setPrices}
-          />
-          <div className="w-full flex items-center gap-3">
-            <button
-              className=" bg-lightgray-sunsu rounded-[10px] w-full h-[32px]"
-              onClick={handleResetFilter}
-            >
-              필터 초기화
-            </button>
-            <button
-              className=" rounded-[10px] w-full h-[32px] text-white bg-blue-sunsu"
-              onClick={handleApplyFilter}
-            >
-              적용
-            </button>
+        <>
+          <div className="overlay w-full max-w-[576px] h-full bg-black fixed opacity-50 z-40 top-[50px]" />
+          <div className="flex flex-col p-4 gap-4 fixed top-[50px] max-w-[576px] w-full bg-white z-40">
+            <FilterForm
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
+              prices={prices}
+              setPrices={setPrices}
+            />
+            <div className="w-full flex items-center gap-3">
+              <button
+                className=" bg-lightgray-sunsu rounded-[10px] w-full h-[32px]"
+                onClick={handleResetFilter}
+              >
+                필터 초기화
+              </button>
+              <button
+                className=" rounded-[10px] w-full h-[32px] text-white bg-blue-sunsu"
+                onClick={handleApplyFilter}
+              >
+                적용
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
       <Container>
         {portfolios.length === 0 ? (
