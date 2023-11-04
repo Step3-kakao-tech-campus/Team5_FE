@@ -7,7 +7,7 @@ export default function NavigateReviewBottomSheet({ onClose }) {
   const { userInfo } = useSelector((state) => state.user);
   const [searchParams] = useSearchParams();
   const { chatId } = useParams();
-  const partnerName = searchParams.get("partnerName");
+  const plannerName = searchParams.get("plannerName");
 
   return (
     <BottomSheet onClose={onClose}>
@@ -18,8 +18,8 @@ export default function NavigateReviewBottomSheet({ onClose }) {
         </div>
         <Link
           className=" w-full h-[50px] rounded-[10px] text-sm bg-lightskyblue-sunsu flex justify-center items-center"
-          to={`/profile/reviews/create/${chatId}?partnerName=${encodeURIComponent(
-            partnerName,
+          to={`/profile/reviews/create/${chatId}?plannerName=${encodeURIComponent(
+            plannerName,
           )}`}
         >
           리뷰 작성하기
