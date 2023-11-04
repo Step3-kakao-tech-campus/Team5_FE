@@ -49,67 +49,57 @@ export default function CreatePortfolioTemplate({ data }) {
   const queryClient = useQueryClient();
 
   const handleSubmit = async () => {
-    setIsSubmitting(true);
     if (!nameRef.current?.value) {
       setWarningMessage("이름을 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       nameRef.current?.focus();
       return;
     }
     if (!location) {
       setWarningMessage("지역을 선택해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       locationRef.current?.focus();
       return;
     }
     if (items.some((item) => !item.itemTitle)) {
       setWarningMessage("가격 항목을 모두 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       itemRef.current?.focus();
       return;
     }
     if (items.some((item) => !item.itemPrice)) {
       setWarningMessage("가격 항목을 모두 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       itemRef.current?.focus();
       return;
     }
     if (!titleRef.current?.value) {
       setWarningMessage("한 줄 소개를 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       titleRef.current?.focus();
       return;
     }
     if (!descriptionRef.current?.value) {
       setWarningMessage("소개를 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       descriptionRef.current?.focus();
       return;
     }
     if (!careerRef.current?.value) {
       setWarningMessage("경력을 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       careerRef.current?.focus();
       return;
     }
     if (!partnerCompanyRef.current?.value) {
       setWarningMessage("주요 제휴 업체를 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       partnerCompanyRef.current?.focus();
       return;
     }
     if (imageItems.length === 0) {
       setWarningMessage("포트폴리오 사진을 추가해주세요.");
       setIsOpenWarningBottomSheet(true);
-      setIsSubmitting(false);
       return;
     }
     const portfolioData = {
@@ -122,6 +112,7 @@ export default function CreatePortfolioTemplate({ data }) {
       partnerCompany: partnerCompanyRef.current.value,
       imageItems,
     };
+    setIsSubmitting(true);
     if (isFirstSubmit) {
       createMutate(portfolioData, {
         onSuccess: () => {

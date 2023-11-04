@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Photo from "../common/atoms/Photo";
 
 export default function WritableReviewTemplate({ matches, avatars }) {
-  console.log(matches);
   return (
     <div className="w-full h-full p-5 flex flex-col gap-3">
       {matches.map((match, idx) => (
@@ -20,7 +19,7 @@ export default function WritableReviewTemplate({ matches, avatars }) {
             alt="avatar"
             className="w-12 h-12 object-cover object-center rounded-2xl shrink-0"
           />
-          <div className="w-full flex flex-col tracking-tight">
+          <div className="w-full flex flex-col tracking-tight justify-between">
             <div className="flex justify-between w-full">
               <span className="font-bold">{match.plannerName} 플래너</span>
               <span className="text-[10px]">
@@ -28,8 +27,9 @@ export default function WritableReviewTemplate({ matches, avatars }) {
               </span>
             </div>
             <div className="flex items-center justify-end">
-              <span>리뷰 작성하러 가기</span>
-
+              <span className="underline font-semibold text-sm">
+                리뷰 작성하러 가기
+              </span>
               <AiOutlineDoubleRight size={16} />
             </div>
           </div>

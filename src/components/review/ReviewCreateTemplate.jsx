@@ -2,10 +2,11 @@ import { CircularProgress, Rating } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { createReview } from "../../apis/review";
+import ImageUploadZone from "../common/ImageUploadZone";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
+import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
-import ImageUploadZone from "../common/ImageUploadZone";
 
 export default function ReviewCreateTemplate() {
   const { chatId } = useParams();
@@ -83,7 +84,7 @@ export default function ReviewCreateTemplate() {
         />
       )}
       {isOpenSuccessBottomSheet && (
-        <WarningBottomSheet
+        <SuccessBottomSheet
           message="리뷰가 성공적으로 등록되었습니다."
           onClose={() => {
             setIsOpenSuccessBottomSheet(false);
@@ -122,7 +123,8 @@ export default function ReviewCreateTemplate() {
         <div className="grow flex flex-col justify-end pt-[10px]">
           <Button
             onClick={handleSubmit}
-            className="block w-full h-[50px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu"
+            disabled={isSubmitting}
+            className="w-full h-[50px] rounded-[10px] font-normal text-sm bg-lightskyblue-sunsu flex justify-center items-center"
           >
             {isSubmitting ? (
               <CircularProgress size={24} />
