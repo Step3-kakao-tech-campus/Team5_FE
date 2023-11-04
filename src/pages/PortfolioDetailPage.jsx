@@ -8,7 +8,7 @@ import PortfolioDetailTemplate from "../components/portfoliodetail/PortfolioDeta
 
 const PortfolioDetailPage = () => {
   const { id } = useParams();
-  const { data, error, isLoading } = useQuery(`portfolio/${id}`, () =>
+  const { data, error, isLoading } = useQuery([`portfolio/${id}`], () =>
     getPortfolioDetail(id),
   );
   const portfolio = data?.response;
