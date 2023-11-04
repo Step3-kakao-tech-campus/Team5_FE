@@ -3,9 +3,10 @@ import { useMutation, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addFavorite, deleteFavorite } from "../../apis/favorite";
+import { ReactComponent as HeartOutlinedIcon } from "../../assets/heart-03.svg";
+import { ReactComponent as HeartIcon } from "../../assets/heart-04.svg";
 import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
-import Photo from "../common/atoms/Photo";
 
 export default function FavoriteButton({ isLiked }) {
   const { isLogged } = useSelector((state) => state.user);
@@ -62,17 +63,9 @@ export default function FavoriteButton({ isLiked }) {
       disabled={isSubmitting}
     >
       {isLogged && isLiked ? (
-        <Photo
-          src="/images/heart.png"
-          alt="빈 하트"
-          className="w-[20px] h-[20px] object-cover"
-        />
+        <HeartOutlinedIcon className="w-[20px] h-[20px] object-cover" />
       ) : (
-        <Photo
-          src="/images/outline-heart.png"
-          alt="하트"
-          className="w-[20px] h-[20px] object-cover"
-        />
+        <HeartIcon className="w-[20px] h-[20px] object-cover" />
       )}
       <span className="font-bold">찜하기</span>
     </Button>
