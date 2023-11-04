@@ -125,7 +125,7 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
           <FavoriteButton isLiked={portfolio.isLiked} />
         </div>
         <div className="h-[50px] w-3/5 flex items-center justify-center">
-          <Link to={`/reviews/${portfolio.userId}`}>
+          <Link to={`/portfolios/reviews/${portfolio.userId}`}>
             <div className="flex gap-3 items-center">
               <span className="font-bold">
                 리뷰({portfolio.reviews.totalReviewCount})

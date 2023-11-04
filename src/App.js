@@ -12,6 +12,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PaymentCompletePage from "./pages/PaymentCompletePage";
 import PaymentFailPage from "./pages/PaymentFailPage";
 import PortfolioDetailPage from "./pages/PortfolioDetailPage";
+import PortfolioReviewPage from "./pages/PortfolioReviewPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ProfilePage from "./pages/ProfilePage";
 import QuotationCollectPage from "./pages/QuotationCollectPage";
@@ -35,6 +36,10 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/portfolios/:id" element={<PortfolioDetailPage />} />
+            <Route
+              path="/portfolios/reviews/:plannerId"
+              element={<PortfolioReviewPage />}
+            />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
