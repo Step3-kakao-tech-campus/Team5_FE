@@ -10,7 +10,7 @@ import {
 import { useSetAtom } from "jotai";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createChatRoom } from "../../apis/chat";
 import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
 import "../../firebase";
@@ -19,8 +19,10 @@ import { comma } from "../../utils/convert";
 import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
+import Photo from "../common/atoms/Photo";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
+import FavoriteButton from "./FavoriteButton";
 import HistoryBottomSheet from "./HistoryBottomSheet";
 import PortfolioCarousel from "./PortfolioCarousel";
 import PriceInfoRow from "./PriceInfoRow";
@@ -115,6 +117,29 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
         </div>
         <div className="pt-5">
           <PriceInfoRow priceInfo={portfolio.priceInfo} />
+        </div>
+      </div>
+      {/* 찜하기 & 리뷰 */}
+      <div className=" flex w-full border-t items-center">
+        <div className="h-[50px] w-2/5 border-r flex justify-center">
+          <FavoriteButton isLiked={portfolio.isLiked} />
+        </div>
+        <div className="h-[50px] w-3/5 flex items-center justify-center">
+          <Link to={`/reviews/${portfolio.userId}`}>
+            <div className="flex gap-3 items-center">
+              <span className="font-bold">
+                리뷰({portfolio.reviews.totalReviewCount})
+              </span>
+              <Photo
+                src="/images/star.png"
+                alt="별점"
+                className="w-[20px] h-[20px] object-cover"
+              />
+              <div className=" text-[18px] align-middle font-bold pt-[2px]">
+                {portfolio.reviews.totalStars}
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
       <DivideBar />
