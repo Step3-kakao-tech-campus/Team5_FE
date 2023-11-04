@@ -37,3 +37,8 @@ export const updateReview = async ({ reviewId, content, stars, images }) => {
   });
   return response.data;
 };
+
+export const getPortfolioReviews = async (page) => {
+  const response = await instance.get(`/reviews?page=${page}`);
+  return response.data.response.reviews;
+};
