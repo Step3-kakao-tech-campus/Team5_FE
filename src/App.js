@@ -5,23 +5,25 @@ import RootLayout from "./layouts/RootLayout";
 import ChatListPage from "./pages/ChatListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 import CreatePortfolioPage from "./pages/CreatePortfolioPage";
+import FavoriteListPage from "./pages/FavoriteListPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PaymentCompletePage from "./pages/PaymentCompletePage";
 import PaymentFailPage from "./pages/PaymentFailPage";
 import PortfolioDetailPage from "./pages/PortfolioDetailPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ProfilePage from "./pages/ProfilePage";
+import QuotationCollectPage from "./pages/QuotationCollectPage";
+import QuotationCreatePage from "./pages/QuotationCreatePage";
+import QuotationListPage from "./pages/QuotationListPage";
+import QuotationUpdatePage from "./pages/QuotationUpdatePage";
+import ReviewCreatePage from "./pages/ReviewCreatePage";
+import ReviewListPage from "./pages/ReviewListPage";
+import ReviewUpdatePage from "./pages/ReviewUpdatePage";
 import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
 import TermsPage from "./pages/TermsPage";
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import QuotationListPage from "./pages/QuotationListPage";
-import QuotationCreatePage from "./pages/QuotationCreatePage";
-import QuotationUpdatePage from "./pages/QuotationUpdatePage";
-import ReviewCreatePage from "./pages/ReviewCreatePage";
-import QuotationCollectPage from "./pages/QuotationCollectPage";
-import FavoriteListPage from "./pages/FavoriteListPage";
 import WritableReviewListPage from "./pages/WritableReviewListPage";
 
 function App() {
@@ -67,8 +69,16 @@ function App() {
               element={<ReviewCreatePage />}
             />
             <Route
+              path="/profile/reviews/update/:reviewId"
+              element={<ReviewUpdatePage />}
+            />
+            <Route
               path="/profile/reviews/writable"
               element={<WritableReviewListPage />}
+            />
+            <Route
+              path="/profile/reviews/collect"
+              element={<ReviewListPage />}
             />
             <Route path="/favorites" element={<FavoriteListPage />} />
           </Route>
