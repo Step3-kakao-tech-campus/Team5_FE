@@ -104,11 +104,14 @@ export default function ProfileTemplate() {
                 className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
                 to="/profile/reviews/writable"
               >
-                리뷰 작성
+                작성 가능한 리뷰
               </Link>
-              <button className="w-fit pt-[5px] pb-[5px] text-lg hover:underline">
-                리뷰 수정 / 삭제
-              </button>
+              <Link
+                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
+                to="/profile/reviews/collect"
+              >
+                리뷰 관리
+              </Link>
             </>
           )}
           <button
