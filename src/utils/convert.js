@@ -16,6 +16,25 @@ export const comma = (num) => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export const uncomma = (str) => {
+  if (!str || str.length === 0) {
+    return "";
+  }
+  return str.replace(/[^\d]+/g, "");
+};
+
+export const convertPriceFormat = (num) => {
+  const commaA = (str) => {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+  };
+  const commaB = (str) => {
+    str = String(str);
+    return str.replace(/[^\d]+/g, "");
+  };
+  return commaA(commaB(num));
+};
+
 // timestamp를 받아서 "2021년 10월 10일 일요일" 형식으로 포맷팅하는 함수
 export const convertToDate = (timestamp) => {
   const daysOfWeek = [
@@ -37,4 +56,9 @@ export const convertToDate = (timestamp) => {
 export const isNonNegativeInteger = (str) => {
   const pattern = /^(0|[1-9]\d*)$/; // 0 또는 양의 정수를 확인하는 정규 표현식
   return pattern.test(str);
+};
+
+export const getReactAppApiUrl = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  return apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
 };

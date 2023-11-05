@@ -14,3 +14,21 @@ export function openSeverErrorBottomSheet(dispatch) {
     }),
   );
 }
+
+export function openNavigateReviewBottomSheet(dispatch) {
+  dispatch(
+    openBottomSheet({
+      bottomSheetType: "navigateReviewBottomSheet",
+      isOpen: true,
+    }),
+  );
+}
+
+export function openDeleteReviewBottomSheet(dispatch) {
+  dispatch(
+    openBottomSheet({
+      bottomSheetType: "deleteReviewBottomSheet",
+      isOpen: true,
+    }),
+  );
+}

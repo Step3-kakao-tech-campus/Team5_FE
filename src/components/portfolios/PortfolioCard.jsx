@@ -1,6 +1,8 @@
 import Card from "../common/atoms/Card";
 import { comma } from "../../utils/convert";
 import SquarePhoto from "../common/atoms/SquarePhoto";
+import { ReactComponent as HeartOutlinedIcon } from "../../assets/heart-03.svg";
+import { ReactComponent as HeartIcon } from "../../assets/heart-04.svg";
 
 const PortfolioCard = ({ portfolio }) => {
   return (
@@ -30,10 +32,19 @@ const PortfolioCard = ({ portfolio }) => {
           원
         </div>
         <div className="planner-contract-count flex pt-[1px] text-xs text-blue-sunsu">
-          <em className="emph-count font-bold not-italic">
-            {comma(portfolio.contractCount)}
-          </em>
-          건 매칭
+          <span className="mr-auto">
+            <em className="emph-count font-bold not-italic">
+              {comma(portfolio.contractCount)}
+            </em>
+            건 매칭
+          </span>
+          <span>
+            {portfolio.isLiked ? (
+              <HeartIcon className="w-[11px] h-[10px]" />
+            ) : (
+              <HeartOutlinedIcon className="w-[11px] h-[10px]" />
+            )}
+          </span>
         </div>
       </div>
     </Card>

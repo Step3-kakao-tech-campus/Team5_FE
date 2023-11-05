@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import dayjs from "dayjs";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Photo from "../common/atoms/Photo";
 
 export default function ChatRoomItem({
   timestamp,
@@ -8,31 +10,41 @@ export default function ChatRoomItem({
   lastMessage,
   chatId,
   unreadCount,
+  avatar,
 }) {
   const navigate = useNavigate();
 
   return (
     <button
-      className="px-[29px] pt-[15px] pb-[20px] flex flex-col w-full"
+      className="px-[29px] pt-[15px] pb-[20px] w-full hover:bg-zinc-100"
       onClick={() => {
         navigate(`/chat/${chatId}`);
       }}
     >
-      <div className="flex justify-between items-end w-full">
-        <span className="font-bold text-lg">{counterName}</span>
-        <span className="text-sm text-zinc-500">
-          {dayjs(timestamp).format("YYYY.MM.DD")}
-        </span>
-      </div>
-      <div className="h-8 flex justify-between w-full items-end">
-        <span className="text-ellipsis whitespace-nowrap overflow-hidden w-4/5 text-base text-left">
-          {lastMessage}
-        </span>
-        {unreadCount > 0 && (
-          <span className="text-xs bg-red-500 text-white rounded-full self-start px-2">
-            {unreadCount}
-          </span>
-        )}
+      <div className="flex items-center w-full gap-2">
+        <Photo
+          src={avatar}
+          alt="avatar"
+          className="w-12 h-12 object-cover object-center rounded-2xl shrink-0"
+        />
+        <div className="flex flex-col grow">
+          <div className="flex justify-between w-full">
+            <span className="text-base font-bold">{counterName}</span>
+            <span className="text-sm text-zinc-500">
+              {dayjs(timestamp).format("YYYY.MM.DD")}
+            </span>
+          </div>
+          <div className="flex justify-between w-full">
+            <span className="mr-1 text-left line-clamp-2 leading-tight text-sm">
+              {lastMessage}
+            </span>
+            {unreadCount > 0 && (
+              <span className="self-start px-2 text-xs text-white bg-red-500 rounded-full">
+                {unreadCount}
+              </span>
+            )}
+          </div>
+        </div>
       </div>
     </button>
   );
