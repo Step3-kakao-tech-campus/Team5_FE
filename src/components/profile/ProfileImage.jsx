@@ -24,7 +24,7 @@ export default function ProfileImage() {
         open={imageModalOpen}
         setUploading={setUploading}
       />
-      <div className="relative w-32 h-32">
+      <div className="relative w-32 h-32 sm:w-24 sm:h-24">
         <Photo
           src={avatar}
           alt="avatar"
