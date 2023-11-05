@@ -16,7 +16,7 @@ export default function ChatRoomItem({
 
   return (
     <button
-      className="px-[29px] pt-[15px] pb-[20px] w-full "
+      className="px-[29px] pt-[15px] pb-[20px] w-full hover:bg-zinc-100"
       onClick={() => {
         navigate(`/chat/${chatId}`);
       }}
@@ -29,13 +29,13 @@ export default function ChatRoomItem({
         />
         <div className="flex flex-col grow">
           <div className="flex justify-between w-full">
-            <span className="text-lg font-bold">{counterName}</span>
+            <span className="text-base font-bold">{counterName}</span>
             <span className="text-sm text-zinc-500">
               {dayjs(timestamp).format("YYYY.MM.DD")}
             </span>
           </div>
-          <div className="flex justify-between w-full ">
-            <span className="w-[90%] text-left line-clamp-1">
+          <div className="flex justify-between w-full">
+            <span className="mr-1 text-left line-clamp-2 leading-tight text-sm">
               {lastMessage}
             </span>
             {unreadCount > 0 && (
