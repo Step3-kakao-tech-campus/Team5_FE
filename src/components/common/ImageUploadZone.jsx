@@ -54,7 +54,7 @@ export default function ImageUploadZone({ imageItems, setImageItems }) {
             htmlFor="photo"
             className="cursor-pointer relative w-full h-0 pb-[100%]"
           >
-            <div className="absolute w-[98%] h-[98%] left-0 bottom-0 bg-lightgray-sunsu rounded-[10px] flex flex-col justify-center items-center gap-1 hover:border-2 xs:w-24 xs:h-24">
+            <div className="absolute w-[98%] h-[98%] left-0 bottom-0 bg-lightgray-sunsu rounded-[10px] flex flex-col justify-center items-center gap-1 hover:border-2">
               <BsCamera size={25} />
               <span className="text-xs">사진 추가</span>
               <input
