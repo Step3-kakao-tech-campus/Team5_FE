@@ -1,9 +1,26 @@
 import { BsCamera } from "react-icons/bs";
 import heic2any from "heic2any";
+import Compressor from "compressorjs";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
 import Photo from "./atoms/Photo";
 
 export default function ImageUploadZone({ imageItems, setImageItems }) {
+  const returnCompressor = (reader, file) => {
+    return new Compressor(file, {
+      quality: 0.8,
+      mimeType: "image/webp",
+      success(result) {
+        const newFile = new File([result], `image${new Date().getTime()}`, {
+          type: result.type,
+        });
+        reader.readAsDataURL(newFile);
+      },
+      error(err) {
+        console.log(err);
+      },
+    });
+  };
+
   const onChangeAddFile = async (e) => {
     let addedFile = e.target.files[0];
     if (addedFile) {
@@ -23,13 +40,13 @@ export default function ImageUploadZone({ imageItems, setImageItems }) {
                 lastModified: new Date().getTime(),
               },
             );
-            reader.readAsDataURL(addedFile);
+            returnCompressor(reader, addedFile);
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
-        reader.readAsDataURL(addedFile);
+        returnCompressor(reader, addedFile);
       }
     }
   };
