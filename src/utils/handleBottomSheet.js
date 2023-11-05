@@ -23,3 +23,12 @@ export function openNavigateReviewBottomSheet(dispatch) {
     }),
   );
 }
+
+export function openDeleteReviewBottomSheet(dispatch) {
+  dispatch(
+    openBottomSheet({
+      bottomSheetType: "deleteReviewBottomSheet",
+      isOpen: true,
+    }),
+  );
+}

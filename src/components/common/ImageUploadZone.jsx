@@ -3,7 +3,7 @@ import { BsCamera } from "react-icons/bs";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
 import Photo from "./atoms/Photo";
 
-export default function PortfolioImage({ imageItems, setImageItems }) {
+export default function ImageUploadZone({ imageItems, setImageItems }) {
   const onChangeAddFile = (e) => {
     const addedFile = e.target.files[0];
     if (addedFile) {
@@ -43,17 +43,18 @@ export default function PortfolioImage({ imageItems, setImageItems }) {
           </label>
         )}
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="grid w-full h-full grid-cols-3 gap-2">
         {imageItems.map((imageItem, idx) => (
           <div
+            className="relative w-full h-0"
+            style={{ paddingBottom: "100%" }}
             // eslint-disable-next-line react/no-array-index-key
             key={idx}
-            className="w-36 h-36 relative pt-1 pr-1 xs:w-24 xs:h-24"
           >
             <Photo
               src={imageItem}
-              alt="portfolio"
-              className="w-full h-full rounded-[10px] object-cover object-center"
+              alt="결혼 사진"
+              className="absolute w-[98%] h-[98%] object-cover object-center rounded-[10px] left-0 bottom-0"
             />
             <button
               onClick={() => handleDeleteImage(idx)}

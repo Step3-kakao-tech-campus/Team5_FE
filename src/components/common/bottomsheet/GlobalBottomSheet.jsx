@@ -4,6 +4,7 @@ import { closeBottomSheet } from "../../../store/slices/bottomSheetSlice";
 import RequiredLoginBottomSheet from "./RequiredLoginBottomSheet";
 import ServerErrorBottomSheet from "./ServerErrorBottomSheet";
 import NavigateReviewBottomSheet from "./NavigateReviewBottomSheet";
+import DeleteReviewBottomSheet from "../../review/DeleteReviewBottomSheet";
 
 export default function GlobalBottomSheet() {
   const { bottomSheetType, isOpen } = useSelector((state) => state.bottomSheet);
@@ -11,8 +12,9 @@ export default function GlobalBottomSheet() {
 
   const BOTTOMSHEET_TYPES = {
     LOGIN: "loginBottomSheet",
-    SERVERERROR: "serverErrorBottomSheet",
-    NAVIGATEREVIEW: "navigateReviewBottomSheet",
+    SERVER_ERROR: "serverErrorBottomSheet",
+    NAVIGATE_REVIEW: "navigateReviewBottomSheet",
+    DELETE_REVIEW: "deleteReviewBottomSheet",
   };
 
   const BOTTOMSHEET_COMPONENTS = [
@@ -25,17 +27,23 @@ export default function GlobalBottomSheet() {
       ),
     },
     {
-      type: BOTTOMSHEET_TYPES.SERVERERROR,
+      type: BOTTOMSHEET_TYPES.SERVER_ERROR,
       component: (
         <ServerErrorBottomSheet onClose={() => dispatch(closeBottomSheet())} />
       ),
     },
     {
-      type: BOTTOMSHEET_TYPES.NAVIGATEREVIEW,
+      type: BOTTOMSHEET_TYPES.NAVIGATE_REVIEW,
       component: (
         <NavigateReviewBottomSheet
           onClose={() => dispatch(closeBottomSheet())}
         />
+      ),
+    },
+    {
+      type: BOTTOMSHEET_TYPES.DELETE_REVIEW,
+      component: (
+        <DeleteReviewBottomSheet onClose={() => dispatch(closeBottomSheet())} />
       ),
     },
   ];

@@ -308,6 +308,11 @@ export const portfolioDetail1 = {
     images: ["/images/1.jpg", "/images/2.jpg", "/images/3.jpg"],
     title: "최고의 결혼을 만들어주는 이 시대의 웨딩플래너 “유희정”입니다.",
     plannerName: "유희정",
+    isLiked: true,
+    reviews: {
+      totalStars: 4.5,
+      totalReviewCount: 10,
+    },
     contractCount: 225, // 추가
     priceInfo: {
       totalPrice: 3400000, // 플래너가 제시한 가격
@@ -403,6 +408,11 @@ export const portfolioDetail2 = {
     title: "최고의 결혼을 만들어주는 이 시대의 웨딩플래너 “김아름”입니다.",
     plannerName: "김아름",
     contractCount: 225, // 추가
+    isLiked: false,
+    reviews: {
+      totalStars: 4.8,
+      totalReviewCount: 907,
+    },
     priceInfo: {
       totalPrice: 3400000, // 플래너가 제시한 가격
       items: [

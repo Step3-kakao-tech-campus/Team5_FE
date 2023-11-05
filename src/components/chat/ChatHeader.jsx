@@ -9,7 +9,7 @@ export default function ChatHeader({ counterName, chatId }) {
         <span className="text-sm pl-10 mr-auto">{counterName}</span>
         <span className="text-sm pr-[15px] text-blue-sunsu font-medium">
           <Link
-            to={`/quotations/${chatId}?partnerName=${encodeURIComponent(
+            to={`/quotations/${chatId}?plannerName=${encodeURIComponent(
               counterName,
             )}`}
           >

@@ -1,22 +1,19 @@
 import { CircularProgress, Rating } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { createReview } from "../../apis/review";
+import { updateReview } from "../../apis/review";
 import ImageUploadZone from "../common/ImageUploadZone";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 
-export default function ReviewCreateTemplate() {
-  const { chatId } = useParams();
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const plannerName = searchParams.get("plannerName");
-  const [imageItems, setImageItems] = useState([]);
-  const [stars, setStars] = useState(3);
+export default function ReviewUpdateTemplate({ review }) {
+  // eslint-disable-next-line prefer-destructuring
+  const plannerName = review.plannerName;
+  const [stars, setStars] = useState(review.stars);
+  const [imageItems, setImageItems] = useState(review.images);
+  const contentRef = useRef(review.content);
   const heightRef = useRef(null);
-  const contentRef = useRef(null);
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
     useState(false);
   const [isOpenSuccessBottomSheet, setIsOpenSuccessBottomSheet] =
@@ -28,22 +25,25 @@ export default function ReviewCreateTemplate() {
     if (stars === null) {
       setWarningMessage("별점을 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
+
       return;
     }
     if (contentRef.current.value === "") {
       setWarningMessage("리뷰 내용을 입력해주세요.");
       setIsOpenWarningBottomSheet(true);
+
       return;
     }
     if (imageItems.length === 0) {
       setWarningMessage("사진을 등록해주세요.");
       setIsOpenWarningBottomSheet(true);
+
       return;
     }
     setIsSubmitting(true);
     try {
-      const response = await createReview({
-        chatId,
+      const response = await updateReview({
+        reviewId: review.id,
         content: contentRef.current.value,
         stars,
         imageItems,
@@ -56,13 +56,6 @@ export default function ReviewCreateTemplate() {
     }
     setIsSubmitting(false);
   };
-
-  useEffect(() => {
-    // url 접근 차단
-    if (plannerName === null) {
-      navigate("/404", { replace: true });
-    }
-  }, []);
 
   useEffect(() => {
     const height = heightRef?.current?.offsetHeight;
@@ -85,10 +78,9 @@ export default function ReviewCreateTemplate() {
       )}
       {isOpenSuccessBottomSheet && (
         <SuccessBottomSheet
-          message="리뷰가 성공적으로 등록되었습니다."
+          message="리뷰가 성공적으로 수정되었습니다."
           onClose={() => {
             setIsOpenSuccessBottomSheet(false);
-            navigate("/profile");
           }}
         />
       )}
@@ -115,6 +107,7 @@ export default function ReviewCreateTemplate() {
           name="content"
           ref={contentRef}
           rows={7}
+          defaultValue={review.content}
         />
         <ImageUploadZone
           imageItems={imageItems}
@@ -129,7 +122,7 @@ export default function ReviewCreateTemplate() {
             {isSubmitting ? (
               <CircularProgress size={24} />
             ) : (
-              <span>등록하기</span>
+              <span>수정하기</span>
             )}
           </Button>
         </div>

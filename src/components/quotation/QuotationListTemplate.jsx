@@ -1,23 +1,24 @@
 import { useSetAtom } from "jotai";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as AddIcon } from "../../assets/add-01.svg";
 import { ReactComponent as StarIcon } from "../../assets/star-01.svg";
 import { quotationItemAtom } from "../../store";
 import { comma } from "../../utils/convert";
+import AlreadyConfirmBottomSheet from "./AlreadyConfirmBottomSheet";
 import ConfirmAllBottomSheet from "./ConfirmAllBottomSheet";
 import ConfirmOneBottomSheet from "./ConfirmOneBottomSheet";
 import RequiredConfirmBottomSheet from "./RequiredConfirmBottomSheet";
-import { openNavigateReviewBottomSheet } from "../../utils/handleBottomSheet";
 
 const QuotationListTemplate = ({ quotation }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { chatId } = useParams();
   const [confirmOneSheetOpen, setConfirmOneSheetOpen] = useState(false);
   const [confirmAllSheetOpen, setConfirmAllSheetOpen] = useState(false);
   const [requiredConfirmBottomSheetOpen, setRequiredConfirmBottomSheetOpen] =
+    useState(false);
+  const [alreadyConfirmBottomSheetOpen, setAlreadyConfirmBottomSheetOpen] =
     useState(false);
   const [quotationId, setQuotationId] = useState(null);
   const setQuotationItem = useSetAtom(quotationItemAtom);
@@ -25,7 +26,8 @@ const QuotationListTemplate = ({ quotation }) => {
 
   const handleOnConfirmAll = () => {
     if (quotation.status === "완료") {
-      openNavigateReviewBottomSheet(dispatch);
+      // 이전에 이미 확정을 한 경우
+      setAlreadyConfirmBottomSheetOpen(true);
       return;
     }
     // 전체 확정을 안 한 경우
@@ -41,6 +43,11 @@ const QuotationListTemplate = ({ quotation }) => {
 
   return (
     <div>
+      {alreadyConfirmBottomSheetOpen && (
+        <AlreadyConfirmBottomSheet
+          onClose={() => setAlreadyConfirmBottomSheetOpen(false)}
+        />
+      )}
       {requiredConfirmBottomSheetOpen && (
         <RequiredConfirmBottomSheet
           onClose={() => setRequiredConfirmBottomSheetOpen(false)}
@@ -130,7 +137,7 @@ const QuotationListTemplate = ({ quotation }) => {
         </button>
       ) : (
         <button
-          className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
+          className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center hover:shadow-lg"
           onClick={handleOnConfirmAll}
         >
           <StarIcon className="w-4 h-4 mr-2" />
