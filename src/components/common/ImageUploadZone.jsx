@@ -4,7 +4,11 @@ import Compressor from "compressorjs";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
 import Photo from "./atoms/Photo";
 
-export default function ImageUploadZone({ imageItems, setImageItems }) {
+export default function ImageUploadZone({
+  imageItems,
+  setImageItems,
+  setIsUploading,
+}) {
   const returnCompressor = (reader, file) => {
     return new Compressor(file, {
       quality: 0.8,
@@ -22,11 +26,14 @@ export default function ImageUploadZone({ imageItems, setImageItems }) {
   };
 
   const onChangeAddFile = async (e) => {
+    setIsUploading(true);
     let addedFile = e.target.files[0];
+
     if (addedFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageItems([...imageItems, reader.result]);
+        setIsUploading(false);
       };
       if (addedFile.name.split(".")[1].toLowerCase() === "heic") {
         const blob = addedFile;

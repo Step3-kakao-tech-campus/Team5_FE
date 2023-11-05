@@ -10,6 +10,7 @@ import Button from "../common/atoms/Button";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 import ItemsInfo from "./ItemsInfo";
 import SelectRegion from "./SelectRegion";
+import Spinner from "../common/atoms/Spinner";
 
 export default function CreatePortfolioTemplate({ data }) {
   const [isFirstSubmit, setIsFirstSubmit] = useState(data?.title === "");
@@ -35,6 +36,7 @@ export default function CreatePortfolioTemplate({ data }) {
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
     useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const nameRef = useRef(null);
   const locationRef = useRef(null);
@@ -157,6 +159,7 @@ export default function CreatePortfolioTemplate({ data }) {
           }}
         />
       )}
+      {isUploading && <Spinner />}
       <div className="w-full h-full flex flex-col p-7 gap-5">
         {/* 이름 */}
         <InputGroup
@@ -221,6 +224,7 @@ export default function CreatePortfolioTemplate({ data }) {
         <ImageUploadZone
           imageItems={imageItems}
           setImageItems={setImageItems}
+          setIsUploading={setIsUploading}
         />
         <Button
           onClick={handleSubmit}

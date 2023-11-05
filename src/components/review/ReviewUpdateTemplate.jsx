@@ -8,6 +8,7 @@ import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import { ReactComponent as EmptyStarIcon } from "../../assets/star-03.svg";
+import Spinner from "../common/atoms/Spinner";
 
 export default function ReviewUpdateTemplate({ review }) {
   // eslint-disable-next-line prefer-destructuring
@@ -22,6 +23,7 @@ export default function ReviewUpdateTemplate({ review }) {
     useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const [warningMessage, setWarningMessage] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleSubmit = async () => {
     if (stars === null) {
@@ -86,6 +88,7 @@ export default function ReviewUpdateTemplate({ review }) {
           }}
         />
       )}
+      {isUploading && <Spinner />}
       <div
         className="w-full flex flex-col px-[40px] py-[29px] gap-[5px] "
         ref={heightRef}
@@ -116,6 +119,7 @@ export default function ReviewUpdateTemplate({ review }) {
         <ImageUploadZone
           imageItems={imageItems}
           setImageItems={setImageItems}
+          setIsUploading={setIsUploading}
         />
         <div className="grow flex flex-col justify-end pt-[10px]">
           <Button
