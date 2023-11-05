@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
+import { success } from "./commonData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -21,7 +21,7 @@ export const paymentHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /payments/approve
@@ -52,6 +52,6 @@ export const paymentHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];

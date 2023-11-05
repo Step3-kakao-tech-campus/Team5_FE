@@ -5,6 +5,8 @@ import useFetchPortfolios from "../../hooks/useFetchPortfolios";
 import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
 import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
+import EmptySearchResult from "./EmptySearchResult";
+import FilterForm from "./FilterForm";
 import PortfolioGrid from "./PortfolioGrid";
 import PortfolioSearchBar from "./PortfolioSearchBar";
 import SearchHeaderRow from "./SearchHeaderRow";
@@ -13,15 +15,17 @@ const PortfolioTemplate = () => {
   const dispatch = useDispatch();
   const bottomObserver = useRef(null);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const [isFilterFormOpen, setIsFilterFormOpen] = useState(false);
   const [searchParams] = useSearchParams();
+
   const [name, setName] = useState(searchParams.get("name") || "");
-  // const [location, setLocation] = useState("");
-  // const [minPrice, setMinPrice] = useState(1_000_000);
-  // const [maxPrice, setMaxPrice] = useState(10_000_000);
-  const queryName = useRef(searchParams.get("name"));
-  const queryLocation = useRef(searchParams.get("location"));
-  const queryMinPrice = useRef(searchParams.get("minPrice"));
-  const queryMaxPrice = useRef(searchParams.get("maxPrice"));
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [prices, setPrices] = useState([0, 10_000_000]);
+
+  const [queryName, setQueryName] = useState(searchParams.get("name") || "");
+  const [queryLocation, setQueryLocation] = useState(null);
+  const [queryMinPrice, setQueryMinPrice] = useState(null);
+  const [queryMaxPrice, setQueryMaxPrice] = useState(null);
 
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
@@ -32,25 +36,31 @@ const PortfolioTemplate = () => {
     portfolios,
     isFetching,
   } = useFetchPortfolios({
-    name: queryName.current,
-    location: queryLocation.current,
-    minPrice: queryMinPrice.current,
-    maxPrice: queryMaxPrice.current,
+    name: queryName,
+    location: queryLocation,
+    minPrice: queryMinPrice,
+    maxPrice: queryMaxPrice,
   });
 
   const handleOpenSearchBar = () => {
+    if (isFilterFormOpen) {
+      setIsFilterFormOpen(false);
+    }
     setIsSearchBarOpen(true);
   };
   const handleCloseSearchBar = () => {
     setIsSearchBarOpen(false);
+  };
+  const handleFilterForm = () => {
+    setIsFilterFormOpen((prev) => !prev);
   };
 
   const onKeyDownEnter = (e) => {
     // 한글만 두 번 입력되는 문제가 발생 -> 한글은 자음과 모음의 조합으로 한 음절이 만들어지기 때문에 조합문자이고, 영어는 조합문자가 아니다.
     if (e.isComposing || e.keyCode === 229) return;
     if (e.key === "Enter") {
+      setQueryName(name);
       handleCloseSearchBar();
-      queryName.current = name;
     }
   };
 
@@ -91,11 +101,30 @@ const PortfolioTemplate = () => {
         />
       )}
       {!isSearchBarOpen && (
-        <SearchHeaderRow handleOpenSearchBar={handleOpenSearchBar} />
+        <SearchHeaderRow
+          handleOpenSearchBar={handleOpenSearchBar}
+          isFilterFormOpen={isFilterFormOpen}
+          handleFilterForm={handleFilterForm}
+        />
       )}
-      {/* <FilterForm /> */}
+      {isFilterFormOpen && (
+        <FilterForm
+          selectedRegion={selectedRegion}
+          setSelectedRegion={setSelectedRegion}
+          prices={prices}
+          setPrices={setPrices}
+          handleFilterForm={handleFilterForm}
+          setQueryLocation={setQueryLocation}
+          setQueryMinPrice={setQueryMinPrice}
+          setQueryMaxPrice={setQueryMaxPrice}
+        />
+      )}
       <Container>
-        <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
+        {portfolios.length === 0 ? (
+          <EmptySearchResult />
+        ) : (
+          <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
+        )}
       </Container>
       <div ref={bottomObserver} />
     </>

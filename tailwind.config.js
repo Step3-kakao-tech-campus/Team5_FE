@@ -15,6 +15,12 @@ module.exports = {
         "gradient-to-sunsu": "rgba(0, 0, 0, 0.67)",
       },
     },
+    screens: {
+      sm: { max: "576px" },
+      // => @media (max-width: 576px) { ... }
+      xs: { max: "412px" },
+      // => @media (max-width: 412px) { ... }
+    },
   },
   plugins: [],
 };

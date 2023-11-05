@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
+import { success } from "./commonData";
 import {
   portfolioDetail1,
   portfolioDetail2,
@@ -29,6 +29,44 @@ export const portfolioHandlers = [
     return res(ctx.status(200), ctx.json(portfolioList3));
   }),
 
+  // portfolios/self
+  rest.get("/portfolios/self", async (req, res, ctx) => {
+    await sleep(500);
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          code: 403,
+          message: "Not authorized",
+        }),
+      );
+    }
+    // return res(
+    //   ctx.status(200),
+    //   ctx.json({
+    //     success: true,
+    //     response: {
+    //       plannerName: "",
+    //       imageItems: [],
+    //       items: [
+    //         {
+    //           itemTitle: "",
+    //           itemPrice: 0,
+    //         },
+    //       ],
+    //       title: "",
+    //       description: "",
+    //       location: "",
+    //       career: "",
+    //       partnerCompany: "",
+    //     },
+    //     error: null,
+    //   }),
+    // );
+    return res(ctx.status(200), ctx.json(portfolioSelfData));
+  }),
+
   // /portfolios/{portfolioId}
   rest.get("/portfolios/:portfolioId", async (req, res, ctx) => {
     await sleep(500);
@@ -52,7 +90,7 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /portfolios
@@ -68,7 +106,7 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /portfolios
@@ -84,22 +122,6 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
-  }),
-
-  // portfolios/self
-  rest.get("/portfolios/self", async (req, res, ctx) => {
-    await sleep(500);
-    const accessToken = req.headers.get("Authorization");
-    if (!accessToken) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          code: 403,
-          message: "Not authorized",
-        }),
-      );
-    }
-    return res(ctx.status(200), ctx.json(portfolioSelfData));
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];

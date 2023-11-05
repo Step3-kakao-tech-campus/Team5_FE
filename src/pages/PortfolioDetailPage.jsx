@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { getPortfolioDetail } from "../apis/portfolio";
-import GNBBOX from "../components/common/GNBBOX";
 import Spinner from "../components/common/atoms/Spinner";
 import PortfolioDetailHeader from "../components/portfoliodetail/PortfolioDetailHeader";
 import PortfolioDetailTemplate from "../components/portfoliodetail/PortfolioDetailTemplate";
 
 const PortfolioDetailPage = () => {
   const { id } = useParams();
-  const { data, error, isLoading } = useQuery(`portfolio/${id}`, () =>
+  const { data, error, isLoading } = useQuery([`portfolio/${id}`], () =>
     getPortfolioDetail(id),
   );
   const portfolio = data?.response;
@@ -25,11 +24,8 @@ const PortfolioDetailPage = () => {
 
   return (
     <div className="flex w-full h-full flex-col">
-      <div className="w-full h-full">
-        <PortfolioDetailHeader />
-        {portfolio && <PortfolioDetailTemplate portfolio={portfolio} />}
-      </div>
-      <GNBBOX />
+      <PortfolioDetailHeader />
+      {portfolio && <PortfolioDetailTemplate portfolio={portfolio} />}
     </div>
   );
 };

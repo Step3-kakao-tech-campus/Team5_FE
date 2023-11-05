@@ -30,7 +30,7 @@ const MainPhoto = ({
 
   return (
     <div
-      className={`photo-wrapper relative h-[600px] min-[576px]:h-[800px] ${className}`}
+      className={`photo-wrapper relative sm:h-[600px] h-[800px] ${className}`}
     >
       <div
         onMouseUp={() => upListener()}
@@ -45,7 +45,7 @@ const MainPhoto = ({
         />
         <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full">
           <div className="flex">
-            <div className="mt-4 mx-auto text-white text-[60px] min-[390px]:text-[80px] min-[576px]:text-[100px] leading-none font-['Licorice']">
+            <div className="mt-4 mx-auto text-white xs:text-[60px] sm:text-[80px] text-[100px] leading-none font-['Licorice']">
               Congratulations!
             </div>
           </div>
@@ -58,7 +58,7 @@ const MainPhoto = ({
         </div>
         <div className="absolute bottom-0 left-0 right-0 top-[60%] h-full w-full overflow-hidden bg-gradient-to-b from-gradient-from-sunsu to-gradient-to-sunsu">
           <div className="flex">
-            <div className="mt-[195px] min-[576px]:mt-[270px] ml-8 text-sm text-white font-bold">
+            <div className="sm:mt-[195px] mt-[270px] ml-8 text-sm text-white font-bold">
               <div>{plannerName}</div>
             </div>
           </div>

@@ -9,7 +9,7 @@ import Box from "../components/common/atoms/Box";
 import Button from "../components/common/atoms/Button";
 import Container from "../components/common/atoms/Container";
 import useInput from "../hooks/useInput";
-import { fetchUserInfo, logIn } from "../store/slices/userSlice";
+import { fetchAvatar, fetchUserInfo, logIn } from "../store/slices/userSlice";
 import { validateEmail, validatePassword } from "../utils";
 
 export default function LoginPage() {
@@ -48,11 +48,12 @@ export default function LoginPage() {
     }
     try {
       setIsSubmitting(true);
-      const response = await login({
+      const res = await login({
         email: values.email,
         password: values.password,
       });
-      if (response.success) {
+      if (res.success) {
+        dispatch(fetchAvatar(res.response.userId));
         dispatch(logIn());
         dispatch(fetchUserInfo());
         navigate("/");
@@ -73,7 +74,7 @@ export default function LoginPage() {
   return (
     <Container className="max-w-none">
       <Box className="relative h-full mx-auto px-[29px] pt-[100px] text-xs justify-center">
-        <h1 className="w-full text-center text-xl font-medium">로그인</h1>
+        <h1 className="w-full text-xl font-medium text-center">로그인</h1>
         <form>
           <InputGroup
             id="email"
@@ -120,9 +121,9 @@ export default function LoginPage() {
             </Button>
           )}
 
-          <div className="flex items-center justify-center pt-5 tracking-tight gap-2">
+          <div className="flex items-center justify-center gap-2 pt-5 tracking-tight">
             <span>아직 계정이 없으신가요?</span>
-            <Link className=" underline font-bold" to="/signup">
+            <Link className="font-bold underline " to="/signup">
               회원가입
             </Link>
           </div>

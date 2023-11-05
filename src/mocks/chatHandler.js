@@ -1,5 +1,4 @@
 import { rest } from "msw";
-import { chatIdHJ, chatIdAR } from "./chatData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -20,9 +19,15 @@ export const chatHandlers = [
         }),
       );
     }
-    if (req.body.plannerId === 1) {
-      return res(ctx.status(200), ctx.json(chatIdHJ));
-    }
-    return res(ctx.status(200), ctx.json(chatIdAR));
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        response: {
+          chatId: 21001,
+        },
+        error: null,
+      }),
+    );
   }),
 ];

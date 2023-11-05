@@ -13,20 +13,20 @@ import {
 } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import ChatHeader from "../components/chat/ChatHeader";
 import ChatInput from "../components/chat/ChatInput";
 import ChatMessage from "../components/chat/ChatMessage";
 import DateSeperationLine from "../components/chat/DateSeperationLine";
+import Spinner from "../components/common/atoms/Spinner";
 import "../firebase";
 import { convertToDate, isNonNegativeInteger } from "../utils/convert";
-import NotFoundPage from "./NotFoundPage";
-import Spinner from "../components/common/atoms/Spinner";
 
 export default function ChatRoomPage() {
   const [messages, setMessages] = useState([]);
-  const [isValidChatId, setIsValidChatId] = useState(true);
-  // eslint-disable-next-line no-unused-vars
+  const [counterAvatar, setCounterAvatar] = useState(null);
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true); // [추가] 로딩 상태
   const { userInfo } = useSelector((state) => state.user);
   const { chatId } = useParams();
@@ -37,7 +37,7 @@ export default function ChatRoomPage() {
   useEffect(() => {
     // 0. chatId 검증
     if (!isNonNegativeInteger(chatId)) {
-      setIsValidChatId(false);
+      navigate("/404", { replace: true });
       return;
     }
     // 0. 채팅방 유저가 맞는지 검증
@@ -48,19 +48,26 @@ export default function ChatRoomPage() {
       );
       const chatRoom = await get(chatRoomRef);
       if (!chatRoom.exists()) {
-        setIsValidChatId(false);
+        navigate("/404", { replace: true });
         return false;
       }
       return true;
     };
 
     // 1. 저장되어 있는 메세지 가져오기
+    // 1-0) 상대방 아바타 가져오기
     // 1-1) 채팅방 이름 가져오기
     const getCounterName = async () => {
       const snapShot = await get(
         ref(getDatabase(), `users/${userInfo.userId}/chatRooms/${chatId}`),
       );
       setCounterName(snapShot.val().counterName);
+      const counterAvatarRef = ref(
+        getDatabase(),
+        `users/${snapShot.val().counterId}/avatar`,
+      );
+      const counterAvatarSnapShot = await get(counterAvatarRef);
+      setCounterAvatar(counterAvatarSnapShot.val());
     };
 
     // 1-2) 이전의 메세지 읽음 처리
@@ -177,15 +184,14 @@ export default function ChatRoomPage() {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages.length]);
 
-  if (!isValidChatId) return <NotFoundPage />;
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col w-full h-full">
       {/* 헤더 */}
-      <ChatHeader counterName={counterName} />
+      <ChatHeader counterName={counterName} chatId={chatId} />
       {/* 메세지 영역 */}
-      <div className="px-[10px] pt-3 flex flex-col gap-[5px] relative mb-[120px]">
+      <div className="px-[12px] pt-3 flex flex-col gap-[8px] relative mb-[80px]">
         {messages?.map((message) => {
           if (prevDate !== convertToDate(message.timestamp)) {
             prevDate = convertToDate(message.timestamp);
@@ -195,6 +201,7 @@ export default function ChatRoomPage() {
                 <ChatMessage
                   message={message}
                   isSender={message.user.userId === userInfo.userId}
+                  counterAvatar={counterAvatar}
                 />
               </React.Fragment>
             );
@@ -204,6 +211,7 @@ export default function ChatRoomPage() {
               key={message.timestamp}
               message={message}
               isSender={message.user.userId === userInfo.userId}
+              counterAvatar={counterAvatar}
             />
           );
         })}
