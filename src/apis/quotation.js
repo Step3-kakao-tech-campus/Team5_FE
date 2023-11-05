@@ -30,6 +30,11 @@ export const updateQuotation = async (quotationId, chatId, data) => {
   return response.data;
 };
 
+export const deleteQuotation = async (quotationId) => {
+  const response = await instance.delete(`/quotations/${quotationId}`);
+  return response.data;
+};
+
 export const confirmQuotationAll = async (chatId) => {
   const response = await instance.post(`/match/confirmAll?chatId=${chatId}`);
   return response.data;

@@ -10,12 +10,14 @@ import AlreadyConfirmBottomSheet from "./AlreadyConfirmBottomSheet";
 import ConfirmAllBottomSheet from "./ConfirmAllBottomSheet";
 import ConfirmOneBottomSheet from "./ConfirmOneBottomSheet";
 import RequiredConfirmBottomSheet from "./RequiredConfirmBottomSheet";
+import DeleteOneBottomSheet from "./DeleteOneBottomSheet";
 
 const QuotationListTemplate = ({ quotation }) => {
   const navigate = useNavigate();
   const { chatId } = useParams();
   const [confirmOneSheetOpen, setConfirmOneSheetOpen] = useState(false);
   const [confirmAllSheetOpen, setConfirmAllSheetOpen] = useState(false);
+  const [deleteOneSheetOpen, setDeleteOneSheetOpen] = useState(false);
   const [requiredConfirmBottomSheetOpen, setRequiredConfirmBottomSheetOpen] =
     useState(false);
   const [alreadyConfirmBottomSheetOpen, setAlreadyConfirmBottomSheetOpen] =
@@ -66,6 +68,12 @@ const QuotationListTemplate = ({ quotation }) => {
           chatId={chatId}
         />
       )}
+      {deleteOneSheetOpen && (
+        <DeleteOneBottomSheet
+          onClose={() => setDeleteOneSheetOpen(false)}
+          quotationId={quotationId}
+        />
+      )}
       {quotation.quotations.map((quotationItem) => (
         <div className="pt-[30px] px-[29px]" key={quotationItem.id}>
           <div className="flex">
@@ -92,7 +100,7 @@ const QuotationListTemplate = ({ quotation }) => {
                   <>
                     <span> | </span>
                     <button
-                      className="underline text-red-sunsu font-bold"
+                      className="underline text-blue-sunsu font-bold"
                       onClick={() => {
                         setConfirmOneSheetOpen(true);
                         setQuotationId(quotationItem.id);
@@ -110,7 +118,7 @@ const QuotationListTemplate = ({ quotation }) => {
             {quotationItem.status === "미완료" &&
               userInfo.role === "planner" && (
                 <>
-                  <span> | </span>
+                  <span className="mx-[5px]">|</span>
                   <button
                     className="underline text-black font-bold"
                     onClick={() => {
@@ -121,6 +129,16 @@ const QuotationListTemplate = ({ quotation }) => {
                     }}
                   >
                     수정하기
+                  </button>
+                  <span className="mx-[5px]">|</span>
+                  <button
+                    className="underline text-red-sunsu font-bold"
+                    onClick={() => {
+                      setDeleteOneSheetOpen(true);
+                      setQuotationId(quotationItem.id);
+                    }}
+                  >
+                    삭제하기
                   </button>
                 </>
               )}
