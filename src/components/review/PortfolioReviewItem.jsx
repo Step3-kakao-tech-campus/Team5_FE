@@ -1,5 +1,5 @@
 import React from "react";
-import Photo from "../common/atoms/Photo";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 
 export default function PortfolioReviewItem({ review }) {
   return (
@@ -19,14 +19,8 @@ export default function PortfolioReviewItem({ review }) {
       {/* 별점 & 커플네임 */}
       <div className="flex justify-between">
         <div className="flex">
-          {Array.from({ length: review.stars }).map((_, index) => (
-            <Photo
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              src="/images/star.png"
-              alt="별점"
-              className="w-[20px] h-[20px]"
-            />
+          {Array.from({ length: review.stars }).map(() => (
+            <StarIcon className="w-[20px] h-[20px] mr-[1px]" />
           ))}
         </div>
         <span className="text-sm font-bold self-end">{review.coupleName}</span>

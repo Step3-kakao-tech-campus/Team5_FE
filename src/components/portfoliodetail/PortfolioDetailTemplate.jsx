@@ -19,7 +19,7 @@ import { comma } from "../../utils/convert";
 import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
-import Photo from "../common/atoms/Photo";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import FavoriteButton from "./FavoriteButton";
@@ -130,13 +130,11 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
               <span className="font-bold">
                 리뷰({portfolio.reviews.totalReviewCount})
               </span>
-              <Photo
-                src="/images/star.png"
-                alt="별점"
-                className="w-[20px] h-[20px] object-cover"
-              />
-              <div className=" text-[18px] align-middle font-bold pt-[2px]">
-                {portfolio.reviews.totalStars}
+              <div className="flex gap-1 items-center">
+                <StarIcon className="w-[20px] h-[20px] object-cover" />
+                <div className=" text-[18px] align-middle font-bold pt-[2px]">
+                  {portfolio.reviews.totalStars}
+                </div>
               </div>
             </div>
           </Link>
