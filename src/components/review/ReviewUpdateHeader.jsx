@@ -6,7 +6,9 @@ export default function ReviewUpdateHeader() {
   const dispatch = useDispatch();
   return (
     <BackButtonHeader>
-      <span className="w-full text-sm text-center font-medium ">리뷰 수정</span>
+      <span className="w-full text-sm text-center font-medium ">
+        리뷰 수정하기
+      </span>
       <button
         className="absolute text-sm text-right font-bold right-3 text-red-600"
         onClick={() => openDeleteReviewBottomSheet(dispatch)}
