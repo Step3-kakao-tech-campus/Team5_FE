@@ -6,6 +6,8 @@ import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
+import { ReactComponent as EmptyStarIcon } from "../../assets/star-03.svg";
 
 export default function ReviewUpdateTemplate({ review }) {
   // eslint-disable-next-line prefer-destructuring
@@ -84,9 +86,12 @@ export default function ReviewUpdateTemplate({ review }) {
           }}
         />
       )}
-      <div className="w-full flex flex-col p-7 gap-[5px] " ref={heightRef}>
-        <div className="w-full flex flex-col items-center justify-center h-[170px] ">
-          <span className="text-2xl font-medium">{`${plannerName} 플래너님은 어땠나요?`}</span>
+      <div
+        className="w-full flex flex-col px-[40px] py-[29px] gap-[5px] "
+        ref={heightRef}
+      >
+        <div className="w-full flex flex-col items-center justify-center mt-[20px] mb-[40px]">
+          <span className="sm:text-xl text-2xl font-medium mb-[10px]">{`${plannerName} 플래너님은 어땠나요?`}</span>
           <Rating
             value={stars}
             defaultValue={stars}
@@ -95,10 +100,9 @@ export default function ReviewUpdateTemplate({ review }) {
             onChange={(event, newValue) => {
               setStars(newValue);
             }}
-            size="large"
-            sx={{
-              fontSize: "50px",
-            }}
+            icon={<StarIcon className="w-[40px] h-[40px]" />}
+            emptyIcon={<EmptyStarIcon className="w-[40px] h-[40px]" />}
+            sx={{ gap: "8px" }}
           />
         </div>
         <AutoHeightTextarea

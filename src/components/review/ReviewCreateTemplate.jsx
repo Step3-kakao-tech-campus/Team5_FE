@@ -7,6 +7,8 @@ import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
+import { ReactComponent as EmptyStarIcon } from "../../assets/star-03.svg";
 
 export default function ReviewCreateTemplate() {
   const { chatId } = useParams();
@@ -14,7 +16,7 @@ export default function ReviewCreateTemplate() {
   const navigate = useNavigate();
   const plannerName = searchParams.get("plannerName");
   const [imageItems, setImageItems] = useState([]);
-  const [stars, setStars] = useState(3);
+  const [stars, setStars] = useState(null);
   const heightRef = useRef(null);
   const contentRef = useRef(null);
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
@@ -92,9 +94,12 @@ export default function ReviewCreateTemplate() {
           }}
         />
       )}
-      <div className="w-full flex flex-col p-7 gap-[5px] " ref={heightRef}>
-        <div className="w-full flex flex-col items-center justify-center h-[170px] ">
-          <span className="text-2xl font-medium">{`${plannerName} 플래너님은 어땠나요?`}</span>
+      <div
+        className="w-full flex flex-col px-[40px] py-[29px] gap-[5px] "
+        ref={heightRef}
+      >
+        <div className="w-full flex flex-col items-center justify-center mt-[20px] mb-[40px]">
+          <span className="sm:text-xl text-2xl font-medium mb-[10px]">{`${plannerName} 플래너님은 어땠나요?`}</span>
           <Rating
             value={stars}
             defaultValue={stars}
@@ -103,10 +108,9 @@ export default function ReviewCreateTemplate() {
             onChange={(event, newValue) => {
               setStars(newValue);
             }}
-            size="large"
-            sx={{
-              fontSize: "50px",
-            }}
+            icon={<StarIcon className="w-[40px] h-[40px]" />}
+            emptyIcon={<EmptyStarIcon className="w-[40px] h-[40px]" />}
+            sx={{ gap: "8px" }}
           />
         </div>
         <AutoHeightTextarea
@@ -120,7 +124,7 @@ export default function ReviewCreateTemplate() {
           imageItems={imageItems}
           setImageItems={setImageItems}
         />
-        <div className="grow flex flex-col justify-end pt-[10px]">
+        <div className="grow flex justify-end pt-[10px]">
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}

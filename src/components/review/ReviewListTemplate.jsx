@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Photo from "../common/atoms/Photo";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 
 export default function ReviewListTemplate({ reviews }) {
   return (
@@ -14,11 +15,7 @@ export default function ReviewListTemplate({ reviews }) {
                 <span>{review.plannerName} 플래너</span>
               </div>
               <div className="flex items-center gap-1 self-start">
-                <img
-                  src="/images/star.png"
-                  alt="별점"
-                  className="w-[14px] h-[14px]"
-                />
+                <StarIcon className="w-[14px] h-[14px]" />
                 <span>{review.stars}.0</span>
                 <Link
                   to={`/profile/reviews/update/${review.id}`}
