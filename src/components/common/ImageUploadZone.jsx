@@ -1,19 +1,39 @@
-import React from "react";
 import { BsCamera } from "react-icons/bs";
+import heic2any from "heic2any";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
 import Photo from "./atoms/Photo";
 
 export default function ImageUploadZone({ imageItems, setImageItems }) {
-  const onChangeAddFile = (e) => {
-    const addedFile = e.target.files[0];
+  const onChangeAddFile = async (e) => {
+    let addedFile = e.target.files[0];
     if (addedFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageItems([...imageItems, reader.result]);
       };
-      reader.readAsDataURL(addedFile);
+      if (addedFile.name.split(".")[1].toLowerCase() === "heic") {
+        const blob = addedFile;
+        await heic2any({ blob, toType: "image/jpeg" })
+          .then((resultBlob) => {
+            addedFile = new File(
+              [resultBlob],
+              `${addedFile.name.split(".")[0]}.jpg`,
+              {
+                type: "image/jpeg",
+                lastModified: new Date().getTime(),
+              },
+            );
+            reader.readAsDataURL(addedFile);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        reader.readAsDataURL(addedFile);
+      }
     }
   };
+
   const handleDeleteImage = (index) => {
     const updatedImageItems = [...imageItems];
     updatedImageItems.splice(index, 1); // 해당 항목 삭제
@@ -61,7 +81,7 @@ export default function ImageUploadZone({ imageItems, setImageItems }) {
                 type="file"
                 className="w-0 h-0"
                 id="photo"
-                accept="image/jpeg, image/jpg, image/png, image/gif"
+                accept="image/*, image/heic"
                 onChange={onChangeAddFile}
               />
             </div>
