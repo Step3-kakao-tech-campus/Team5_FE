@@ -9,10 +9,12 @@ import ConfirmOneBottomSheet from "./ConfirmOneBottomSheet";
 import { comma } from "../../utils/convert";
 import { quotationItemAtom } from "../../store";
 import SkeletonQuotationItem from "./SkeletonQuotationItem";
+import DeleteOneBottomSheet from "./DeleteOneBottomSheet";
 
 const QuotationCollectTemplate = () => {
   const navigate = useNavigate();
   const [confirmOneSheetOpen, setConfirmOneSheetOpen] = useState(false);
+  const [deleteOneSheetOpen, setDeleteOneSheetOpen] = useState(false);
   const [quotationId, setQuotationId] = useState(null);
   const [chatId, setChatId] = useState(null);
   const setQuotationItem = useSetAtom(quotationItemAtom);
@@ -62,6 +64,12 @@ const QuotationCollectTemplate = () => {
             onClose={() => setConfirmOneSheetOpen(false)}
             quotationId={quotationId}
             chatId={chatId}
+          />
+        )}
+        {deleteOneSheetOpen && (
+          <DeleteOneBottomSheet
+            onClose={() => setDeleteOneSheetOpen(false)}
+            quotationId={quotationId}
           />
         )}
         <div className="mb-[24px]">
@@ -136,7 +144,7 @@ const QuotationCollectTemplate = () => {
                     {quotationItem.status === "미완료" &&
                       userInfo.role === "planner" && (
                         <>
-                          <span> | </span>
+                          <span className="mx-[5px]">|</span>
                           <button
                             className="underline text-black font-bold"
                             onClick={() => {
@@ -147,6 +155,16 @@ const QuotationCollectTemplate = () => {
                             }}
                           >
                             수정하기
+                          </button>
+                          <span className="mx-[5px]">|</span>
+                          <button
+                            className="underline text-red-sunsu font-bold"
+                            onClick={() => {
+                              setDeleteOneSheetOpen(true);
+                              setQuotationId(quotationItem.id);
+                            }}
+                          >
+                            삭제하기
                           </button>
                         </>
                       )}
