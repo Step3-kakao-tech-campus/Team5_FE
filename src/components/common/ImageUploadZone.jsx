@@ -30,6 +30,15 @@ export default function ImageUploadZone({
     let addedFile = e.target.files[0];
 
     if (addedFile) {
+      // 이미지가 아닌 파일 업로드를 방지
+      if (
+        !addedFile.type.match("image") &&
+        !(addedFile.name.split(".")[1].toLowerCase() === "heic")
+      ) {
+        setIsUploading(false);
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageItems([...imageItems, reader.result]);
