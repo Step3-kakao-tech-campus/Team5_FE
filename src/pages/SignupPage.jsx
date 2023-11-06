@@ -14,6 +14,8 @@ import "../firebase";
 import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
+import Timer from "../components/common/atoms/Timer";
+import { sendAuthCode, verifyAuthCode } from "../apis/email";
 
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,6 +28,12 @@ export default function SignupPage() {
   const passwordInputRef = useRef(null);
   const password2InputRef = useRef(null);
   const agreePolicyRef = useRef(null);
+  const codeRef = useRef(null);
+  const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isValidatingCode, setIsValidatingCode] = useState(false);
+  const [isSentCode, setIsSentCode] = useState(false);
+  const [isPassAuthCode, setIsPassAuthCode] = useState(false);
+  const [time, setTime] = useState(60 * 10);
 
   const { values, handleChange, setValues } = useInput({
     role: "",
@@ -33,7 +41,55 @@ export default function SignupPage() {
     password: "",
     password2: "",
     username: "",
+    code: "",
   });
+
+  const handleSendCode = async () => {
+    if (!values.email) {
+      setErrorMessage("이메일을 입력해주세요.");
+      emailInputRef.current.focus();
+      return;
+    }
+    if (!validateEmail(values.email)) {
+      setErrorMessage("이메일 형식으로 입력해주세요.");
+      emailInputRef.current.focus();
+      return;
+    }
+    setIsSendingCode(true);
+    try {
+      await sendAuthCode({ email: values.email });
+      if (isSentCode) {
+        setTime(60 * 10);
+      }
+    } catch (error) {
+      if (error.response.data.error.status === 2002) {
+        setErrorMessage("이미 가입된 이메일입니다.");
+        emailInputRef.current.focus();
+        return;
+      }
+      setErrorMessage("인증코드 전송에 실패했습니다.");
+      return;
+    }
+    setIsSendingCode(false);
+    setIsSentCode(true);
+  };
+
+  const handleValidateCode = async () => {
+    if (!values.code) {
+      setErrorMessage("인증코드를 입력해주세요.");
+      codeRef.current.focus();
+      return;
+    }
+    setIsValidatingCode(true);
+    try {
+      await verifyAuthCode({ email: values.email, code: values.code });
+      setIsPassAuthCode(true);
+    } catch (error) {
+      console.log(error);
+      setErrorMessage("인증코드가 일치하지 않습니다.");
+    }
+    setIsValidatingCode(false);
+  };
 
   const setUserRole = (roleNumber) => {
     setActiveButton(roleNumber);
@@ -52,49 +108,46 @@ export default function SignupPage() {
     if (!values.username) {
       setErrorMessage("이름을 입력해주세요.");
       nameInputRef.current.focus();
-      setIsSubmitting(false);
       return false;
     }
     if (!values.email) {
       setErrorMessage("이메일을 입력해주세요.");
       emailInputRef.current.focus();
-      setIsSubmitting(false);
       return false;
     }
     if (!validateEmail(values.email)) {
       setErrorMessage("이메일 형식으로 입력해주세요.");
       emailInputRef.current.focus();
-      setIsSubmitting(false);
+      return false;
+    }
+    if (!isPassAuthCode) {
+      setErrorMessage("이메일 인증을 완료해주세요.");
+      codeRef.current.focus();
       return false;
     }
     if (!values.password) {
       setErrorMessage("비밀번호를 입력해주세요.");
       passwordInputRef.current.focus();
-      setIsSubmitting(false);
       return false;
     }
     if (!validatePassword(values.password)) {
       setErrorMessage("비밀번호 형식에 맞게 입력해주세요.");
       passwordInputRef.current.focus();
-      setIsSubmitting(false);
       return false;
     }
     if (!values.password2) {
       setErrorMessage("비밀번호 확인을 입력해주세요.");
       password2InputRef.current.focus();
-      setIsSubmitting(false);
       return false;
     }
     if (!agreePolicy) {
       setErrorMessage("개인정보 제3자 제공 동의에 동의해주세요.");
       agreePolicyRef.current.focus();
-      setIsSubmitting(false);
       return false;
     }
     if (values.password !== values.password2) {
       setErrorMessage("비밀번호가 일치하지 않습니다.");
       passwordInputRef.current.focus();
-      setIsSubmitting(false);
       return false;
     }
     return true;
@@ -180,17 +233,56 @@ export default function SignupPage() {
             onChange={handleChange}
             className="relative pt-[15px]"
           />
-          <InputGroup
-            ref={emailInputRef}
-            id="email"
-            type="email"
-            name="email"
-            label="이메일"
-            placeholder="이메일"
-            value={values.email}
-            onChange={handleChange}
-            className="relative pt-[15px]"
-          />
+          <div className="relative">
+            <InputGroup
+              ref={emailInputRef}
+              id="email"
+              type="email"
+              name="email"
+              label="이메일"
+              placeholder="이메일"
+              value={values.email}
+              onChange={handleChange}
+              className="relative pt-[15px] w-full"
+            />
+            <button
+              type="button"
+              disabled={isSendingCode}
+              className="absolute right-[6px] h-[38px] bottom-[6px] w-[100px] border rounded-[10px] bg-blue-sunsu text-white text-xs"
+              onClick={handleSendCode}
+            >
+              {isSentCode ? "재전송" : "인증코드 전송"}
+            </button>
+          </div>
+          <div className="relative">
+            <InputGroup
+              ref={codeRef}
+              id="code"
+              type="code"
+              name="code"
+              label="인증코드"
+              placeholder="인증코드"
+              value={values.code}
+              onChange={handleChange}
+              className="relative pt-[15px] w-full"
+            />
+            <div className="absolute right-[6px] bottom-[6px] flex gap-[6px] items-center">
+              {isSentCode &&
+                (isPassAuthCode ? (
+                  <span className=" text-green-700 font-bold">인증완료</span>
+                ) : (
+                  <Timer time={time} setTime={setTime} />
+                ))}
+              <button
+                type="button"
+                disabled={isValidatingCode}
+                onClick={handleValidateCode}
+                className=" h-[38px] w-[50px] border rounded-[10px] bg-blue-sunsu text-white text-xs"
+              >
+                확인
+              </button>
+            </div>
+          </div>
           <InputGroup
             ref={passwordInputRef}
             id="password"
@@ -240,12 +332,12 @@ export default function SignupPage() {
           {errorMessage && (
             <AlertBox
               id="errorMessage"
-              className="mt-[10px] pl-[20px] py-[15px] text-xs rounded-[10px] border"
+              className="mt-[10px] pl-[20px] py-[15px] text-xs rounded-[10px] border font-bold"
               label={errorMessage}
             />
           )}
           {isSubmitting ? (
-            <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center">
+            <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center mb-[50px]">
               <CircularProgress
                 color="primary"
                 style={{ width: "30px", height: "30px" }}
@@ -257,9 +349,9 @@ export default function SignupPage() {
                 handleSubmit();
               }}
               disabled={isSubmitting}
-              className={`block w-full h-[50px] mt-[30px] rounded-[10px] font-normal text-sm ${
+              className={`block w-full h-[50px] mt-[5px] rounded-[10px] font-normal text-sm ${
                 isSubmitting ? "bg-zinc-300" : "bg-lightskyblue-sunsu"
-              }`}
+              } mb-[50px]`}
             >
               회원가입
             </Button>
