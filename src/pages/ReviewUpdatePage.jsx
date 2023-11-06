@@ -6,9 +6,9 @@ import Spinner from "../components/common/atoms/Spinner";
 import ReviewUpdateHeader from "../components/review/ReviewUpdateHeader";
 import ReviewUpdateTemplate from "../components/review/ReviewUpdateTemplate";
 
-export default function ReviewCreatePage() {
+export default function ReviewUpdatePage() {
   const { reviewId } = useParams();
-  const { data, isLoading } = useQuery(
+  const { data: review, isLoading } = useQuery(
     [`/reviews/${reviewId}`],
     () => getReivewDetail(parseInt(reviewId, 10)),
     {
@@ -22,7 +22,7 @@ export default function ReviewCreatePage() {
   return (
     <div className="w-full h-full">
       <ReviewUpdateHeader />
-      {data && <ReviewUpdateTemplate review={data} />}
+      {review && <ReviewUpdateTemplate review={review} />}
     </div>
   );
 }

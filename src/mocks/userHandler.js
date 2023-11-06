@@ -128,7 +128,7 @@ export const userHandlers = [
   }),
 
   // /user/token
-  rest.put("/user/token", async (req, res, ctx) => {
+  rest.post("/user/token", async (req, res, ctx) => {
     await sleep(500);
     const refreshToken = req.headers.get("Refresh");
     return res(
