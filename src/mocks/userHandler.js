@@ -150,4 +150,14 @@ export const userHandlers = [
     //   }),
     // );
   }),
+
+  rest.post("/mail", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
+  }),
+
+  rest.post("/mail/verify", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
+  }),
 ];
