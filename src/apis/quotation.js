@@ -40,7 +40,7 @@ export const confirmQuotationAll = async (chatId) => {
   return response.data;
 };
 
-export const confirmQuotationDetail = async (quotationId, chatId) => {
+export const confirmQuotationDetail = async ({ quotationId, chatId }) => {
   const response = await instance.post(
     `/quotations/confirm/${quotationId}?chatId=${chatId}`,
   );

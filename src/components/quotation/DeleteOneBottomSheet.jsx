@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import BottomSheet from "../common/bottomsheet/BottomSheet";
-import Button from "../common/atoms/Button";
+import { useMutation, useQueryClient } from "react-query";
+import { useParams } from "react-router-dom";
 import { deleteQuotation } from "../../apis/quotation";
+import Button from "../common/atoms/Button";
+import BottomSheet from "../common/bottomsheet/BottomSheet";
 
 const DeleteOneBottomSheet = ({ onClose, quotationId }) => {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { mutate: deleteQuotationMutate } = useMutation(deleteQuotation);
+  const queryClient = useQueryClient();
+  const { chatId } = useParams();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -14,18 +19,17 @@ const DeleteOneBottomSheet = ({ onClose, quotationId }) => {
   const handleConfirmOne = async () => {
     if (!agreePolicy) return;
     setIsSubmitting(true);
-    try {
-      const response = await deleteQuotation(quotationId);
-      console.log(response);
-      if (response.success) {
-        // eslint-disable-next-line no-restricted-globals
-        location.reload();
+    deleteQuotationMutate(quotationId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(`/quotations?chatId=${chatId}`);
+        setIsSubmitting(false);
         onClose();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setIsSubmitting(false);
+      },
+      onError: (error) => {
+        console.log(error);
+        setIsSubmitting(false);
+      },
+    });
   };
 
   return (
