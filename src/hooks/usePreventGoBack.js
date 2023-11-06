@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function usePreventGoBack() {
   const navigate = useNavigate();
   const preventGoBack = () => {
+    console.log(window.history);
     if (
       // eslint-disable-next-line no-restricted-globals
       confirm("페이지를 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.")
@@ -15,6 +16,7 @@ export default function usePreventGoBack() {
   };
 
   useEffect(() => {
+    console.log(window.history);
     window.history.pushState(null, null, window.location.href);
     window.addEventListener("popstate", preventGoBack);
 

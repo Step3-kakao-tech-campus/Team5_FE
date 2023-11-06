@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { createPortfolio } from "../../apis/portfolio";
+import { updatePortfolio } from "../../apis/portfolio";
 import { comma } from "../../utils/convert";
 import ImageUploadZone from "../common/ImageUploadZone";
 import InputGroup from "../common/accounts/InputGroup";
@@ -12,18 +12,33 @@ import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 import ItemsInfo from "./ItemsInfo";
 import SelectRegion from "./SelectRegion";
 
-export default function CreatePortfolioTemplate() {
-  const [location, setLocation] = useState("");
-  const [items, setItems] = useState([{ itemTitle: "", itemPrice: comma(0) }]);
-  const [numberItems, setNumberItems] = useState([
-    { itemTitle: "", itemPrice: 0 },
+export default function UpdatePortfoliotemplate({ portfolio }) {
+  const [location, setLocation] = useState(portfolio?.location);
+  const [items, setItems] = useState([
+    ...portfolio.items.map((item) => {
+      return {
+        itemTitle: item.itemTitle,
+        itemPrice: comma(item.itemPrice),
+      };
+    }),
   ]);
-  const [images, setImages] = useState([]);
+  const [numberItems, setNumberItems] = useState([
+    ...portfolio.items.map((item) => {
+      return {
+        itemTitle: item.itemTitle,
+        itemPrice: Number(item.itemPrice),
+      };
+    }),
+  ]);
+  const [images, setImages] = useState([...portfolio.images]);
   const [warningMessage, setWarningMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
     useState(false);
   const [isUploading, setIsUploading] = useState(false);
+
+  const { mutate: updateMutate } = useMutation(updatePortfolio);
+  const queryClient = useQueryClient();
 
   const nameRef = useRef(null);
   const locationRef = useRef(null);
@@ -32,9 +47,6 @@ export default function CreatePortfolioTemplate() {
   const descriptionRef = useRef(null);
   const careerRef = useRef(null);
   const partnerCompanyRef = useRef(null);
-
-  const { mutate: createMutate } = useMutation(createPortfolio);
-  const queryClient = useQueryClient();
 
   const handleSubmit = async () => {
     if (!nameRef.current?.value) {
@@ -102,17 +114,17 @@ export default function CreatePortfolioTemplate() {
     };
     console.log("portfolioData", portfolioData);
     setIsSubmitting(true);
-    createMutate(portfolioData, {
+    updateMutate(portfolioData, {
       onSuccess: () => {
-        setIsSubmitting(false);
-        setWarningMessage("포트폴리오가 성공적으로 저장되었습니다.");
         queryClient.invalidateQueries("portfolios/self");
+        setIsSubmitting(false);
+        setWarningMessage("포트폴리오가 성공적으로 수정되었습니다.");
         setIsOpenWarningBottomSheet(true);
       },
       onError: (error) => {
         console.log(error);
         setIsSubmitting(false);
-        setWarningMessage("포트폴리오를 저장하는데 실패했습니다.");
+        setWarningMessage("포트폴리오를 수정하는데 실패했습니다.");
         setIsOpenWarningBottomSheet(true);
       },
     });
@@ -138,7 +150,7 @@ export default function CreatePortfolioTemplate() {
           placeholder="이름을 입력해주세요."
           label="이름"
           ref={nameRef}
-          defaultValue=""
+          defaultValue={portfolio?.plannerName}
         />
         {/* 지역 */}
         <SelectRegion
@@ -163,7 +175,7 @@ export default function CreatePortfolioTemplate() {
           name="title"
           maxLength={72}
           rows={2}
-          defaultValue=""
+          defaultValue={portfolio?.title}
         />
         <AutoHeightTextarea
           label="소개"
@@ -171,7 +183,7 @@ export default function CreatePortfolioTemplate() {
           id="description"
           name="description"
           rows={7}
-          defaultValue=""
+          defaultValue={portfolio?.description}
         />
         <AutoHeightTextarea
           label="경력"
@@ -179,7 +191,7 @@ export default function CreatePortfolioTemplate() {
           id="career"
           name="career"
           rows={3}
-          defaultValue=""
+          defaultValue={portfolio?.career}
         />
         <AutoHeightTextarea
           label="주요 제휴 업체"
@@ -187,7 +199,7 @@ export default function CreatePortfolioTemplate() {
           id="partnerCompany"
           name="partnerCompany"
           rows={4}
-          defaultValue=""
+          defaultValue={portfolio?.partnerCompany}
         />
         {/* 사진 */}
         <ImageUploadZone

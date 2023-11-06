@@ -47,19 +47,14 @@ export const portfolioHandlers = [
     //   ctx.json({
     //     success: true,
     //     response: {
-    //       plannerName: "",
-    //       imageItems: [],
-    //       items: [
-    //         {
-    //           itemTitle: "",
-    //           itemPrice: 0,
-    //         },
-    //       ],
-    //       title: "",
-    //       description: "",
-    //       location: "",
-    //       career: "",
-    //       partnerCompany: "",
+    //       plannerName: null,
+    //       images: null,
+    //       items: null,
+    //       title: null,
+    //       description: null,
+    //       location: null,
+    //       career: null,
+    //       partnerCompany: null,
     //     },
     //     error: null,
     //   }),
