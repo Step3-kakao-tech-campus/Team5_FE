@@ -30,6 +30,7 @@ const PortfolioCarousel = ({ portfolio }) => {
     ),
     dotsClass: "custom-dots",
     arrows: false,
+    lazyLoad: "anticipated",
   };
 
   return (

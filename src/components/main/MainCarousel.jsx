@@ -30,6 +30,7 @@ const MainCarousel = () => {
     ),
     dotsClass: "custom-dots",
     arrows: false,
+    lazyLoad: "anticipated",
   };
 
   return (

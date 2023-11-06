@@ -3,6 +3,7 @@ import { comma } from "../../utils/convert";
 import SquarePhoto from "../common/atoms/SquarePhoto";
 import { ReactComponent as HeartOutlinedIcon } from "../../assets/heart-03.svg";
 import { ReactComponent as HeartIcon } from "../../assets/heart-04.svg";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 
 const PortfolioCard = ({ portfolio }) => {
   return (
@@ -31,14 +32,25 @@ const PortfolioCard = ({ portfolio }) => {
           </em>
           원
         </div>
-        <div className="planner-contract-count flex pt-[1px] text-xs text-blue-sunsu">
+        <div className="planner-contract-count flex pt-[1px] text-xs text-blue-sunsu items-center">
+          {portfolio.avgStars && (
+            <>
+              <span className="">
+                <StarIcon className="w-[12px] h-[12px] mb-[1px] mr-[3px] justify-center" />
+              </span>
+              <span className="text-black mr-[3px]">
+                {portfolio.avgStars.toFixed(1)}
+                {" |"}
+              </span>
+            </>
+          )}
           <span className="mr-auto">
             <em className="emph-count font-bold not-italic">
               {comma(portfolio.contractCount)}
             </em>
             건 매칭
           </span>
-          <span>
+          <span className="">
             {portfolio.isLiked ? (
               <HeartIcon className="w-[11px] h-[10px]" />
             ) : (
