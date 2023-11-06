@@ -36,7 +36,7 @@ const PortfolioCard = ({ portfolio }) => {
           {portfolio.avgStars && (
             <>
               <span className="">
-                <StarIcon className="w-[12px] h-[12px] mr-[3px] justify-center" />
+                <StarIcon className="w-[12px] h-[12px] mb-[1px] mr-[3px] justify-center" />
               </span>
               <span className="text-black mr-[3px]">
                 {portfolio.avgStars.toFixed(1)}

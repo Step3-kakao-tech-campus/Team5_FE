@@ -129,8 +129,8 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
             <div className="flex gap-[15px] items-center">
               <span className="font-bold">리뷰</span>
               <div className="flex gap-1 items-center">
-                <StarIcon className="w-[16px] h-[16px] object-cover" />
-                <div className=" text-base align-middle font-bold pt-[2px]">
+                <StarIcon className="w-[16px] h-[16px] object-cover mb-[1px]" />
+                <div className="text-base align-middle font-bold">
                   {portfolio.avgStars}
                 </div>
               </div>
