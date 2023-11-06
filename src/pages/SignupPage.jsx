@@ -80,6 +80,10 @@ export default function SignupPage() {
       codeRef.current.focus();
       return;
     }
+    if (!isSentCode) {
+      setErrorMessage("인증코드를 전송해주세요.");
+      return;
+    }
     setIsValidatingCode(true);
     try {
       await verifyAuthCode({ email: values.email, code: values.code });
