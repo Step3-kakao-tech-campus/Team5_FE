@@ -39,6 +39,7 @@ export default function PortfolioReviewItem({ review }) {
     },
     dotsClass: "slick-dots",
     arrows: false,
+    lazyLoad: "anticipated",
   };
 
   return (
