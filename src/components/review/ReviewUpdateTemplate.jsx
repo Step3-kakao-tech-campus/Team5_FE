@@ -14,7 +14,7 @@ export default function ReviewUpdateTemplate({ review }) {
   // eslint-disable-next-line prefer-destructuring
   const plannerName = review.plannerName;
   const [stars, setStars] = useState(review.stars);
-  const [imageItems, setImageItems] = useState(review.images);
+  const [images, setImages] = useState(review.images);
   const contentRef = useRef(review.content);
   const heightRef = useRef(null);
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
@@ -38,7 +38,7 @@ export default function ReviewUpdateTemplate({ review }) {
 
       return;
     }
-    if (imageItems.length === 0) {
+    if (images.length === 0) {
       setWarningMessage("사진을 등록해주세요.");
       setIsOpenWarningBottomSheet(true);
 
@@ -50,7 +50,7 @@ export default function ReviewUpdateTemplate({ review }) {
         reviewId: review.id,
         content: contentRef.current.value,
         stars,
-        imageItems,
+        images,
       });
       if (response.success) {
         setIsOpenSuccessBottomSheet(true);
@@ -68,7 +68,7 @@ export default function ReviewUpdateTemplate({ review }) {
     } else {
       heightRef.current.style.height = "auto";
     }
-  }, [imageItems]);
+  }, [images]);
 
   return (
     <>
@@ -117,8 +117,8 @@ export default function ReviewUpdateTemplate({ review }) {
           defaultValue={review.content}
         />
         <ImageUploadZone
-          imageItems={imageItems}
-          setImageItems={setImageItems}
+          images={images}
+          setImages={setImages}
           setIsUploading={setIsUploading}
         />
         <div className="grow flex flex-col justify-end pt-[10px]">

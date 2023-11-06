@@ -31,7 +31,7 @@ export default function CreatePortfolioTemplate({ data }) {
       };
     }),
   ]);
-  const [imageItems, setImageItems] = useState([...data.imageItems]);
+  const [images, setImages] = useState([...data.images]);
   const [warningMessage, setWarningMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
@@ -99,21 +99,22 @@ export default function CreatePortfolioTemplate({ data }) {
       partnerCompanyRef.current?.focus();
       return;
     }
-    if (imageItems.length === 0) {
+    if (images.length === 0) {
       setWarningMessage("포트폴리오 사진을 추가해주세요.");
       setIsOpenWarningBottomSheet(true);
       return;
     }
     const portfolioData = {
       plannerName: nameRef.current.value,
-      location,
-      numberItems,
+      items: numberItems,
+      images,
       title: titleRef.current.value,
       description: descriptionRef.current.value,
+      location,
       career: careerRef.current.value,
       partnerCompany: partnerCompanyRef.current.value,
-      imageItems,
     };
+    console.log(portfolioData);
     setIsSubmitting(true);
     if (isFirstSubmit) {
       createMutate(portfolioData, {
@@ -222,8 +223,8 @@ export default function CreatePortfolioTemplate({ data }) {
         />
         {/* 사진 */}
         <ImageUploadZone
-          imageItems={imageItems}
-          setImageItems={setImageItems}
+          images={images}
+          setImages={setImages}
           setIsUploading={setIsUploading}
         />
         <Button
