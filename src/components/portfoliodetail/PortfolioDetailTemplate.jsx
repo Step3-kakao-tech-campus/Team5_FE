@@ -126,11 +126,11 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
         </div>
         <div className="h-[50px] w-3/5 flex items-center justify-center">
           <Link to={`/portfolios/reviews/${portfolio.userId}`}>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-[15px] items-center">
               <span className="font-bold">리뷰</span>
               <div className="flex gap-1 items-center">
-                <StarIcon className="w-[20px] h-[20px] object-cover" />
-                <div className=" text-[18px] align-middle font-medium pt-[2px]">
+                <StarIcon className="w-[16px] h-[16px] object-cover" />
+                <div className=" text-base align-middle font-bold pt-[2px]">
                   {portfolio.avgStars}
                 </div>
               </div>
