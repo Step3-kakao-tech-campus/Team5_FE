@@ -12,6 +12,7 @@ import useInput from "../hooks/useInput";
 import { fetchAvatar, fetchUserInfo, logIn } from "../store/slices/userSlice";
 import { validateEmail, validatePassword } from "../utils";
 import BackButtonHeader from "../components/common/BackButtonHeader";
+import { ReactComponent as Logo } from "../assets/logo-01.svg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -77,6 +78,9 @@ export default function LoginPage() {
       <BackButtonHeader>
         <span className="text-sm w-full text-center font-medium">로그인</span>
       </BackButtonHeader>
+      <div className="flex items-center justify-center mt-[70px]">
+        <Logo className="w-[200px] h-auto" />
+      </div>
       <Box className="relative h-full mx-auto px-[29px] mt-[30px] text-xs justify-center">
         <form>
           <InputGroup
