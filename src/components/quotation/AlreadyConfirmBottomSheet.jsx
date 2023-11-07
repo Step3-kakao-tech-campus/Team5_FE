@@ -2,7 +2,7 @@ import React from "react";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
 import Button from "../common/atoms/Button";
 
-export default function WarningBottomSheet({ onClose }) {
+export default function AlreadyConfirmBottomSheet({ onClose }) {
   return (
     <BottomSheet onClose={onClose}>
       <div className="flex flex-col gap-10">
