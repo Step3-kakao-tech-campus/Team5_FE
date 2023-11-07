@@ -1,23 +1,23 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import QuotationCreateHeader from "../components/quotation/QuotationCreateHeader";
-import InputGroup from "../components/common/accounts/InputGroup";
-import AlertBox from "../components/common/accounts/AlertBox";
-import Button from "../components/common/atoms/Button";
-import Box from "../components/common/atoms/Box";
-import useInput from "../hooks/useInput";
-import Label from "../components/common/atoms/Label";
 import { createQuotation } from "../apis/quotation";
+import AlertBox from "../components/common/accounts/AlertBox";
+import InputGroup from "../components/common/accounts/InputGroup";
 import AutoHeightTextarea from "../components/common/atoms/AutoHeightTextarea";
-import { convertPriceFormat, uncomma } from "../utils/convert";
+import Box from "../components/common/atoms/Box";
+import Button from "../components/common/atoms/Button";
+import Label from "../components/common/atoms/Label";
+import QuotationCreateHeader from "../components/quotation/QuotationCreateHeader";
+import useInput from "../hooks/useInput";
+import { comma, uncomma } from "../utils/convert";
 
 const QuotationCreatePage = () => {
   const navigate = useNavigate();
   const { chatId } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("0");
   const titleInputRef = useRef(null);
   const companyInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
@@ -57,8 +57,20 @@ const QuotationCreatePage = () => {
     return true;
   };
 
+  const handleChangePrice = (e) => {
+    const { value } = e.target;
+    const numberPrice = uncomma(value);
+    setPrice(comma(numberPrice));
+  };
+
   const handleSubmit = async () => {
     if (!validateInput()) return;
+    console.log({
+      title: values.title,
+      company: values.company,
+      description: values.description,
+      price: uncomma(price),
+    });
     try {
       setIsSubmitting(true);
       const res = await createQuotation(chatId, {
@@ -109,7 +121,6 @@ const QuotationCreatePage = () => {
             onChange={handleChange}
             className="relative pt-[15px]"
           />
-
           <Box className="relative pt-[15px]">
             <AutoHeightTextarea
               label="상세 설명"
@@ -123,7 +134,6 @@ const QuotationCreatePage = () => {
               className="h-[70px]"
             />
           </Box>
-
           <Box className="relative pt-[15px]">
             <div className="pb-[5px]">
               <Label htmlFor="price" className="text-xs">
@@ -136,10 +146,8 @@ const QuotationCreatePage = () => {
                 id="price"
                 name="price"
                 type="text"
-                value={price}
-                onChange={() =>
-                  setPrice(convertPriceFormat(priceInputRef.current.value))
-                }
+                value={price === "0" ? "" : price}
+                onChange={handleChangePrice}
                 placeholder="0"
                 className="w-full h-[50px] rounded-[10px] pl-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent text-right pr-[34px] hover:border-blue-sunsu"
               />
