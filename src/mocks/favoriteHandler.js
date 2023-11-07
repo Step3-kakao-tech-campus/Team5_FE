@@ -9,7 +9,7 @@ async function sleep(ms) {
 }
 
 export const favoriteHandlers = [
-  rest.get("/favorites", async (req, res, ctx) => {
+  rest.get("/api/favorite", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     const page = req.url.searchParams.get("page");
@@ -36,7 +36,7 @@ export const favoriteHandlers = [
       ctx.json({ success: true, response: [], error: null }),
     );
   }),
-  rest.post("/favorites/:portfolioId", async (req, res, ctx) => {
+  rest.post("/api/favorite/:portfolioId", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -51,7 +51,7 @@ export const favoriteHandlers = [
     return res(ctx.status(200), ctx.json(success));
   }),
 
-  rest.delete("/favorites/:portfolioId", async (req, res, ctx) => {
+  rest.delete("/api/favorite/:portfolioId", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {

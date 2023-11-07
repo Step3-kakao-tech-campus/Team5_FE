@@ -14,7 +14,7 @@ async function sleep(ms) {
 }
 
 export const quotationHandlers = [
-  rest.get("/quotations", async (req, res, ctx) => {
+  rest.get("/api/quotation", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -29,7 +29,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(quotationList));
   }),
 
-  rest.post("/quotations", async (req, res, ctx) => {
+  rest.post("/api/quotation", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -44,7 +44,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(success));
   }),
 
-  rest.put("/quotations/:quotationId", async (req, res, ctx) => {
+  rest.put("/api/quotation/:quotationId", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -59,7 +59,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(success));
   }),
 
-  rest.delete("/quotations/:quotationId", async (req, res, ctx) => {
+  rest.delete("/api/quotation/:quotationId", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -74,7 +74,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(success));
   }),
 
-  rest.post("/match/confirmAll", async (req, res, ctx) => {
+  rest.post("/api/match/confirm", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -89,7 +89,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(success));
   }),
 
-  rest.post("/quotations/confirm/:quotationId", async (req, res, ctx) => {
+  rest.post("/api/quotation/confirm/:quotationId", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -104,7 +104,7 @@ export const quotationHandlers = [
     return res(ctx.status(200), ctx.json(success));
   }),
 
-  rest.get("/quotations/collect", async (req, res, ctx) => {
+  rest.get("/api/quotation/all", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     const page = req.url.searchParams.get("page");
