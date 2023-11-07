@@ -1,7 +1,7 @@
 import { instance } from "./index";
 
 export const createReview = async ({ chatId, content, stars, images }) => {
-  const response = await instance.post(`/reviews?chatId=${chatId}`, {
+  const response = await instance.post(`/api/review?chatId=${chatId}`, {
     content,
     stars,
     images,
@@ -10,27 +10,27 @@ export const createReview = async ({ chatId, content, stars, images }) => {
 };
 
 export const getMatchReviews = async () => {
-  const response = await instance.get("/match/reviews");
+  const response = await instance.get("/api/match/review");
   return response.data.response;
 };
 
 export const getReviewsListSelf = async () => {
-  const response = await instance.get("/reviews/collect");
+  const response = await instance.get("/api/review/all");
   return response.data.response;
 };
 
 export const getReivewDetail = async (reviewId) => {
-  const response = await instance.get(`/reviews/${reviewId}`);
+  const response = await instance.get(`/api/review/${reviewId}`);
   return response.data.response;
 };
 
 export const deleteReview = async (reviewId) => {
-  const response = await instance.delete(`/reviews/${reviewId}`);
+  const response = await instance.delete(`/api/review/${reviewId}`);
   return response.data;
 };
 
 export const updateReview = async ({ reviewId, content, stars, images }) => {
-  const response = await instance.put(`/reviews/${reviewId}`, {
+  const response = await instance.put(`/api/review/${reviewId}`, {
     content,
     stars,
     images,
@@ -39,6 +39,6 @@ export const updateReview = async ({ reviewId, content, stars, images }) => {
 };
 
 export const getPortfolioReviews = async (page) => {
-  const response = await instance.get(`/reviews?page=${page}`);
+  const response = await instance.get(`/api/review?page=${page}`);
   return response.data.response.reviews;
 };
