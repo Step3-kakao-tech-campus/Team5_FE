@@ -128,7 +128,7 @@ export const userHandlers = [
   }),
 
   // /user/token
-  rest.put("/user/token", async (req, res, ctx) => {
+  rest.post("/user/token", async (req, res, ctx) => {
     await sleep(500);
     const refreshToken = req.headers.get("Refresh");
     return res(
@@ -149,5 +149,15 @@ export const userHandlers = [
     //     },
     //   }),
     // );
+  }),
+
+  rest.post("/mail", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
+  }),
+
+  rest.post("/mail/verify", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];

@@ -14,7 +14,15 @@ if (process.env.NODE_ENV === "development") {
   worker.start();
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 5,
+      retry: false,
+    },
+  },
+});
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

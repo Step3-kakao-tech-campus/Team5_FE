@@ -16,7 +16,7 @@ export default function ReviewCreateTemplate() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const plannerName = searchParams.get("plannerName");
-  const [imageItems, setImageItems] = useState([]);
+  const [images, setImages] = useState([]);
   const [stars, setStars] = useState(null);
   const heightRef = useRef(null);
   const contentRef = useRef(null);
@@ -39,7 +39,7 @@ export default function ReviewCreateTemplate() {
       setIsOpenWarningBottomSheet(true);
       return;
     }
-    if (imageItems.length === 0) {
+    if (images.length === 0) {
       setWarningMessage("사진을 등록해주세요.");
       setIsOpenWarningBottomSheet(true);
       return;
@@ -50,7 +50,7 @@ export default function ReviewCreateTemplate() {
         chatId,
         content: contentRef.current.value,
         stars,
-        imageItems,
+        images,
       });
       if (response.success) {
         setIsOpenSuccessBottomSheet(true);
@@ -75,7 +75,7 @@ export default function ReviewCreateTemplate() {
     } else {
       heightRef.current.style.height = "auto";
     }
-  }, [imageItems]);
+  }, [images]);
 
   return (
     <>
@@ -124,8 +124,8 @@ export default function ReviewCreateTemplate() {
           rows={7}
         />
         <ImageUploadZone
-          imageItems={imageItems}
-          setImageItems={setImageItems}
+          images={images}
+          setImages={setImages}
           setIsUploading={setIsUploading}
         />
         <div className="grow flex justify-end pt-[10px]">

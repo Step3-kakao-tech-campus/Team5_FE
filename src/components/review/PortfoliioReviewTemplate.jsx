@@ -46,12 +46,7 @@ export default function PortfoliioReviewTemplate() {
         {portfolioReviews.map((review) => (
           <PortfolioReviewItem review={review} key={review.id} />
         ))}
-        {isFetchingNextPage && (
-          <>
-            <PortfolioReviewSkeleton />
-            <PortfolioReviewSkeleton />
-          </>
-        )}
+        {isFetchingNextPage && <PortfolioReviewSkeleton />}
       </div>
       <div ref={bottomObserver} />
     </>

@@ -3,7 +3,7 @@ import { getReactAppApiUrl } from "../utils/convert";
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  timeout: process.env.REACT_APP_API_TIMEOUT,
+  timeout: 3000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -34,7 +34,7 @@ instance.interceptors.response.use(
         const accessToken = localStorage.getItem("accessToken");
         const refreshToken = localStorage.getItem("refreshToken");
         // refresh token으로 access token 재발급
-        const res = await instance.put(
+        const res = await instance.post(
           `${getReactAppApiUrl()}/user/token`, // token refresh api
           {},
           { headers: { Authorization: accessToken, Refresh: refreshToken } },

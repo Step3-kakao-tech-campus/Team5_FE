@@ -555,7 +555,7 @@ export const portfolioDetail2 = {
 export const portfolioSelfData = {
   success: true,
   response: {
-    imageItems: images,
+    images,
     title: "최고의 결혼을 만들어주는 이 시대의 웨딩플래너 “유희정”입니다.",
     plannerName: "유희정",
     items: [

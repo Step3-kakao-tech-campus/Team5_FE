@@ -11,6 +11,9 @@ const QuotationListPage = () => {
   const { data, error, isLoading } = useQuery(
     `/quotations?chatId=${chatId}`,
     () => getQuotationList(chatId),
+    {
+      keepPreviousData: true,
+    },
   );
   const quotation = data?.response;
 
