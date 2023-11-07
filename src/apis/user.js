@@ -2,7 +2,7 @@ import { instance } from "./index";
 
 export const signup = async (data) => {
   const { role, username, email, password, password2 } = data;
-  const response = await instance.post("/user/signup", {
+  const response = await instance.post("/api/user/signup", {
     role,
     email,
     password,
@@ -14,7 +14,7 @@ export const signup = async (data) => {
 
 export const login = async (loginData) => {
   const { email, password } = loginData;
-  const response = await instance.post("/user/login", { email, password });
+  const response = await instance.post("/api/user/login", { email, password });
   // 로그인시 accessToken, refreshToken을 localStorage에 저장
   localStorage.setItem("accessToken", response.headers.get("Authorization"));
   localStorage.setItem("refreshToken", response.headers.get("Refresh"));
@@ -22,16 +22,16 @@ export const login = async (loginData) => {
 };
 
 export const deleteAccount = async () => {
-  const response = await instance.delete("/user");
+  const response = await instance.delete("/api/user");
   return response.data;
 };
 
 export const getUserInfo = async () => {
-  const response = await instance.get("/user/info");
+  const response = await instance.get("/api/user/info");
   return response.data;
 };
 
 export const userUpgrade = async () => {
-  const response = await instance.post("/user/upgrade");
+  const response = await instance.post("/api/user/upgrade");
   return response.data;
 };

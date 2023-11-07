@@ -11,6 +11,8 @@ import Container from "../components/common/atoms/Container";
 import useInput from "../hooks/useInput";
 import { fetchAvatar, fetchUserInfo, logIn } from "../store/slices/userSlice";
 import { validateEmail, validatePassword } from "../utils";
+import BackButtonHeader from "../components/common/BackButtonHeader";
+import { ReactComponent as Logo } from "../assets/logo-01.svg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -73,8 +75,13 @@ export default function LoginPage() {
 
   return (
     <Container className="max-w-none">
-      <Box className="relative h-full mx-auto px-[29px] pt-[100px] text-xs justify-center">
-        <h1 className="w-full text-xl font-medium text-center">로그인</h1>
+      <BackButtonHeader>
+        <span className="text-sm w-full text-center font-medium">로그인</span>
+      </BackButtonHeader>
+      <div className="flex items-center justify-center mt-[70px]">
+        <Logo className="w-[200px] h-auto" />
+      </div>
+      <Box className="relative h-full mx-auto px-[29px] mt-[30px] text-xs justify-center">
         <form>
           <InputGroup
             id="email"

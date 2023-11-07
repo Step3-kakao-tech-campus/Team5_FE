@@ -16,6 +16,7 @@ import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
 import Timer from "../components/common/atoms/Timer";
 import { sendAuthCode, verifyAuthCode } from "../apis/email";
+import BackButtonHeader from "../components/common/BackButtonHeader";
 
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -196,8 +197,10 @@ export default function SignupPage() {
           }}
         />
       )}
-      <Box className="relative h-full mx-auto px-[29px] pt-[45px] text-xs justify-center">
-        <h1 className="w-full pb-10 text-xl text-center">회원가입</h1>
+      <BackButtonHeader>
+        <span className="text-sm w-full text-center font-medium">회원가입</span>
+      </BackButtonHeader>
+      <Box className="relative h-full mx-auto px-[29px] pt-[30px] text-xs justify-center">
         <form>
           <div className="pb-[5px]">
             <Label className="text-xs">회원 구분</Label>

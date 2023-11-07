@@ -26,6 +26,7 @@ import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
 import TermsPage from "./pages/TermsPage";
 import WritableReviewListPage from "./pages/WritableReviewListPage";
+import DuplicatedCheckLayout from "./layouts/DuplicatedCheckLayout";
 
 function App() {
   return (
@@ -87,8 +88,10 @@ function App() {
             />
             <Route path="/favorites" element={<FavoriteListPage />} />
           </Route>
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route element={<DuplicatedCheckLayout />}>
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Route>
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/policy" element={<PrivacyPolicyPage />} />
         </Route>

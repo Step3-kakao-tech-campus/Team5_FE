@@ -1,13 +1,13 @@
 import { instance } from "./index";
 
 export const getQuotationList = async (chatId) => {
-  const response = await instance.get(`/quotations?chatId=${chatId}`);
+  const response = await instance.get(`/api/quotation?chatId=${chatId}`);
   return response.data;
 };
 
 export const createQuotation = async (chatId, data) => {
   const { title, company, description, price } = data;
-  const response = await instance.post(`/quotations?chatId=${chatId}`, {
+  const response = await instance.post(`/api/quotation?chatId=${chatId}`, {
     title,
     company,
     description,
@@ -19,7 +19,7 @@ export const createQuotation = async (chatId, data) => {
 export const updateQuotation = async (quotationId, chatId, data) => {
   const { title, company, description, price } = data;
   const response = await instance.put(
-    `/quotations/${quotationId}?chatId=${chatId}`,
+    `/api/quotation/${quotationId}?chatId=${chatId}`,
     {
       title,
       company,
@@ -31,23 +31,23 @@ export const updateQuotation = async (quotationId, chatId, data) => {
 };
 
 export const deleteQuotation = async (quotationId) => {
-  const response = await instance.delete(`/quotations/${quotationId}`);
+  const response = await instance.delete(`/api/quotation/${quotationId}`);
   return response.data;
 };
 
 export const confirmQuotationAll = async (chatId) => {
-  const response = await instance.post(`/match/confirmAll?chatId=${chatId}`);
+  const response = await instance.post(`/api/match/confirm?chatId=${chatId}`);
   return response.data;
 };
 
 export const confirmQuotationDetail = async ({ quotationId, chatId }) => {
   const response = await instance.post(
-    `/quotations/confirm/${quotationId}?chatId=${chatId}`,
+    `/api/quotation/confirm/${quotationId}?chatId=${chatId}`,
   );
   return response.data;
 };
 
 export const getQuotationCollectList = async (page) => {
-  const response = await instance.get(`/quotations/collect?page=${page}`);
+  const response = await instance.get(`/api/quotation/all?page=${page}`);
   return response.data.response;
 };
