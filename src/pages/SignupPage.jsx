@@ -16,7 +16,9 @@ import "../firebase";
 import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
+import useDefaultErrorHander from "../hooks/useDefaultErrorHander";
 
+// 테스트 완료(찬호)
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [activeButton, setActiveButton] = useState(1);
@@ -32,6 +34,7 @@ export default function SignupPage() {
   const [isSentCode, setIsSentCode] = useState(false);
   const [isPassAuthCode, setIsPassAuthCode] = useState(false);
   const [time, setTime] = useState(60 * 10);
+  const { defaultErrorHandler } = useDefaultErrorHander();
 
   const { values, handleChange, setValues } = useInput({
     role: "couple",
@@ -42,15 +45,19 @@ export default function SignupPage() {
     code: "",
   });
 
+  // eslint-disable-next-line no-shadow
+  const setErrorMessageAndFocus = (message, ref) => {
+    setErrorMessage(message);
+    ref.current.focus();
+  };
+
   const handleSendCode = async () => {
     if (!values.email) {
-      setErrorMessage("이메일을 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일을 입력해주세요.", emailInputRef);
       return;
     }
     if (!validateEmail(values.email)) {
-      setErrorMessage("이메일 형식으로 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일 형식으로 입력해주세요.", emailInputRef);
       return;
     }
     if (isSentCode) {
@@ -61,17 +68,15 @@ export default function SignupPage() {
 
   const handleValidateCode = async () => {
     if (!isSentCode) {
-      setErrorMessage("인증코드를 전송해주세요.");
+      setErrorMessageAndFocus("인증코드를 전송해주세요.", emailInputRef);
       return;
     }
     if (!values.code) {
-      setErrorMessage("인증코드를 입력해주세요.");
-      codeRef.current.focus();
+      setErrorMessageAndFocus("인증코드를 입력해주세요.", codeRef);
       return;
     }
     if (values.code !== "999999") {
-      setErrorMessage("인증코드는 999999입니다.");
-      codeRef.current.focus();
+      setErrorMessageAndFocus("인증코드가 일치하지 않습니다.", codeRef);
       return;
     }
     setIsPassAuthCode(true);
@@ -92,48 +97,48 @@ export default function SignupPage() {
 
   const validateInput = () => {
     if (!values.username) {
-      setErrorMessage("이름을 입력해주세요.");
-      nameInputRef.current.focus();
+      setErrorMessageAndFocus("이름을 입력해주세요.", nameInputRef);
       return false;
     }
     if (!values.email) {
-      setErrorMessage("이메일을 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일을 입력해주세요.", emailInputRef);
       return false;
     }
     if (!validateEmail(values.email)) {
-      setErrorMessage("이메일 형식으로 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일 형식으로 입력해주세요.", emailInputRef);
       return false;
     }
     if (!isPassAuthCode) {
-      setErrorMessage("이메일 인증을 완료해주세요.");
-      codeRef.current.focus();
+      setErrorMessageAndFocus("이메일 인증을 완료해주세요.", codeRef);
       return false;
     }
     if (!values.password) {
-      setErrorMessage("비밀번호를 입력해주세요.");
-      passwordInputRef.current.focus();
+      setErrorMessageAndFocus("비밀번호를 입력해주세요.", passwordInputRef);
       return false;
     }
     if (!validatePassword(values.password)) {
-      setErrorMessage("비밀번호 형식에 맞게 입력해주세요.");
-      passwordInputRef.current.focus();
+      setErrorMessageAndFocus(
+        "비밀번호 형식에 맞게 입력해주세요.",
+        passwordInputRef,
+      );
       return false;
     }
     if (!values.password2) {
-      setErrorMessage("비밀번호 확인을 입력해주세요.");
-      password2InputRef.current.focus();
+      setErrorMessageAndFocus(
+        "비밀번호 확인을 입력해주세요.",
+        password2InputRef,
+      );
       return false;
     }
     if (!agreePolicy) {
-      setErrorMessage("개인정보 제3자 제공 동의에 동의해주세요.");
-      agreePolicyRef.current.focus();
+      setErrorMessageAndFocus("이용약관에 동의해주세요.", agreePolicyRef);
       return false;
     }
     if (values.password !== values.password2) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
-      passwordInputRef.current.focus();
+      setErrorMessageAndFocus(
+        "비밀번호가 일치하지 않습니다.",
+        password2InputRef,
+      );
       return false;
     }
     return true;
@@ -142,6 +147,13 @@ export default function SignupPage() {
   const handleSubmit = async () => {
     if (!validateInput()) return;
     try {
+      console.log({
+        role: values.role,
+        email: values.email,
+        password: values.password,
+        password2: values.password2,
+        username: values.username,
+      });
       setIsSubmitting(true);
       const res = await signup({
         role: values.role,
@@ -158,8 +170,9 @@ export default function SignupPage() {
         setIsCompletionSheetOpen(true);
       }
     } catch (error) {
-      console.log(error);
-      setErrorMessage(error.response.data.message);
+      console.log(error?.response?.data?.error);
+      setErrorMessage(error?.response?.data?.error?.message);
+      defaultErrorHandler(error);
     } finally {
       setIsSubmitting(false);
     }
