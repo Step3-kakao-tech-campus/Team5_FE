@@ -34,7 +34,8 @@ export default function GNB() {
         to="/"
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname === "/" ? (
+        {location.pathname === "/" ||
+        location.pathname.startsWith("/reviews") ? (
           <HomeIcon className="w-6 h-6" />
         ) : (
           <HomeOutlinedIcon className="w-6 h-6" />
