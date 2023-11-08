@@ -21,8 +21,7 @@ const InProgressQuotationBanner = () => {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+      console.log(error);
     }
   }, [error]);
 
