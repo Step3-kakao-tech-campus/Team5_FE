@@ -336,7 +336,7 @@ export default function SignupPage() {
             />
           )}
           {isSubmitting ? (
-            <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center mb-[50px]">
+            <div className=" w-full h-[50px] mt-[5px] bg-zinc-200 rounded-[10px] flex items-center justify-center mb-[50px]">
               <CircularProgress
                 color="primary"
                 style={{ width: "30px", height: "30px" }}
