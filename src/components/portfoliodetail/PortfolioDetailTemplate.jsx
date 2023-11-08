@@ -23,16 +23,16 @@ import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import FavoriteButton from "./FavoriteButton";
 import HistoryBottomSheet from "./HistoryBottomSheet";
+import PlannerInfoRow from "./PlannerInfoRow";
 import PortfolioCarousel from "./PortfolioCarousel";
-import PriceInfoRow from "./PriceInfoRow";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
   const { isLogged, userInfo } = useSelector((state) => state.user);
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [historyBottomSheetOpen, setHistoryBottomSheetOpen] = useState(false);
   const setPayment = useSetAtom(paymentAtom);
-  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleOpenPaymentBottomSheet = () => {
@@ -91,24 +91,14 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
       <div>
         <PortfolioCarousel portfolio={portfolio} />
       </div>
-      <div className="p-5 justify-between">
-        <div className="flex whitespace-nowrap">
-          <div className="inline mr-auto text-xl">
-            <em className="font-bold not-italic">{portfolio.plannerName}</em>{" "}
-            플래너 | {portfolio.location}
-          </div>
-          <div className="inline text-sm text-blue-sunsu">
-            <em className="font-bold not-italic">{portfolio.contractCount}</em>
-            건 매칭
-          </div>
-        </div>
-        <div className="pt-[5px] text-xs text-gray-sunsu">
-          {portfolio.title}
-        </div>
-        <div className="pt-5">
-          <PriceInfoRow priceInfo={portfolio.priceInfo} />
-        </div>
-      </div>
+      {/* 플래너 정보 */}
+      <PlannerInfoRow
+        plannerName={portfolio.plannerName}
+        contractCount={portfolio.contractCount}
+        location={portfolio.location}
+        title={portfolio.title}
+        priceInfo={portfolio.priceInfo}
+      />
       {/* 찜하기 & 리뷰 */}
       <div className=" flex w-full border-t items-center">
         <div className="h-[50px] w-1/2 border-r flex justify-center">
@@ -128,6 +118,7 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
           </Link>
         </div>
       </div>
+      {/* 플래너 소개 */}
       <DivideBar />
       <DescriptionRow title="소개" detail={portfolio.description} />
       <DivideBar />
@@ -222,12 +213,15 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
         </div>
       </div>
       <Button
-        className="w-full h-[50px] mt-3 items-center justify-center bg-lightskyblue-sunsu text-sm"
+        className="w-full h-[50px] mt-3 flex items-center justify-center bg-lightskyblue-sunsu text-sm"
         onClick={handleOnCreateChatRoom}
         disabled={isSubmitting}
       >
-        {isSubmitting && <CircularProgress size={15} />}
-        {isSubmitting ? "" : "채팅 상담 받기"}
+        {isSubmitting ? (
+          <CircularProgress size={20} />
+        ) : (
+          <span>채팅 상담 받기</span>
+        )}
       </Button>
     </div>
   );
