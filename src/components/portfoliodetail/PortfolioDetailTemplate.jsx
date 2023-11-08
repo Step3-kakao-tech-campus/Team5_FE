@@ -1,7 +1,6 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   child,
-  get,
   getDatabase,
   ref,
   serverTimestamp,
@@ -13,13 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createChatRoom } from "../../apis/chat";
 import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import "../../firebase";
 import { paymentAtom } from "../../store";
 import { comma } from "../../utils/convert";
 import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
-import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import FavoriteButton from "./FavoriteButton";
@@ -50,27 +49,18 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
       return;
     }
     setIsSubmitting(true);
-    const db = getDatabase();
-    const userRef = ref(db, `users/${userInfo.userId}`);
-    const counterUserRef = ref(db, `users/${portfolio.userId}`);
+
     try {
-      const snapshot = await get(userRef);
-      const data = snapshot.val();
-      if (data && data.chatRooms) {
-        const chatIds = Object.keys(data.chatRooms);
-        const existChatRoom = chatIds.find((chatId) => {
-          const chatRoom = data.chatRooms[chatId];
-          return chatRoom.counterId === portfolio.userId;
-        });
-        if (existChatRoom) {
-          // console.log("이미 채팅방이 존재합니다.");
-          navigate(`/chat/${existChatRoom}`);
-          return;
-        }
-      }
       // 채팅방이 없을 경우 새로 만들어준다.
-      const res = await createChatRoom(portfolio.userId);
-      const { chatId } = res.response;
+      const { response } = await createChatRoom(portfolio.userId);
+      const { chatId, existed } = response;
+      if (existed) {
+        navigate(`/chat/${chatId}`);
+        return;
+      }
+      const db = getDatabase();
+      const userRef = ref(db, `users/${userInfo.userId}`);
+      const counterUserRef = ref(db, `users/${portfolio.userId}`);
       await set(child(userRef, `chatRooms/${chatId}`), {
         chatId,
         counterId: portfolio.userId,
