@@ -28,7 +28,7 @@ instance.interceptors.response.use(
     } = error;
     if (status === 401) {
       // 액세스 토큰 만료
-      if (error.response.data.error.status === 2101) {
+      if (error.response.data.error.status === 2100) {
         const originalRequest = config;
         const accessToken = localStorage.getItem("accessToken");
         const refreshToken = localStorage.getItem("refreshToken");
