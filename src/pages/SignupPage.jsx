@@ -170,8 +170,11 @@ export default function SignupPage() {
         setIsCompletionSheetOpen(true);
       }
     } catch (error) {
-      console.log(error?.response?.data?.error);
-      setErrorMessage(error?.response?.data?.error?.message);
+      const customError = error?.response?.data?.error;
+      if (customError) {
+        setErrorMessage(error?.response?.data?.error?.message);
+        return;
+      }
       defaultErrorHandler(error);
     } finally {
       setIsSubmitting(false);
