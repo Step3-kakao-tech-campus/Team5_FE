@@ -1,18 +1,20 @@
 import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
 import { updatePortfolio } from "../../apis/portfolio";
-import { comma } from "../../utils/convert";
+import { comma, uncomma } from "../../utils/convert";
+import { openMessageBottomSheet } from "../../utils/handleBottomSheet";
 import ImageUploadZone from "../common/ImageUploadZone";
 import InputGroup from "../common/accounts/InputGroup";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import Spinner from "../common/atoms/Spinner";
-import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
 import ItemsInfo from "./ItemsInfo";
 import SelectRegion from "./SelectRegion";
 
 export default function UpdatePortfoliotemplate({ portfolio }) {
+  const dispatch = useDispatch();
   const [location, setLocation] = useState(portfolio?.location);
   const [items, setItems] = useState([
     ...portfolio.items.map((item) => {
@@ -22,19 +24,8 @@ export default function UpdatePortfoliotemplate({ portfolio }) {
       };
     }),
   ]);
-  const [numberItems, setNumberItems] = useState([
-    ...portfolio.items.map((item) => {
-      return {
-        itemTitle: item.itemTitle,
-        itemPrice: Number(item.itemPrice),
-      };
-    }),
-  ]);
   const [images, setImages] = useState([...portfolio.images]);
-  const [warningMessage, setWarningMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
-  const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
-    useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
   const { mutate: updateMutate } = useMutation(updatePortfolio);
@@ -48,63 +39,60 @@ export default function UpdatePortfoliotemplate({ portfolio }) {
   const careerRef = useRef(null);
   const partnerCompanyRef = useRef(null);
 
+  const openMessageBottomSheetAndFocus = (message, ref) => {
+    openMessageBottomSheet(dispatch, message);
+    ref.current?.focus();
+  };
+
   const handleSubmit = async () => {
+    console.log("items", items);
     if (!nameRef.current?.value) {
-      setWarningMessage("이름을 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      nameRef.current?.focus();
+      openMessageBottomSheetAndFocus("이름을 입력해주세요.", nameRef);
       return;
     }
     if (!location) {
-      setWarningMessage("지역을 선택해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      locationRef.current?.focus();
+      openMessageBottomSheetAndFocus("지역을 선택해주세요.", locationRef);
       return;
     }
     if (items.some((item) => !item.itemTitle)) {
-      setWarningMessage("가격 항목을 모두 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      itemRef.current?.focus();
+      openMessageBottomSheetAndFocus("가격 항목을 모두 입력해주세요.", itemRef);
       return;
     }
-    if (items.some((item) => !item.itemPrice)) {
-      setWarningMessage("가격 항목을 모두 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      itemRef.current?.focus();
+    if (items.some((item) => item.itemPrice === "0" || !item.itemPrice)) {
+      openMessageBottomSheetAndFocus("가격 항목을 모두 입력해주세요.", itemRef);
       return;
     }
     if (!titleRef.current?.value) {
-      setWarningMessage("한 줄 소개를 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      titleRef.current?.focus();
+      openMessageBottomSheetAndFocus("한 줄 소개를 입력해주세요.", titleRef);
       return;
     }
     if (!descriptionRef.current?.value) {
-      setWarningMessage("소개를 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      descriptionRef.current?.focus();
+      openMessageBottomSheetAndFocus("소개를 입력해주세요.", descriptionRef);
       return;
     }
     if (!careerRef.current?.value) {
-      setWarningMessage("경력을 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      careerRef.current?.focus();
+      openMessageBottomSheetAndFocus("경력을 입력해주세요.", careerRef);
       return;
     }
     if (!partnerCompanyRef.current?.value) {
-      setWarningMessage("주요 제휴 업체를 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
-      partnerCompanyRef.current?.focus();
+      openMessageBottomSheetAndFocus(
+        "주요 제휴 업체를 입력해주세요.",
+        partnerCompanyRef,
+      );
       return;
     }
     if (images.length === 0) {
-      setWarningMessage("포트폴리오 사진을 추가해주세요.");
-      setIsOpenWarningBottomSheet(true);
+      openMessageBottomSheet(dispatch, "포트폴리오 사진을 추가해주세요.");
       return;
     }
     const portfolioData = {
       plannerName: nameRef.current.value,
-      items: numberItems,
+      items: items.map((item) => {
+        return {
+          itemTitle: item.itemTitle,
+          itemPrice: uncomma(item.itemPrice),
+        };
+      }),
       images,
       title: titleRef.current.value,
       description: descriptionRef.current.value,
@@ -118,28 +106,24 @@ export default function UpdatePortfoliotemplate({ portfolio }) {
       onSuccess: () => {
         queryClient.invalidateQueries("portfolios/self");
         setIsSubmitting(false);
-        setWarningMessage("포트폴리오가 성공적으로 수정되었습니다.");
-        setIsOpenWarningBottomSheet(true);
+        openMessageBottomSheet(
+          dispatch,
+          "포트폴리오가 성공적으로 수정되었습니다.",
+        );
       },
       onError: (error) => {
         console.log(error);
         setIsSubmitting(false);
-        setWarningMessage("포트폴리오를 수정하는데 실패했습니다.");
-        setIsOpenWarningBottomSheet(true);
+        openMessageBottomSheet(
+          dispatch,
+          "포트폴리오를 수정하는데 실패했습니다.",
+        );
       },
     });
   };
 
   return (
     <>
-      {isOpenWarningBottomSheet && (
-        <WarningBottomSheet
-          message={warningMessage}
-          onClose={() => {
-            setIsOpenWarningBottomSheet(false);
-          }}
-        />
-      )}
       {isUploading && <Spinner />}
       <div className="w-full h-full flex flex-col p-7 gap-5">
         {/* 이름 */}
@@ -159,15 +143,7 @@ export default function UpdatePortfoliotemplate({ portfolio }) {
           ref={locationRef}
         />
         {/* 가격 */}
-        <ItemsInfo
-          items={items}
-          ref={itemRef}
-          setItems={setItems}
-          numberItems={numberItems}
-          setNumberItems={setNumberItems}
-          setWarningMessage={setWarningMessage}
-          setIsOpenWarningBottomSheet={setIsOpenWarningBottomSheet}
-        />
+        <ItemsInfo items={items} ref={itemRef} setItems={setItems} />
         <AutoHeightTextarea
           label="한 줄 소개"
           ref={titleRef}
