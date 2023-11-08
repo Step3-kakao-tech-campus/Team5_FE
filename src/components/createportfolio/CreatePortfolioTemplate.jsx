@@ -103,6 +103,7 @@ export default function CreatePortfolioTemplate() {
         );
       },
       onError: (error) => {
+        // 디폴트 에러 핸들러를 적용하면 작성한게 사라지므로 따로 처리
         console.log(error);
         setIsSubmitting(false);
         openMessageBottomSheet(
