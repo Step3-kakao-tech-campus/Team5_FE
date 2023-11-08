@@ -1,16 +1,15 @@
-import React from "react";
-import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import ReviewDetailHeader from "../components/review/ReviewDetailHeader";
+import ReviewDetailTemplate from "../components/review/ReviewDetailTemplate";
 import { getReviewDetail } from "../apis/review";
 import Spinner from "../components/common/atoms/Spinner";
-import ReviewUpdateHeader from "../components/review/ReviewUpdateHeader";
-import ReviewUpdateTemplate from "../components/review/ReviewUpdateTemplate";
 
-export default function ReviewUpdatePage() {
+const ReviewDetailPage = () => {
   const { reviewId } = useParams();
   const { data: review, isLoading } = useQuery(
     [`/reviews/${reviewId}`],
-    () => getReviewDetail(parseInt(reviewId, 10)),
+    () => getReviewDetail(reviewId),
     {
       onError: (error) => {
         console.log(error);
@@ -19,10 +18,13 @@ export default function ReviewUpdatePage() {
   );
 
   if (isLoading) return <Spinner />;
+
   return (
     <div className="w-full h-full">
-      <ReviewUpdateHeader />
-      {review && <ReviewUpdateTemplate review={review} />}
+      <ReviewDetailHeader />
+      {review && <ReviewDetailTemplate review={review} />}
     </div>
   );
-}
+};
+
+export default ReviewDetailPage;

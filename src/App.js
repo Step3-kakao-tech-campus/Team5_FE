@@ -27,6 +27,7 @@ import SignupPage from "./pages/SignupPage";
 import TermsPage from "./pages/TermsPage";
 import WritableReviewListPage from "./pages/WritableReviewListPage";
 import DuplicatedCheckLayout from "./layouts/DuplicatedCheckLayout";
+import ReviewDetailPage from "./pages/ReviewDetailPage";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
               path="/portfolios/reviews/:plannerId"
               element={<PortfolioReviewPage />}
             />
+            <Route path="/reviews/:reviewId" element={<ReviewDetailPage />} />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
