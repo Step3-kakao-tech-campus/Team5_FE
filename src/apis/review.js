@@ -19,7 +19,7 @@ export const getReviewsListSelf = async () => {
   return response.data.response;
 };
 
-export const getReivewDetail = async (reviewId) => {
+export const getReviewDetail = async (reviewId) => {
   const response = await instance.get(`/api/review/${reviewId}`);
   return response.data.response;
 };
