@@ -6,6 +6,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { paymentApprovalAndUserUpgrade } from "../apis/payments";
 import GNBBOX from "../components/common/GNBBOX";
 import { fetchUserInfo } from "../store/slices/userSlice";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHander";
 
 export default function PaymentCompletePage() {
   const [isApproving, setIsApproving] = useState(true);
@@ -15,6 +16,7 @@ export default function PaymentCompletePage() {
   const amount = searchParams.get("amount");
   const orderId = searchParams.get("orderId");
   const paymentKey = searchParams.get("paymentKey");
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   useEffect(() => {
     if (!amount || !orderId || !paymentKey) {
@@ -33,7 +35,12 @@ export default function PaymentCompletePage() {
         dispatch(fetchUserInfo());
         setIsApproving(false);
       } catch (error) {
-        navigate(`/payments/fail?message=${error.message}`);
+        const customError = error?.response?.data?.error;
+        if (customError) {
+          navigate(`/payments/fail?message=${customError.message}`);
+          return;
+        }
+        defaultErrorHandler(error);
       }
     })();
   }, []);

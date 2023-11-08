@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { savePayment } from "../../../apis/payments";
+import useDefaultErrorHandler from "../../../hooks/useDefaultErrorHander";
 import { sunsuMembershipPrice } from "../../../utils/constants";
 import { comma } from "../../../utils/convert";
 import Button from "../atoms/Button";
@@ -12,6 +13,8 @@ export default function PaymentBottomSheet({ onClose }) {
   const { userInfo } = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = useState(false);
   const tossPaymentsRef = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
+
   const handleOnPayment = async () => {
     try {
       setIsLoading(true);
@@ -32,11 +35,11 @@ export default function PaymentBottomSheet({ onClose }) {
         successUrl: `${window.location.origin}/payments/complete`,
         failUrl: `${window.location.origin}/payments/fail`,
         customerName: userInfo.username,
-        // 테스트에서는 email 정보X -> 결제 정보 날라옴
-        // customerEmail: userInfo.email,
       });
     } catch (error) {
-      console.error("비동기 작업 중 오류 발생:", error);
+      console.error("결제 작업 중 오류 발생:", error);
+      console.log(error);
+      defaultErrorHandler(error);
     } finally {
       setIsLoading(false);
     }
