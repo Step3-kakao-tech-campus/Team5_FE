@@ -59,7 +59,7 @@ const PortfolioCard = ({ portfolio }) => {
   return (
     <Card to={`/portfolios/${portfolio.id}`} className="portfolio-card">
       <SquarePhoto
-        src={portfolio.image.substring(1, portfolio.image.length)}
+        src={portfolio.image}
         alt={portfolio.plannerName}
         className="portfolio-image"
       />
