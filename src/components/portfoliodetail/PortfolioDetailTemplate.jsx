@@ -23,6 +23,7 @@ import PaymentsHistorySection from "./PaymentsHistorySection";
 import PlannerInfoRow from "./PlannerInfoRow";
 import PortfolioCarousel from "./PortfolioCarousel";
 import MembershipPaySection from "./MembershipPaySection";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHander";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
   const { isLogged, userInfo } = useSelector((state) => state.user);
@@ -31,6 +32,7 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleOpenPaymentBottomSheet = () => {
     if (!isLogged) {
@@ -46,15 +48,14 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
       return;
     }
     setIsSubmitting(true);
-
     try {
-      // 채팅방이 없을 경우 새로 만들어준다.
       const { response } = await createChatRoom(portfolio.userId);
       const { chatId, existed } = response;
       if (existed) {
         navigate(`/chat/${chatId}`);
         return;
       }
+      // 채팅방이 없을 경우 새로 만들어준다.
       const db = getDatabase();
       const userRef = ref(db, `users/${userInfo.userId}`);
       const counterUserRef = ref(db, `users/${portfolio.userId}`);
@@ -73,8 +74,10 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
       navigate(`/chat/${chatId}`);
     } catch (error) {
       console.log(error);
+      defaultErrorHandler(error);
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (
