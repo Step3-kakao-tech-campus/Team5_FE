@@ -5,6 +5,7 @@ import MainHeaderRow from "../components/main/MainHeaderRow";
 import MainSearchBar from "../components/main/MainSearchBar";
 import InProgressQuotationBanner from "../components/main/InProgressQuotationBanner";
 import Footer from "../components/common/Footer";
+import MainBestReview from "../components/main/MainBestReview";
 
 export default function MainPage() {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function MainPage() {
       )}
       {userInfo.role === "couple" && <InProgressQuotationBanner />}
       <MainCarousel />
+      <MainBestReview />
       <Footer />
     </div>
   );
