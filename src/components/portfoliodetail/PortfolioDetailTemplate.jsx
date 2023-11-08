@@ -6,16 +6,12 @@ import {
   serverTimestamp,
   set,
 } from "firebase/database";
-import { useSetAtom } from "jotai";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createChatRoom } from "../../apis/chat";
-import { ReactComponent as RightArrow } from "../../assets/right-01.svg";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import "../../firebase";
-import { paymentAtom } from "../../store";
-import { comma } from "../../utils/convert";
 import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
@@ -23,14 +19,15 @@ import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import FavoriteButton from "./FavoriteButton";
 import HistoryBottomSheet from "./HistoryBottomSheet";
+import PaymentsHistorySection from "./PaymentsHistorySection";
 import PlannerInfoRow from "./PlannerInfoRow";
 import PortfolioCarousel from "./PortfolioCarousel";
+import MembershipPaySection from "./MembershipPaySection";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
   const { isLogged, userInfo } = useSelector((state) => state.user);
   const [paymentBottomSheetOpen, setPaymentBottomSheetOpen] = useState(false);
   const [historyBottomSheetOpen, setHistoryBottomSheetOpen] = useState(false);
-  const setPayment = useSetAtom(paymentAtom);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -133,82 +130,14 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
         <div className="text-base font-bold">이전 매칭 내역</div>
         <div className="pt-5">
           {userInfo.grade === "premium" ? (
-            <>
-              <div className="flex h-[80px] pb-5 border-b">
-                <div className="flex flex-col float-left w-[45%] items-center justify-center border-r border-lightgray-sunsu">
-                  <div className="text-lg">
-                    <em className="font-bold not-italic">
-                      {comma(portfolio.paymentHistory.avgPrice)}
-                    </em>
-                    원
-                  </div>
-                  <div className="text-sm text-gray-sunsu">평균</div>
-                </div>
-                <div className="flex flex-col float-right w-[55%] items-center justify-center">
-                  <div className="flex items-center pb-[5px] border-b border-lightgray-sunsu">
-                    <span className="mr-2.5 text-sm text-gray-sunsu">최대</span>
-                    <span className="text-lg">
-                      <em className="font-bold not-italic">
-                        {comma(portfolio.paymentHistory.maxPrice)}
-                      </em>
-                      원
-                    </span>
-                  </div>
-                  <div className="flex items-center pt-[5px]">
-                    <span className="mr-2.5 text-sm text-gray-sunsu">최소</span>
-                    <span className="text-lg">
-                      <em className="font-bold not-italic">
-                        {comma(portfolio.paymentHistory.minPrice)}
-                      </em>
-                      원
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                {portfolio.paymentHistory.payments?.map((payment, idx) => (
-                  <Button
-                    onClick={() => {
-                      setPayment(payment);
-                      setHistoryBottomSheetOpen(true);
-                    }}
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={idx}
-                    className="block w-full mt-3"
-                  >
-                    <div className="flex text-sm items-center">
-                      <div className="inline text-gray-sunsu pl-2.5">
-                        {payment.confirmedAt}
-                      </div>
-                      <div className="inline ml-auto">
-                        <em className="font-bold not-italic">
-                          {comma(payment.price)}
-                        </em>
-                        원
-                      </div>
-                      <div className="inline mx-2.5">
-                        <RightArrow />
-                      </div>
-                    </div>
-                  </Button>
-                ))}
-              </div>
-            </>
+            <PaymentsHistorySection
+              portfolio={portfolio}
+              setHistoryBottomSheetOpen={setHistoryBottomSheetOpen}
+            />
           ) : (
-            <div className="flex h-[46px] justify-between">
-              <div className="text-sm mr-[10px] flex flex-col">
-                <span>이전 매칭 내역을 확인하려면</span>
-                <span>순수 멤버십을 결제하셔야 합니다.</span>
-              </div>
-              <div className="inline w-[120px]">
-                <Button
-                  onClick={handleOpenPaymentBottomSheet}
-                  className="block w-full h-full rounded-[10px] font-normal text-sm text-black border-solid border-skyblue-sunsu border-2 hover:bg-blue-sunsu hover:text-white"
-                >
-                  결제하기
-                </Button>
-              </div>
-            </div>
+            <MembershipPaySection
+              handleOpenPaymentBottomSheet={handleOpenPaymentBottomSheet}
+            />
           )}
         </div>
       </div>
