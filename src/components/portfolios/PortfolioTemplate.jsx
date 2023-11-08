@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHander";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
-import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
 import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
 import EmptySearchResult from "./EmptySearchResult";
@@ -12,11 +11,11 @@ import PortfolioSearchBar from "./PortfolioSearchBar";
 import SearchHeaderRow from "./SearchHeaderRow";
 
 const PortfolioTemplate = () => {
-  const dispatch = useDispatch();
   const bottomObserver = useRef(null);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [isFilterFormOpen, setIsFilterFormOpen] = useState(false);
   const [searchParams] = useSearchParams();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const [name, setName] = useState(searchParams.get("name") || "");
   const [selectedRegion, setSelectedRegion] = useState(null);
@@ -83,8 +82,8 @@ const PortfolioTemplate = () => {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      openSeverErrorBottomSheet(dispatch); // 현재 msw에서 가끔씩 404에러 발생을 서버에러로 대체 처리중
+      console.log(error);
+      defaultErrorHandler(error);
     }
   }, [error]);
 
@@ -120,7 +119,7 @@ const PortfolioTemplate = () => {
         />
       )}
       <Container>
-        {portfolios.length === 0 ? (
+        {portfolios?.length === 0 ? (
           <EmptySearchResult />
         ) : (
           <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
