@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { comma, uncomma } from "../../utils/convert";
 import { openMessageBottomSheet } from "../../utils/handleBottomSheet";
 
+// done test
 const ItemsInfo = forwardRef(({ items, setItems }, ref) => {
   const dispatch = useDispatch();
   const handleOnAddItem = () => {

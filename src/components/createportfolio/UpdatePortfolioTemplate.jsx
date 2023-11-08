@@ -13,6 +13,7 @@ import Spinner from "../common/atoms/Spinner";
 import ItemsInfo from "./ItemsInfo";
 import SelectRegion from "./SelectRegion";
 
+// done test
 export default function UpdatePortfoliotemplate({ portfolio }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useState(portfolio?.location);
