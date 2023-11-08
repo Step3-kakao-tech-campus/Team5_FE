@@ -4,11 +4,14 @@ import { deleteAccount } from "../../apis/user";
 import { logOut } from "../../store/slices/userSlice";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHander";
 
+// test 완료
 export default function DeleteAccountBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -25,6 +28,7 @@ export default function DeleteAccountBottomSheet({ onClose }) {
       }
     } catch (error) {
       console.log(error);
+      defaultErrorHandler(error);
     }
     setIsSubmitting(false);
   };
