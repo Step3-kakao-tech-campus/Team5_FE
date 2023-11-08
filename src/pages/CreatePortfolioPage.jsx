@@ -7,16 +7,24 @@ import CreatePortfolioTemplate from "../components/createportfolio/CreatePortfol
 import UpdatePortfoliotemplate from "../components/createportfolio/UpdatePortfolioTemplate";
 import usePreventGoBack from "../hooks/usePreventGoBack";
 import usePreventRefresh from "../hooks/usePreventRefresh";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHander";
 
 export default function CreatePortfolioPage() {
-  const { isLoading, data: portfolio } = useQuery(
-    ["portfolios/self"],
-    getPortfolioSelf,
-  );
+  const { defaultErrorHandler } = useDefaultErrorHandler();
+  const {
+    isLoading,
+    data: portfolio,
+    error,
+  } = useQuery(["portfolios/self"], getPortfolioSelf, {
+    keepPreviousData: true,
+  });
 
   usePreventRefresh();
   usePreventGoBack();
 
+  if (error) {
+    defaultErrorHandler(error);
+  }
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-full">
@@ -28,7 +36,7 @@ export default function CreatePortfolioPage() {
   return (
     <div className="w-full h-full">
       <CreatePortfolioHeader />
-      {!isLoading && portfolio.plannerName ? (
+      {!isLoading && portfolio?.plannerName ? (
         <UpdatePortfoliotemplate portfolio={portfolio} />
       ) : (
         <CreatePortfolioTemplate />
