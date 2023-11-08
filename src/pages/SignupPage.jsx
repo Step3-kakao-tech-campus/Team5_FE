@@ -3,6 +3,7 @@ import { getDatabase, ref, set } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { signup } from "../apis/user";
+import BackButtonHeader from "../components/common/BackButtonHeader";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
 import SignupCompletionSheet from "../components/common/accounts/SignupCompletionSheet";
@@ -10,13 +11,11 @@ import Box from "../components/common/atoms/Box";
 import Button from "../components/common/atoms/Button";
 import Container from "../components/common/atoms/Container";
 import Label from "../components/common/atoms/Label";
+import Timer from "../components/common/atoms/Timer";
 import "../firebase";
 import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
-import Timer from "../components/common/atoms/Timer";
-import { sendAuthCode, verifyAuthCode } from "../apis/email";
-import BackButtonHeader from "../components/common/BackButtonHeader";
 
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,14 +29,12 @@ export default function SignupPage() {
   const password2InputRef = useRef(null);
   const agreePolicyRef = useRef(null);
   const codeRef = useRef(null);
-  const [isSendingCode, setIsSendingCode] = useState(false);
-  const [isValidatingCode, setIsValidatingCode] = useState(false);
   const [isSentCode, setIsSentCode] = useState(false);
   const [isPassAuthCode, setIsPassAuthCode] = useState(false);
   const [time, setTime] = useState(60 * 10);
 
   const { values, handleChange, setValues } = useInput({
-    role: "",
+    role: "couple",
     email: "",
     password: "",
     password2: "",
@@ -56,44 +53,28 @@ export default function SignupPage() {
       emailInputRef.current.focus();
       return;
     }
-    setIsSendingCode(true);
-    try {
-      await sendAuthCode({ email: values.email });
-      if (isSentCode) {
-        setTime(60 * 10);
-      }
-    } catch (error) {
-      if (error.response.data.error.status === 2002) {
-        setErrorMessage("이미 가입된 이메일입니다.");
-        emailInputRef.current.focus();
-        return;
-      }
-      setErrorMessage("인증코드 전송에 실패했습니다.");
-      return;
+    if (isSentCode) {
+      setTime(60 * 10);
     }
-    setIsSendingCode(false);
     setIsSentCode(true);
   };
 
   const handleValidateCode = async () => {
+    if (!isSentCode) {
+      setErrorMessage("인증코드를 전송해주세요.");
+      return;
+    }
     if (!values.code) {
       setErrorMessage("인증코드를 입력해주세요.");
       codeRef.current.focus();
       return;
     }
-    if (!isSentCode) {
-      setErrorMessage("인증코드를 전송해주세요.");
+    if (values.code !== "999999") {
+      setErrorMessage("인증코드는 999999입니다.");
+      codeRef.current.focus();
       return;
     }
-    setIsValidatingCode(true);
-    try {
-      await verifyAuthCode({ email: values.email, code: values.code });
-      setIsPassAuthCode(true);
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("인증코드가 일치하지 않습니다.");
-    }
-    setIsValidatingCode(false);
+    setIsPassAuthCode(true);
   };
 
   const setUserRole = (roleNumber) => {
@@ -254,7 +235,6 @@ export default function SignupPage() {
             />
             <button
               type="button"
-              disabled={isSendingCode}
               className="absolute right-[6px] h-[38px] bottom-[6px] w-[100px] border rounded-[10px] bg-blue-sunsu text-white text-xs"
               onClick={handleSendCode}
             >
@@ -268,7 +248,7 @@ export default function SignupPage() {
               type="code"
               name="code"
               label="인증코드"
-              placeholder="인증코드"
+              placeholder="인증코드는 999999입니다."
               value={values.code}
               onChange={handleChange}
               className="relative pt-[15px] w-full"
@@ -282,7 +262,6 @@ export default function SignupPage() {
                 ))}
               <button
                 type="button"
-                disabled={isValidatingCode}
                 onClick={handleValidateCode}
                 className=" h-[38px] w-[50px] border rounded-[10px] bg-blue-sunsu text-white text-xs"
               >
