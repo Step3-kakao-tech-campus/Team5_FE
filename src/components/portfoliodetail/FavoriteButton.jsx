@@ -63,9 +63,9 @@ export default function FavoriteButton({ isLiked }) {
       disabled={isSubmitting}
     >
       {isLogged && isLiked ? (
-        <HeartOutlinedIcon className="w-[20px] h-[20px] object-cover" />
-      ) : (
         <HeartIcon className="w-[20px] h-[20px] object-cover" />
+      ) : (
+        <HeartOutlinedIcon className="w-[20px] h-[20px] object-cover" />
       )}
       <span className="font-bold">찜하기</span>
     </Button>
