@@ -7,23 +7,23 @@ import {
   set,
 } from "firebase/database";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createChatRoom } from "../../apis/chat";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import "../../firebase";
-import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import Button from "../common/atoms/Button";
 import DivideBar from "../common/atoms/DivideBar";
 import PaymentBottomSheet from "../common/bottomsheet/PaymentBottomSheet";
 import DescriptionRow from "./DescriptionRow";
 import FavoriteButton from "./FavoriteButton";
 import HistoryBottomSheet from "./HistoryBottomSheet";
+import MembershipPaySection from "./MembershipPaySection";
 import PaymentsHistorySection from "./PaymentsHistorySection";
 import PlannerInfoRow from "./PlannerInfoRow";
 import PortfolioCarousel from "./PortfolioCarousel";
-import MembershipPaySection from "./MembershipPaySection";
-import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
   const { isLogged, userInfo } = useSelector((state) => state.user);
@@ -31,12 +31,12 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
   const [historyBottomSheetOpen, setHistoryBottomSheetOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { defaultErrorHandler } = useDefaultErrorHandler();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
 
   const handleOpenPaymentBottomSheet = () => {
     if (!isLogged) {
-      openLoginBottomSheet(dispatch);
+      openBottomSheetHandler({ bottomSheet: "loginBottomSheet" });
       return;
     }
     setPaymentBottomSheetOpen(true);
@@ -44,7 +44,7 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
 
   const handleOnCreateChatRoom = async () => {
     if (!isLogged) {
-      openLoginBottomSheet(dispatch);
+      openBottomSheetHandler({ bottomSheet: "loginBottomSheet" });
       return;
     }
     setIsSubmitting(true);

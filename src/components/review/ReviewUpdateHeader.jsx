@@ -1,9 +1,8 @@
-import { useDispatch } from "react-redux";
-import { openDeleteReviewBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import BackButtonHeader from "../common/BackButtonHeader";
 
 export default function ReviewUpdateHeader() {
-  const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   return (
     <BackButtonHeader>
       <span className="w-full text-sm text-center font-medium ">
@@ -11,7 +10,9 @@ export default function ReviewUpdateHeader() {
       </span>
       <button
         className="absolute text-sm text-right font-bold right-3 text-red-600"
-        onClick={() => openDeleteReviewBottomSheet(dispatch)}
+        onClick={() =>
+          openBottomSheetHandler({ bottomSheet: "deleteReviewBottomSheet" })
+        }
       >
         삭제하기
       </button>

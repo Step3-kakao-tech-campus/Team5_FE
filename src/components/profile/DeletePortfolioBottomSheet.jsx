@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { deletePortfolio } from "../../apis/portfolio";
-import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
 
@@ -9,7 +8,7 @@ import BottomSheet from "../common/bottomsheet/BottomSheet";
 export default function DeletePortfolioBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -27,7 +26,7 @@ export default function DeletePortfolioBottomSheet({ onClose }) {
       console.log(error);
       if (error?.response.status === 500) {
         onClose();
-        openSeverErrorBottomSheet(dispatch);
+        openBottomSheetHandler({ bottomSheet: "serverErrorBottomSheet" });
       }
     }
     setIsSubmitting(false);

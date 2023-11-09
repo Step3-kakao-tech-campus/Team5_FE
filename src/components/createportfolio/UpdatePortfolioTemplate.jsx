@@ -1,10 +1,9 @@
 import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useDispatch } from "react-redux";
 import { updatePortfolio } from "../../apis/portfolio";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import { comma, uncomma } from "../../utils/convert";
-import { openMessageBottomSheet } from "../../utils/handleBottomSheet";
 import ImageUploadZone from "../common/ImageUploadZone";
 import InputGroup from "../common/accounts/InputGroup";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
@@ -15,7 +14,7 @@ import SelectRegion from "./SelectRegion";
 
 // done test
 export default function UpdatePortfolioTemplate({ portfolio }) {
-  const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   const [location, setLocation] = useState(portfolio?.location);
   const [items, setItems] = useState([
     ...portfolio.items.map((item) => {
@@ -41,7 +40,7 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
   const partnerCompanyRef = useRef(null);
 
   const openMessageBottomSheetAndFocus = (message, ref) => {
-    openMessageBottomSheet(dispatch, message);
+    openBottomSheetHandler({ bottomSheet: "messageBottomSheet", message });
     ref.current?.focus();
   };
 
@@ -83,7 +82,10 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
       return;
     }
     if (images.length === 0) {
-      openMessageBottomSheet(dispatch, "포트폴리오 사진을 추가해주세요.");
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "포트폴리오 사진을 추가해주세요.",
+      });
       return;
     }
     const portfolioData = {
@@ -107,19 +109,19 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
       onSuccess: () => {
         queryClient.invalidateQueries("portfolios/self");
         setIsSubmitting(false);
-        openMessageBottomSheet(
-          dispatch,
-          "포트폴리오가 성공적으로 수정되었습니다.",
-        );
+        openBottomSheetHandler({
+          bottomSheet: "messageBottomSheet",
+          message: "포트폴리오가 성공적으로 수정되었습니다.",
+        });
       },
       onError: (error) => {
         // 디폴트 에러 핸들러를 적용하면 작성한게 사라지므로 따로 처리
         console.log(error);
         setIsSubmitting(false);
-        openMessageBottomSheet(
-          dispatch,
-          "포트폴리오를 수정하는데 실패했습니다.",
-        );
+        openBottomSheetHandler({
+          bottomSheet: "messageBottomSheet",
+          message: "포트폴리오를 수정하는데 실패했습니다.",
+        });
       },
     });
   };

@@ -1,10 +1,9 @@
 import { CircularProgress, Rating } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { updateReview } from "../../apis/review";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import { ReactComponent as EmptyStarIcon } from "../../assets/star-03.svg";
-import { openMessageBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import ImageUploadZone from "../common/ImageUploadZone";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
@@ -12,7 +11,7 @@ import Spinner from "../common/atoms/Spinner";
 import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 
 export default function ReviewUpdateTemplate({ review }) {
-  const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   // eslint-disable-next-line prefer-destructuring
   const plannerName = review.plannerName;
   const [stars, setStars] = useState(review.stars);
@@ -28,18 +27,24 @@ export default function ReviewUpdateTemplate({ review }) {
 
   const handleSubmit = async () => {
     if (stars === null) {
-      openMessageBottomSheet(dispatch, "별점을 입력해주세요.");
-
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "별점을 입력해주세요.",
+      });
       return;
     }
     if (contentRef.current.value === "") {
-      openMessageBottomSheet(dispatch, "리뷰 내용을 입력해주세요.");
-
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "리뷰 내용을 입력해주세요.",
+      });
       return;
     }
     if (images.length === 0) {
-      openMessageBottomSheet(dispatch, "사진을 등록해주세요.");
-
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "사진을 등록해주세요.",
+      });
       return;
     }
     setIsSubmitting(true);

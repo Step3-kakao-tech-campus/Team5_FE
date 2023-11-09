@@ -1,10 +1,9 @@
 import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useDispatch } from "react-redux";
 import { createPortfolio } from "../../apis/portfolio";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import { uncomma } from "../../utils/convert";
-import { openMessageBottomSheet } from "../../utils/handleBottomSheet";
 import ImageUploadZone from "../common/ImageUploadZone";
 import InputGroup from "../common/accounts/InputGroup";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
@@ -15,12 +14,12 @@ import SelectRegion from "./SelectRegion";
 
 // done test
 export default function CreatePortfolioTemplate() {
-  const dispatch = useDispatch();
   const [location, setLocation] = useState("");
   const [items, setItems] = useState([{ itemTitle: "", itemPrice: "0" }]);
   const [images, setImages] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const [isUploading, setIsUploading] = useState(false);
+  const { openBottomSheetHandler } = useOpenBottomSheet();
 
   const nameRef = useRef(null);
   const locationRef = useRef(null);
@@ -34,7 +33,7 @@ export default function CreatePortfolioTemplate() {
   const queryClient = useQueryClient();
 
   const openMessageBottomSheetAndFocus = (message, ref) => {
-    openMessageBottomSheet(dispatch, message);
+    openBottomSheetHandler({ bottomSheet: "messageBottomSheet", message });
     ref.current?.focus();
   };
 
@@ -75,7 +74,10 @@ export default function CreatePortfolioTemplate() {
       return;
     }
     if (images.length === 0) {
-      openMessageBottomSheet(dispatch, "포트폴리오 사진을 추가해주세요.");
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "포트폴리오 사진을 추가해주세요.",
+      });
       return;
     }
     const portfolioData = {
@@ -99,19 +101,19 @@ export default function CreatePortfolioTemplate() {
       onSuccess: () => {
         queryClient.invalidateQueries("portfolios/self");
         setIsSubmitting(false);
-        openMessageBottomSheet(
-          dispatch,
-          "포트폴리오가 성공적으로 저장되었습니다.",
-        );
+        openBottomSheetHandler({
+          bottomSheet: "messageBottomSheet",
+          message: "포트폴리오가 성공적으로 저장되었습니다.",
+        });
       },
       onError: (error) => {
         // 디폴트 에러 핸들러를 적용하면 작성한게 사라지므로 따로 처리
         console.log(error);
         setIsSubmitting(false);
-        openMessageBottomSheet(
-          dispatch,
-          "포트폴리오를 저장하는데 실패했습니다.",
-        );
+        openBottomSheetHandler({
+          bottomSheet: "messageBottomSheet",
+          message: "포트폴리오를 저장하는데 실패했습니다.",
+        });
       },
     });
   };
