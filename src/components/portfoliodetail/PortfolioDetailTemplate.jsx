@@ -23,7 +23,7 @@ import PaymentsHistorySection from "./PaymentsHistorySection";
 import PlannerInfoRow from "./PlannerInfoRow";
 import PortfolioCarousel from "./PortfolioCarousel";
 import MembershipPaySection from "./MembershipPaySection";
-import useDefaultErrorHandler from "../../hooks/useDefaultErrorHander";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const PortfolioDetailTemplate = ({ portfolio }) => {
   const { isLogged, userInfo } = useSelector((state) => state.user);

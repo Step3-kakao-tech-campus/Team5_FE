@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { savePayment } from "../../../apis/payments";
-import useDefaultErrorHandler from "../../../hooks/useDefaultErrorHander";
+import useDefaultErrorHandler from "../../../hooks/useDefaultErrorHandler";
 import { sunsuMembershipPrice } from "../../../utils/constants";
 import { comma } from "../../../utils/convert";
 import Button from "../atoms/Button";

@@ -6,7 +6,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { paymentApprovalAndUserUpgrade } from "../apis/payments";
 import GNBBOX from "../components/common/GNBBOX";
 import { fetchUserInfo } from "../store/slices/userSlice";
-import useDefaultErrorHandler from "../hooks/useDefaultErrorHander";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 export default function PaymentCompletePage() {
   const [isApproving, setIsApproving] = useState(true);

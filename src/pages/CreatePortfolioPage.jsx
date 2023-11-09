@@ -7,7 +7,7 @@ import CreatePortfolioTemplate from "../components/createportfolio/CreatePortfol
 import UpdatePortfoliotemplate from "../components/createportfolio/UpdatePortfolioTemplate";
 import usePreventGoBack from "../hooks/usePreventGoBack";
 import usePreventRefresh from "../hooks/usePreventRefresh";
-import useDefaultErrorHandler from "../hooks/useDefaultErrorHander";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 export default function CreatePortfolioPage() {
   const { defaultErrorHandler } = useDefaultErrorHandler();

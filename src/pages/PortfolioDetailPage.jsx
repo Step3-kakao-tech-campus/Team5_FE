@@ -5,7 +5,7 @@ import { getPortfolioDetail } from "../apis/portfolio";
 import Spinner from "../components/common/atoms/Spinner";
 import PortfolioDetailHeader from "../components/portfoliodetail/PortfolioDetailHeader";
 import PortfolioDetailTemplate from "../components/portfoliodetail/PortfolioDetailTemplate";
-import useDefaultErrorHandler from "../hooks/useDefaultErrorHander";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 // done test
 const PortfolioDetailPage = () => {

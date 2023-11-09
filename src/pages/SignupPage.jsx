@@ -15,7 +15,7 @@ import "../firebase";
 import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
-import useDefaultErrorHander from "../hooks/useDefaultErrorHander";
+import useDefaultErrorHander from "../hooks/useDefaultErrorHandler";
 import CloseButtonPage from "../components/common/CloseButtonPage";
 import PrivacyPolicyData from "../components/common/PrivacyPolicyData";
 import TermsData from "../components/common/TermsData";
