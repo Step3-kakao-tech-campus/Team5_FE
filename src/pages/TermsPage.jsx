@@ -1,6 +1,13 @@
+import { useEffect } from "react";
 import BackButtonHeader from "../components/common/BackButtonHeader";
 
 const TermsPage = () => {
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+    });
+  }, []);
+
   return (
     <>
       <BackButtonHeader>
