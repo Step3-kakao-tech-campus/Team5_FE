@@ -32,3 +32,13 @@ export function openDeleteReviewBottomSheet(dispatch) {
     }),
   );
 }
+
+export function openMessageBottomSheet(dispatch, message) {
+  dispatch(
+    openBottomSheet({
+      bottomSheetType: "messageBottomSheet",
+      isOpen: true,
+      message,
+    }),
+  );
+}

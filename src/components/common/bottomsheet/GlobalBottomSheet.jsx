@@ -5,9 +5,12 @@ import RequiredLoginBottomSheet from "./RequiredLoginBottomSheet";
 import ServerErrorBottomSheet from "./ServerErrorBottomSheet";
 import NavigateReviewBottomSheet from "./NavigateReviewBottomSheet";
 import DeleteReviewBottomSheet from "../../review/DeleteReviewBottomSheet";
+import MessageBottomSheet from "./MessageBottomSheet";
 
 export default function GlobalBottomSheet() {
-  const { bottomSheetType, isOpen } = useSelector((state) => state.bottomSheet);
+  const { bottomSheetType, isOpen, message } = useSelector(
+    (state) => state.bottomSheet,
+  );
   const dispatch = useDispatch();
 
   const BOTTOMSHEET_TYPES = {
@@ -15,6 +18,7 @@ export default function GlobalBottomSheet() {
     SERVER_ERROR: "serverErrorBottomSheet",
     NAVIGATE_REVIEW: "navigateReviewBottomSheet",
     DELETE_REVIEW: "deleteReviewBottomSheet",
+    MESSAGE: "messageBottomSheet",
   };
 
   const BOTTOMSHEET_COMPONENTS = [
@@ -44,6 +48,15 @@ export default function GlobalBottomSheet() {
       type: BOTTOMSHEET_TYPES.DELETE_REVIEW,
       component: (
         <DeleteReviewBottomSheet onClose={() => dispatch(closeBottomSheet())} />
+      ),
+    },
+    {
+      type: BOTTOMSHEET_TYPES.MESSAGE,
+      component: (
+        <MessageBottomSheet
+          message={message}
+          onClose={() => dispatch(closeBottomSheet())}
+        />
       ),
     },
   ];

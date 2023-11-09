@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   bottomSheetType: "",
   isOpen: false,
+  message: "",
 };
 
 export const bottomSheetSlice = createSlice({
@@ -10,7 +11,8 @@ export const bottomSheetSlice = createSlice({
   initialState,
   reducers: {
     openBottomSheet: (state, action) => {
-      const { bottomSheetType } = action.payload;
+      const { bottomSheetType, message } = action.payload;
+      state.message = message;
       state.bottomSheetType = bottomSheetType;
       state.isOpen = true;
     },

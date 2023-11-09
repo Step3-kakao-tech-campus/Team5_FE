@@ -14,8 +14,8 @@ export default function useFetchPortfolios({
       getPortfolioList(pageParam, name, location, minPrice, maxPrice),
     {
       getNextPageParam: (lastPage) => {
-        if (lastPage.cursor) {
-          return lastPage.cursor;
+        if (lastPage?.cursor) {
+          return lastPage?.cursor;
         }
         return undefined;
       },
@@ -23,8 +23,8 @@ export default function useFetchPortfolios({
     },
   );
 
-  const allFetchedPortfolios = infiniteQuery.data?.pages.flatMap(
-    (page) => page.data,
+  const allFetchedPortfolios = infiniteQuery?.data?.pages.flatMap(
+    (page) => page?.data,
   );
 
   return {

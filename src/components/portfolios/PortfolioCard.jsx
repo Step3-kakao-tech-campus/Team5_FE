@@ -1,18 +1,21 @@
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { addFavorite, deleteFavorite } from "../../apis/favorite";
 import { ReactComponent as HeartOutlinedIcon } from "../../assets/heart-03.svg";
 import { ReactComponent as HeartIcon } from "../../assets/heart-04.svg";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import { comma } from "../../utils/convert";
+import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import Card from "../common/atoms/Card";
 import SquarePhoto from "../common/atoms/SquarePhoto";
 
+// done test
 const PortfolioCard = ({ portfolio }) => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const { isLogged } = useSelector((state) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const casheKeyRef = useRef(
@@ -33,6 +36,9 @@ const PortfolioCard = ({ portfolio }) => {
         },
         onError: (error) => {
           console.log(error);
+          if (error.response.status === 500) {
+            openSeverErrorBottomSheet(dispatch);
+          }
           setIsSubmitting(false);
         },
       },
@@ -50,6 +56,9 @@ const PortfolioCard = ({ portfolio }) => {
         },
         onError: (error) => {
           console.log(error);
+          if (error.response.status === 500) {
+            openSeverErrorBottomSheet(dispatch);
+          }
           setIsSubmitting(false);
         },
       },
@@ -59,7 +68,7 @@ const PortfolioCard = ({ portfolio }) => {
   return (
     <Card to={`/portfolios/${portfolio.id}`} className="portfolio-card">
       <SquarePhoto
-        src={portfolio.image.substring(1, portfolio.image.length)}
+        src={portfolio.image}
         alt={portfolio.plannerName}
         className="portfolio-image"
       />

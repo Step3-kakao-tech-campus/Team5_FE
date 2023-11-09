@@ -3,6 +3,7 @@ import { getDatabase, ref, set } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { signup } from "../apis/user";
+import BackButtonHeader from "../components/common/BackButtonHeader";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
 import SignupCompletionSheet from "../components/common/accounts/SignupCompletionSheet";
@@ -10,14 +11,14 @@ import Box from "../components/common/atoms/Box";
 import Button from "../components/common/atoms/Button";
 import Container from "../components/common/atoms/Container";
 import Label from "../components/common/atoms/Label";
+import Timer from "../components/common/atoms/Timer";
 import "../firebase";
 import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
-import Timer from "../components/common/atoms/Timer";
-import { sendAuthCode, verifyAuthCode } from "../apis/email";
-import BackButtonHeader from "../components/common/BackButtonHeader";
+import useDefaultErrorHander from "../hooks/useDefaultErrorHander";
 
+// 테스트 완료(찬호)
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [activeButton, setActiveButton] = useState(1);
@@ -30,14 +31,13 @@ export default function SignupPage() {
   const password2InputRef = useRef(null);
   const agreePolicyRef = useRef(null);
   const codeRef = useRef(null);
-  const [isSendingCode, setIsSendingCode] = useState(false);
-  const [isValidatingCode, setIsValidatingCode] = useState(false);
   const [isSentCode, setIsSentCode] = useState(false);
   const [isPassAuthCode, setIsPassAuthCode] = useState(false);
   const [time, setTime] = useState(60 * 10);
+  const { defaultErrorHandler } = useDefaultErrorHander();
 
   const { values, handleChange, setValues } = useInput({
-    role: "",
+    role: "couple",
     email: "",
     password: "",
     password2: "",
@@ -45,55 +45,41 @@ export default function SignupPage() {
     code: "",
   });
 
+  // eslint-disable-next-line no-shadow
+  const setErrorMessageAndFocus = (message, ref) => {
+    setErrorMessage(message);
+    ref.current.focus();
+  };
+
   const handleSendCode = async () => {
     if (!values.email) {
-      setErrorMessage("이메일을 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일을 입력해주세요.", emailInputRef);
       return;
     }
     if (!validateEmail(values.email)) {
-      setErrorMessage("이메일 형식으로 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일 형식으로 입력해주세요.", emailInputRef);
       return;
     }
-    setIsSendingCode(true);
-    try {
-      await sendAuthCode({ email: values.email });
-      if (isSentCode) {
-        setTime(60 * 10);
-      }
-    } catch (error) {
-      if (error.response.data.error.status === 2002) {
-        setErrorMessage("이미 가입된 이메일입니다.");
-        emailInputRef.current.focus();
-        return;
-      }
-      setErrorMessage("인증코드 전송에 실패했습니다.");
-      return;
+    if (isSentCode) {
+      setTime(60 * 10);
     }
-    setIsSendingCode(false);
     setIsSentCode(true);
   };
 
   const handleValidateCode = async () => {
-    if (!values.code) {
-      setErrorMessage("인증코드를 입력해주세요.");
-      codeRef.current.focus();
-      return;
-    }
     if (!isSentCode) {
-      setErrorMessage("인증코드를 전송해주세요.");
+      setErrorMessageAndFocus("인증코드를 전송해주세요.", emailInputRef);
       return;
     }
-    setIsValidatingCode(true);
-    try {
-      await verifyAuthCode({ email: values.email, code: values.code });
-      setIsPassAuthCode(true);
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("인증코드가 일치하지 않습니다.");
+    if (!values.code) {
+      setErrorMessageAndFocus("인증코드를 입력해주세요.", codeRef);
+      return;
     }
-    setIsValidatingCode(false);
+    if (values.code !== "999999") {
+      setErrorMessageAndFocus("인증코드가 일치하지 않습니다.", codeRef);
+      return;
+    }
+    setIsPassAuthCode(true);
   };
 
   const setUserRole = (roleNumber) => {
@@ -111,48 +97,48 @@ export default function SignupPage() {
 
   const validateInput = () => {
     if (!values.username) {
-      setErrorMessage("이름을 입력해주세요.");
-      nameInputRef.current.focus();
+      setErrorMessageAndFocus("이름을 입력해주세요.", nameInputRef);
       return false;
     }
     if (!values.email) {
-      setErrorMessage("이메일을 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일을 입력해주세요.", emailInputRef);
       return false;
     }
     if (!validateEmail(values.email)) {
-      setErrorMessage("이메일 형식으로 입력해주세요.");
-      emailInputRef.current.focus();
+      setErrorMessageAndFocus("이메일 형식으로 입력해주세요.", emailInputRef);
       return false;
     }
     if (!isPassAuthCode) {
-      setErrorMessage("이메일 인증을 완료해주세요.");
-      codeRef.current.focus();
+      setErrorMessageAndFocus("이메일 인증을 완료해주세요.", codeRef);
       return false;
     }
     if (!values.password) {
-      setErrorMessage("비밀번호를 입력해주세요.");
-      passwordInputRef.current.focus();
+      setErrorMessageAndFocus("비밀번호를 입력해주세요.", passwordInputRef);
       return false;
     }
     if (!validatePassword(values.password)) {
-      setErrorMessage("비밀번호 형식에 맞게 입력해주세요.");
-      passwordInputRef.current.focus();
+      setErrorMessageAndFocus(
+        "비밀번호 형식에 맞게 입력해주세요.",
+        passwordInputRef,
+      );
       return false;
     }
     if (!values.password2) {
-      setErrorMessage("비밀번호 확인을 입력해주세요.");
-      password2InputRef.current.focus();
+      setErrorMessageAndFocus(
+        "비밀번호 확인을 입력해주세요.",
+        password2InputRef,
+      );
       return false;
     }
     if (!agreePolicy) {
-      setErrorMessage("개인정보 제3자 제공 동의에 동의해주세요.");
-      agreePolicyRef.current.focus();
+      setErrorMessageAndFocus("이용약관에 동의해주세요.", agreePolicyRef);
       return false;
     }
     if (values.password !== values.password2) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
-      passwordInputRef.current.focus();
+      setErrorMessageAndFocus(
+        "비밀번호가 일치하지 않습니다.",
+        password2InputRef,
+      );
       return false;
     }
     return true;
@@ -161,6 +147,13 @@ export default function SignupPage() {
   const handleSubmit = async () => {
     if (!validateInput()) return;
     try {
+      console.log({
+        role: values.role,
+        email: values.email,
+        password: values.password,
+        password2: values.password2,
+        username: values.username,
+      });
       setIsSubmitting(true);
       const res = await signup({
         role: values.role,
@@ -177,8 +170,12 @@ export default function SignupPage() {
         setIsCompletionSheetOpen(true);
       }
     } catch (error) {
-      console.log(error);
-      setErrorMessage(error.response.data.message);
+      const customError = error?.response?.data?.error;
+      if (customError) {
+        setErrorMessage(error?.response?.data?.error?.message);
+        return;
+      }
+      defaultErrorHandler(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -254,7 +251,6 @@ export default function SignupPage() {
             />
             <button
               type="button"
-              disabled={isSendingCode}
               className="absolute right-[6px] h-[38px] bottom-[6px] w-[100px] border rounded-[10px] bg-blue-sunsu text-white text-xs"
               onClick={handleSendCode}
             >
@@ -268,7 +264,7 @@ export default function SignupPage() {
               type="code"
               name="code"
               label="인증코드"
-              placeholder="인증코드"
+              placeholder="인증코드는 999999입니다."
               value={values.code}
               onChange={handleChange}
               className="relative pt-[15px] w-full"
@@ -282,7 +278,6 @@ export default function SignupPage() {
                 ))}
               <button
                 type="button"
-                disabled={isValidatingCode}
                 onClick={handleValidateCode}
                 className=" h-[38px] w-[50px] border rounded-[10px] bg-blue-sunsu text-white text-xs"
               >
@@ -344,7 +339,7 @@ export default function SignupPage() {
             />
           )}
           {isSubmitting ? (
-            <div className=" w-full h-[50px] mt-[30px] bg-zinc-200 rounded-[10px] flex items-center justify-center mb-[50px]">
+            <div className=" w-full h-[50px] mt-[5px] bg-zinc-200 rounded-[10px] flex items-center justify-center mb-[50px]">
               <CircularProgress
                 color="primary"
                 style={{ width: "30px", height: "30px" }}

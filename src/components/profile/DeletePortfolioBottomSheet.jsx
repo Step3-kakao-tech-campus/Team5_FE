@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { deletePortfolio } from "../../apis/portfolio";
+import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
 
+// done test
 export default function DeletePortfolioBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -21,6 +25,10 @@ export default function DeletePortfolioBottomSheet({ onClose }) {
       }
     } catch (error) {
       console.log(error);
+      if (error?.response.status === 500) {
+        onClose();
+        openSeverErrorBottomSheet(dispatch);
+      }
     }
     setIsSubmitting(false);
   };

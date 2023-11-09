@@ -4,7 +4,9 @@ import { deleteAccount } from "../../apis/user";
 import { logOut } from "../../store/slices/userSlice";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
+import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
 
+// test 완료
 export default function DeleteAccountBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,6 +27,10 @@ export default function DeleteAccountBottomSheet({ onClose }) {
       }
     } catch (error) {
       console.log(error);
+      if (error?.response.status === 500) {
+        onClose();
+        openSeverErrorBottomSheet(dispatch);
+      }
     }
     setIsSubmitting(false);
   };

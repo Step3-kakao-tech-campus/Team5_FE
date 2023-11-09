@@ -1,17 +1,19 @@
 import { CircularProgress, Rating } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { createReview } from "../../apis/review";
+import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
+import { ReactComponent as EmptyStarIcon } from "../../assets/star-03.svg";
+import { openMessageBottomSheet } from "../../utils/handleBottomSheet";
 import ImageUploadZone from "../common/ImageUploadZone";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
-import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
-import WarningBottomSheet from "../common/bottomsheet/WarningBottomSheet";
-import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
-import { ReactComponent as EmptyStarIcon } from "../../assets/star-03.svg";
 import Spinner from "../common/atoms/Spinner";
+import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 
 export default function ReviewCreateTemplate() {
+  const dispatch = useDispatch();
   const { chatId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -20,28 +22,25 @@ export default function ReviewCreateTemplate() {
   const [stars, setStars] = useState(null);
   const heightRef = useRef(null);
   const contentRef = useRef(null);
-  const [isOpenWarningBottomSheet, setIsOpenWarningBottomSheet] =
-    useState(false);
   const [isOpenSuccessBottomSheet, setIsOpenSuccessBottomSheet] =
     useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
-  const [warningMessage, setWarningMessage] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
   const handleSubmit = async () => {
     if (stars === null) {
-      setWarningMessage("별점을 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
+      openMessageBottomSheet(dispatch, "별점을 입력해주세요.");
+
       return;
     }
     if (contentRef.current.value === "") {
-      setWarningMessage("리뷰 내용을 입력해주세요.");
-      setIsOpenWarningBottomSheet(true);
+      openMessageBottomSheet(dispatch, "리뷰 내용을 입력해주세요.");
+
       return;
     }
     if (images.length === 0) {
-      setWarningMessage("사진을 등록해주세요.");
-      setIsOpenWarningBottomSheet(true);
+      openMessageBottomSheet(dispatch, "사진을 등록해주세요.");
+
       return;
     }
     setIsSubmitting(true);
@@ -79,14 +78,6 @@ export default function ReviewCreateTemplate() {
 
   return (
     <>
-      {isOpenWarningBottomSheet && (
-        <WarningBottomSheet
-          message={warningMessage}
-          onClose={() => {
-            setIsOpenWarningBottomSheet(false);
-          }}
-        />
-      )}
       {isOpenSuccessBottomSheet && (
         <SuccessBottomSheet
           message="리뷰가 성공적으로 등록되었습니다."

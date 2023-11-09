@@ -5,8 +5,11 @@ import { getPortfolioDetail } from "../apis/portfolio";
 import Spinner from "../components/common/atoms/Spinner";
 import PortfolioDetailHeader from "../components/portfoliodetail/PortfolioDetailHeader";
 import PortfolioDetailTemplate from "../components/portfoliodetail/PortfolioDetailTemplate";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHander";
 
+// done test
 const PortfolioDetailPage = () => {
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const { id } = useParams();
   const { data, error, isLoading } = useQuery([`portfolio/${id}`], () =>
     getPortfolioDetail(id),
@@ -15,11 +18,9 @@ const PortfolioDetailPage = () => {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+      defaultErrorHandler(error);
     }
   }, [error]);
-
   if (isLoading) return <Spinner />;
 
   return (
