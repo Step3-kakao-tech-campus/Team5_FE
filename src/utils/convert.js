@@ -51,3 +51,7 @@ export const getReactAppApiUrl = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   return apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
 };
+
+export const scrollToTop = () => {
+  window.scrollTo(0, 0);
+};
