@@ -86,6 +86,8 @@ export default function CreatePortfolioTemplate() {
           itemPrice: uncomma(item.itemPrice),
         };
       }),
+      images,
+      title: titleRef.current.value,
       description: descriptionRef.current.value,
       location,
       career: careerRef.current.value,

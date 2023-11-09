@@ -92,7 +92,7 @@ const PortfolioCard = ({ portfolio }) => {
           원
         </div>
         <div className="planner-contract-count flex pt-[1px] text-xs text-blue-sunsu items-center">
-          {portfolio.avgStars && (
+          {portfolio.avgStars !== 0 && (
             <>
               <span className="">
                 <StarIcon className="w-[12px] h-[12px] mb-[1px] mr-[3px] justify-center" />

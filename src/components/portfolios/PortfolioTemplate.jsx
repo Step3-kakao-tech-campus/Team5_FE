@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import useDefaultErrorHandler from "../../hooks/useDefaultErrorHander";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
 import SearchBar from "../common/SearchBar";
 import Container from "../common/atoms/Container";

@@ -1,7 +1,6 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import { getDatabase, ref, set } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { signup } from "../apis/user";
 import BackButtonHeader from "../components/common/BackButtonHeader";
 import AlertBox from "../components/common/accounts/AlertBox";
@@ -16,7 +15,10 @@ import "../firebase";
 import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
-import useDefaultErrorHander from "../hooks/useDefaultErrorHander";
+import useDefaultErrorHander from "../hooks/useDefaultErrorHandler";
+import CloseButtonPage from "../components/common/CloseButtonPage";
+import PrivacyPolicyData from "../components/common/PrivacyPolicyData";
+import TermsData from "../components/common/TermsData";
 
 // 테스트 완료(찬호)
 export default function SignupPage() {
@@ -25,6 +27,8 @@ export default function SignupPage() {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompletionSheetOpen, setIsCompletionSheetOpen] = useState(false); // 회원가입 완료 시 나타나는 bottom sheet
+  const [isTermsOpen, setIsTermsOpen] = useState(false); // 이용약관
+  const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false); // 개인정보 처리방침
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -185,6 +189,31 @@ export default function SignupPage() {
     nameInputRef.current?.focus();
   }, []);
 
+  if (isTermsOpen) {
+    return (
+      <CloseButtonPage
+        onClose={() => {
+          setIsTermsOpen(false);
+        }}
+        headerName="이용약관"
+      >
+        <TermsData />
+      </CloseButtonPage>
+    );
+  }
+  if (isPrivacyPolicyOpen) {
+    return (
+      <CloseButtonPage
+        onClose={() => {
+          setIsPrivacyPolicyOpen(false);
+        }}
+        headerName="개인정보 처리방침"
+      >
+        <PrivacyPolicyData />
+      </CloseButtonPage>
+    );
+  }
+
   return (
     <Container className="h-full max-w-none">
       {isCompletionSheetOpen && (
@@ -318,15 +347,26 @@ export default function SignupPage() {
                 onChange={handleAgreement}
                 className="w-[14px] h-[14px] mt-[1px] rounded-[4px] border-lightgray-sunsu cursor-pointer accent-blue-sunsu"
               />
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="policy" className="text-xs">
-                <Link className="font-bold underline " to="/terms">
+                <button
+                  type="button"
+                  className="font-bold underline"
+                  onClick={() => {
+                    setIsTermsOpen(true);
+                  }}
+                >
                   이용약관
-                </Link>
+                </button>
                 ,{" "}
-                <Link className="font-bold underline " to="/policy">
+                <button
+                  type="button"
+                  className="font-bold underline"
+                  onClick={() => {
+                    setIsPrivacyPolicyOpen(true);
+                  }}
+                >
                   개인정보 처리방침
-                </Link>
+                </button>
                 에 동의합니다.
               </label>
             </span>

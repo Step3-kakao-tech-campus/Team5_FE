@@ -13,7 +13,7 @@ import Container from "../components/common/atoms/Container";
 import useInput from "../hooks/useInput";
 import { fetchAvatar, fetchUserInfo, logIn } from "../store/slices/userSlice";
 import { validateEmail, validatePassword } from "../utils";
-import useDefaultErrorHandler from "../hooks/useDefaultErrorHander";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 // 테스트 완료
 export default function LoginPage() {
