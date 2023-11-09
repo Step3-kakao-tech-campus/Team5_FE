@@ -1,13 +1,9 @@
-import { useEffect } from "react";
 import BackButtonHeader from "../components/common/BackButtonHeader";
 import TermsData from "../components/common/TermsData";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 const TermsPage = () => {
-  useEffect(() => {
-    window.scroll({
-      top: 0,
-    });
-  }, []);
+  useScrollToTop();
 
   return (
     <>

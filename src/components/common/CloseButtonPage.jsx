@@ -1,13 +1,9 @@
-import { useEffect } from "react";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
 import HeaderRow from "./HeaderRow";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const CloseButtonPage = ({ headerName = "", onClose, children }) => {
-  useEffect(() => {
-    window.scroll({
-      top: 0,
-    });
-  }, []);
+  useScrollToTop();
 
   return (
     <>

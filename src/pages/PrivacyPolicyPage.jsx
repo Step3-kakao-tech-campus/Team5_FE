@@ -1,13 +1,9 @@
-import { useEffect } from "react";
 import BackButtonHeader from "../components/common/BackButtonHeader";
 import PrivacyPolicyData from "../components/common/PrivacyPolicyData";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 const PrivacyPolicyPage = () => {
-  useEffect(() => {
-    window.scroll({
-      top: 0,
-    });
-  }, []);
+  useScrollToTop();
 
   return (
     <>
