@@ -14,7 +14,7 @@ import ItemsInfo from "./ItemsInfo";
 import SelectRegion from "./SelectRegion";
 
 // done test
-export default function UpdatePortfoliotemplate({ portfolio }) {
+export default function UpdatePortfolioTemplate({ portfolio }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useState(portfolio?.location);
   const [items, setItems] = useState([
