@@ -10,6 +10,7 @@ import { comma } from "../../utils/convert";
 import { quotationItemAtom } from "../../store";
 import SkeletonQuotationItem from "./SkeletonQuotationItem";
 import DeleteOneBottomSheet from "./DeleteOneBottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const QuotationCollectTemplate = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const QuotationCollectTemplate = () => {
   const setQuotationItem = useSetAtom(quotationItemAtom);
   const { userInfo } = useSelector((state) => state.user);
   const bottomObserver = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
     error,
@@ -49,8 +51,7 @@ const QuotationCollectTemplate = () => {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+      defaultErrorHandler(error);
     }
   }, [error]);
 
