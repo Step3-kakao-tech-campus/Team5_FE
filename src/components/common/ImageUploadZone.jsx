@@ -9,6 +9,8 @@ export default function ImageUploadZone({ images, setImages, setIsUploading }) {
     return new Compressor(file, {
       quality: 0.8,
       mimeType: "image/webp",
+      maxHeight: 2560,
+      maxWidth: 2560,
       success(result) {
         const newFile = new File([result], `image${new Date().getTime()}`, {
           type: result.type,
