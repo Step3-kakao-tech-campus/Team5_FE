@@ -145,17 +145,19 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
           )}
         </div>
       </div>
-      <Button
-        className="w-full h-[50px] mt-3 flex items-center justify-center bg-lightskyblue-sunsu text-sm"
-        onClick={handleOnCreateChatRoom}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? (
-          <CircularProgress size={20} />
-        ) : (
-          <span>채팅 상담 받기</span>
-        )}
-      </Button>
+      {!(userInfo.role === "planner") && (
+        <Button
+          className="w-full h-[50px] mt-3 flex items-center justify-center bg-lightskyblue-sunsu text-sm"
+          onClick={handleOnCreateChatRoom}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <CircularProgress size={20} />
+          ) : (
+            <span>채팅 상담 받기</span>
+          )}
+        </Button>
+      )}
     </div>
   );
 };
