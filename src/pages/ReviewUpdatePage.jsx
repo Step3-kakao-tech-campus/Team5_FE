@@ -1,5 +1,5 @@
-import React from "react";
-import { useQuery } from "react-query";
+import { useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { getReviewDetail } from "../apis/review";
 import Spinner from "../components/common/atoms/Spinner";
@@ -10,6 +10,7 @@ import usePreventRefresh from "../hooks/usePreventRefresh";
 
 export default function ReviewUpdatePage() {
   const { reviewId } = useParams();
+  const queryClient = useQueryClient();
   const { data: review, isLoading } = useQuery(
     [`/reviews/${reviewId}`],
     () => getReviewDetail(parseInt(reviewId, 10)),
@@ -19,6 +20,10 @@ export default function ReviewUpdatePage() {
       },
     },
   );
+
+  useEffect(() => {
+    queryClient.setQueryData([`/reviews/${reviewId}`], null);
+  }, []);
 
   usePreventRefresh();
   usePreventGoBack();
