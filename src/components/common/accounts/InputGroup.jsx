@@ -15,6 +15,7 @@ const InputGroup = forwardRef(
       className,
       onChange,
       defaultValue,
+      readOnly = false,
     },
     ref,
   ) => {
@@ -34,6 +35,7 @@ const InputGroup = forwardRef(
           onChange={onChange}
           defaultValue={defaultValue}
           placeholder={placeholder}
+          readOnly={readOnly}
           className="relative w-full h-[50px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent hover:border-blue-sunsu"
         />
       </Box>
