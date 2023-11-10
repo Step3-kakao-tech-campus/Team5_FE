@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import useFetchFavorites from "../../hooks/useFetchFavorites";
-import Spinner from "../common/atoms/Spinner";
-import Container from "../common/atoms/Container";
-import PortfolioGrid from "../portfolios/PortfolioGrid";
 import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
+import useFetchFavorites from "../../hooks/useFetchFavorites";
+import Container from "../common/atoms/Container";
+import Spinner from "../common/atoms/Spinner";
+import PortfolioGrid from "../portfolios/PortfolioGrid";
 
 const FavoriteListTemplate = () => {
   const bottomObserver = useRef(null);
@@ -16,6 +16,7 @@ const FavoriteListTemplate = () => {
     fetchNextPage,
     favorites,
     isFetching,
+    setFavorites,
   } = useFetchFavorites();
 
   useEffect(() => {
@@ -41,14 +42,17 @@ const FavoriteListTemplate = () => {
     }
   }, [error]);
 
+  console.log("list", favorites);
   if (isLoading) return <Spinner />;
-
-  console.log(favorites);
 
   return (
     <>
       <Container>
-        <PortfolioGrid portfolios={favorites} isFetching={isFetching} />
+        <PortfolioGrid
+          portfolios={favorites}
+          isFetching={isFetching}
+          setFavorites={setFavorites}
+        />
       </Container>
       <div ref={bottomObserver} />
     </>

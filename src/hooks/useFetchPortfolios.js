@@ -20,6 +20,7 @@ export default function useFetchPortfolios({
         return undefined;
       },
       keepPreviousData: true,
+      refetchOnWindowFocus: true,
     },
   );
 

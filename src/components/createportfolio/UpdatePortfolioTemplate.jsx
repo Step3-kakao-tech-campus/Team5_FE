@@ -1,11 +1,11 @@
 import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
 import { updatePortfolio } from "../../apis/portfolio";
 import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import { comma, uncomma } from "../../utils/convert";
 import ImageUploadZone from "../common/ImageUploadZone";
-import InputGroup from "../common/accounts/InputGroup";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import Spinner from "../common/atoms/Spinner";
@@ -28,10 +28,10 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
   const [isUploading, setIsUploading] = useState(false);
 
+  const { userInfo } = useSelector((state) => state.user);
   const { mutate: updateMutate } = useMutation(updatePortfolio);
   const queryClient = useQueryClient();
 
-  const nameRef = useRef(null);
   const locationRef = useRef(null);
   const itemRef = useRef(null);
   const titleRef = useRef(null);
@@ -45,11 +45,6 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
   };
 
   const handleSubmit = async () => {
-    console.log("items", items);
-    if (!nameRef.current?.value) {
-      openMessageBottomSheetAndFocus("이름을 입력해주세요.", nameRef);
-      return;
-    }
     if (!location) {
       openMessageBottomSheetAndFocus("지역을 선택해주세요.", locationRef);
       return;
@@ -89,7 +84,7 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
       return;
     }
     const portfolioData = {
-      plannerName: nameRef.current.value,
+      plannerName: userInfo.username,
       items: items.map((item) => {
         return {
           itemTitle: item.itemTitle,
@@ -131,20 +126,15 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
       {isUploading && <Spinner />}
       <div className="w-full h-full flex flex-col p-7 gap-5">
         {/* 이름 */}
-        <InputGroup
-          id="plannerName"
-          name="plannerName"
-          type="text"
-          placeholder="이름을 입력해주세요."
-          label={
-            <>
-              이름 | <span className="text-gray-sunsu">수정 불가능</span>
-            </>
-          }
-          ref={nameRef}
-          defaultValue={portfolio?.plannerName}
-          readOnly
-        />
+        <div>
+          <div className=" pb-[5px] text-xs">이름</div>
+          <input
+            type="text"
+            disabled
+            defaultValue={userInfo.username}
+            className="relative w-full h-[50px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm"
+          />
+        </div>
         {/* 지역 */}
         <SelectRegion
           location={location}

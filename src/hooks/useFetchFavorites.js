@@ -30,6 +30,7 @@ const useFetchFavorites = () => {
 
   return {
     favorites,
+    setFavorites,
     ...infiniteQuery,
   };
 };
