@@ -11,6 +11,7 @@ import { quotationItemAtom } from "../../store";
 import SkeletonQuotationItem from "./SkeletonQuotationItem";
 import DeleteOneBottomSheet from "./DeleteOneBottomSheet";
 import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
+import NoQuotationCollect from "./NoQuotationCollect";
 
 const QuotationCollectTemplate = () => {
   const navigate = useNavigate();
@@ -74,107 +75,111 @@ const QuotationCollectTemplate = () => {
           />
         )}
         <div className="mb-[24px]">
-          {chats.map((chat) => (
-            <div
-              className="py-[24px] mx-[29px] border-b border-lightgray-sunsu"
-              key={chat.chatId}
-            >
-              <div className="flex text-base text-darkgray-sunsu">
-                <span className="font-bold">{chat.partnerName}</span>
-                {userInfo.role === "planner" ? (
-                  <span className="mr-[3px]">님 |</span>
-                ) : (
-                  <span className="mx-[3px]">플래너님 |</span>
-                )}
-                {chat.status === "완료" ? (
-                  <span className="text-gray-sunsu">확정 완료</span>
-                ) : (
-                  <span className="text-blue-sunsu font-bold">진행 중</span>
-                )}
-                <Link
-                  to={`/chat/${chat.chatId}`}
-                  className="ml-auto text-sm text-darkgray-sunsu font-bold underline"
-                >
-                  채팅방으로 이동
-                </Link>
-              </div>
-              {chat.quotations?.map((quotationItem) => (
-                <div className="pt-[15px]" key={quotationItem.id}>
-                  <div className="flex">
-                    <span className="text-base text-blue-sunsu">
-                      {quotationItem.company}
-                    </span>
-                    <span className="mr-auto ml-[4px] mt-[4px] text-xs text-gray-sunsu">
-                      {"| "}
-                      {quotationItem.title}
-                    </span>
-                    <span className="text-base font-bold">
-                      {comma(quotationItem.price)}
-                    </span>
-                    <span className="text-base">원</span>
-                  </div>
-                  <div className="pt-[5px] text-sm">
-                    {quotationItem.description}
-                  </div>
-                  <div className="pt-[5px] text-xs text-gray-sunsu">
-                    {quotationItem.status === "완료" ? (
-                      <span>결제완료</span>
-                    ) : (
-                      <span>
-                        결제미완료
-                        {userInfo.role === "planner" && (
+          {chats.length === 0 ? (
+            <NoQuotationCollect />
+          ) : (
+            chats.map((chat) => (
+              <div
+                className="py-[24px] mx-[29px] border-b border-lightgray-sunsu"
+                key={chat.chatId}
+              >
+                <div className="flex text-base text-darkgray-sunsu">
+                  <span className="font-bold">{chat.partnerName}</span>
+                  {userInfo.role === "planner" ? (
+                    <span className="mr-[3px]">님 |</span>
+                  ) : (
+                    <span className="mx-[3px]">플래너님 |</span>
+                  )}
+                  {chat.status === "완료" ? (
+                    <span className="text-gray-sunsu">확정 완료</span>
+                  ) : (
+                    <span className="text-blue-sunsu font-bold">진행 중</span>
+                  )}
+                  <Link
+                    to={`/chat/${chat.chatId}`}
+                    className="ml-auto text-sm text-darkgray-sunsu font-bold underline"
+                  >
+                    채팅방으로 이동
+                  </Link>
+                </div>
+                {chat.quotations?.map((quotationItem) => (
+                  <div className="pt-[15px]" key={quotationItem.id}>
+                    <div className="flex">
+                      <span className="text-base text-blue-sunsu">
+                        {quotationItem.company}
+                      </span>
+                      <span className="mr-auto ml-[4px] mt-[4px] text-xs text-gray-sunsu">
+                        {"| "}
+                        {quotationItem.title}
+                      </span>
+                      <span className="text-base font-bold">
+                        {comma(quotationItem.price)}
+                      </span>
+                      <span className="text-base">원</span>
+                    </div>
+                    <div className="pt-[5px] text-sm">
+                      {quotationItem.description}
+                    </div>
+                    <div className="pt-[5px] text-xs text-gray-sunsu">
+                      {quotationItem.status === "완료" ? (
+                        <span>결제완료</span>
+                      ) : (
+                        <span>
+                          결제미완료
+                          {userInfo.role === "planner" && (
+                            <>
+                              <span> | </span>
+                              <button
+                                className="underline text-red-sunsu font-bold"
+                                onClick={() => {
+                                  setConfirmOneSheetOpen(true);
+                                  setQuotationId(quotationItem.id);
+                                  setChatId(chat.chatId);
+                                }}
+                              >
+                                결제완료로 변경
+                              </button>
+                            </>
+                          )}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-[2px] text-xs text-gray-sunsu">
+                      <span>최종 수정일 {quotationItem.modifiedAt}</span>
+                      {quotationItem.status === "미완료" &&
+                        userInfo.role === "planner" && (
                           <>
-                            <span> | </span>
+                            <span className="mx-[5px]">|</span>
+                            <button
+                              className="underline text-black font-bold"
+                              onClick={() => {
+                                setQuotationItem(quotationItem);
+                                navigate(
+                                  `/quotations/update/${quotationItem.id}?chatId=${chat.chatId}`,
+                                );
+                              }}
+                            >
+                              수정하기
+                            </button>
+                            <span className="mx-[5px]">|</span>
                             <button
                               className="underline text-red-sunsu font-bold"
                               onClick={() => {
-                                setConfirmOneSheetOpen(true);
+                                setDeleteOneSheetOpen(true);
                                 setQuotationId(quotationItem.id);
-                                setChatId(chat.chatId);
                               }}
                             >
-                              결제완료로 변경
+                              삭제하기
                             </button>
                           </>
                         )}
-                      </span>
-                    )}
+                    </div>
                   </div>
-                  <div className="pt-[2px] text-xs text-gray-sunsu">
-                    <span>최종 수정일 {quotationItem.modifiedAt}</span>
-                    {quotationItem.status === "미완료" &&
-                      userInfo.role === "planner" && (
-                        <>
-                          <span className="mx-[5px]">|</span>
-                          <button
-                            className="underline text-black font-bold"
-                            onClick={() => {
-                              setQuotationItem(quotationItem);
-                              navigate(
-                                `/quotations/update/${quotationItem.id}?chatId=${chat.chatId}`,
-                              );
-                            }}
-                          >
-                            수정하기
-                          </button>
-                          <span className="mx-[5px]">|</span>
-                          <button
-                            className="underline text-red-sunsu font-bold"
-                            onClick={() => {
-                              setDeleteOneSheetOpen(true);
-                              setQuotationId(quotationItem.id);
-                            }}
-                          >
-                            삭제하기
-                          </button>
-                        </>
-                      )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ))}
-          {isFetching && <SkeletonQuotationItem />}
+                ))}
+              </div>
+            ))
+          )}
+          {chats.length > 0 && isFetching && <SkeletonQuotationItem />}
         </div>
       </Container>
       <div ref={bottomObserver} />

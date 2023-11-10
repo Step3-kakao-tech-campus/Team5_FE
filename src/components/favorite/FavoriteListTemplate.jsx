@@ -4,6 +4,7 @@ import useFetchFavorites from "../../hooks/useFetchFavorites";
 import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
 import PortfolioGrid from "../portfolios/PortfolioGrid";
+import NoFavoriteList from "./NoFavoriteList";
 
 const FavoriteListTemplate = () => {
   const bottomObserver = useRef(null);
@@ -48,11 +49,15 @@ const FavoriteListTemplate = () => {
   return (
     <>
       <Container>
-        <PortfolioGrid
-          portfolios={favorites}
-          isFetching={isFetching}
-          setFavorites={setFavorites}
-        />
+        {favorites?.length === 0 ? (
+          <NoFavoriteList />
+        ) : (
+          <PortfolioGrid
+            portfolios={favorites}
+            isFetching={isFetching}
+            setFavorites={setFavorites}
+          />
+        )}
       </Container>
       <div ref={bottomObserver} />
     </>

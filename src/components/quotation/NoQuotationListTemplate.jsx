@@ -13,12 +13,13 @@ export default function NoQuotationListTemplate() {
         <div className="pt-10 flex flex-col items-center gap-5">
           <BsExclamationTriangle size={50} />
           <div className="flex flex-col items-center">
-            <span className=" text-2xl font-bold">
-              작성된 견적서가 없습니다.
+            <span className="text-2xl font-bold">
+              작성된 견적서가 아직 없네요.
             </span>
             <span>
-              견적서를 {userInfo.role === "planner" ? "작성해" : "요청해"}{" "}
-              주세요.
+              {userInfo.role === "planner"
+                ? "지금 견적서를 작성해보세요!"
+                : "지금 견적서를 요청해보세요!"}
             </span>
           </div>
         </div>
