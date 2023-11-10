@@ -13,6 +13,7 @@ import QuotationUpdateHeader from "../components/quotation/QuotationUpdateHeader
 import useInput from "../hooks/useInput";
 import { quotationItemAtom } from "../store";
 import { comma, uncomma } from "../utils/convert";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 const QuotationUpdatePage = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const QuotationUpdatePage = () => {
   const companyInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
   const priceInputRef = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const { values, handleChange } = useInput({
     title: quotationItem.title,
@@ -82,8 +84,7 @@ const QuotationUpdatePage = () => {
         navigate(-1);
       }
     } catch (error) {
-      console.log(error);
-      setErrorMessage(error.response.data.message);
+      defaultErrorHandler(error);
     } finally {
       setIsSubmitting(false);
     }

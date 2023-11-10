@@ -13,6 +13,9 @@ export default function useDefaultErrorHandler() {
       case 404:
         navigate("/404", { replace: true });
         break;
+      case 403:
+        openBottomSheetHandler({ bottomSheet: "forbiddenBottomSheet" });
+        break;
       default:
         break;
     }

@@ -6,7 +6,7 @@ import { addFavorite, deleteFavorite } from "../../apis/favorite";
 import { ReactComponent as HeartOutlinedIcon } from "../../assets/heart-03.svg";
 import { ReactComponent as HeartIcon } from "../../assets/heart-04.svg";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
-import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 import { comma } from "../../utils/convert";
 import Button from "../common/atoms/Button";
 import Card from "../common/atoms/Card";
@@ -15,7 +15,6 @@ import SquarePhoto from "../common/atoms/SquarePhoto";
 // done test
 const PortfolioCard = ({ portfolio }) => {
   const location = useLocation();
-  const { openBottomSheetHandler } = useOpenBottomSheet();
   const { isLogged } = useSelector((state) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const casheKeyRef = useRef(
@@ -24,6 +23,7 @@ const PortfolioCard = ({ portfolio }) => {
   const { mutate: addFavoriteMutate } = useMutation(addFavorite);
   const { mutate: deleteFavoriteMutate } = useMutation(deleteFavorite);
   const queryClient = useQueryClient();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleAddFavorite = () => {
     setIsSubmitting(true);
@@ -36,11 +36,7 @@ const PortfolioCard = ({ portfolio }) => {
         },
         onError: (error) => {
           console.log(error);
-          if (error.response.status === 500) {
-            openBottomSheetHandler({
-              bottomSheet: "serverErrorBottomSheet",
-            });
-          }
+          defaultErrorHandler(error);
           setIsSubmitting(false);
         },
       },
@@ -52,17 +48,13 @@ const PortfolioCard = ({ portfolio }) => {
     deleteFavoriteMutate(
       { portfolioId: parseInt(portfolio.id, 10) },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           queryClient.invalidateQueries(casheKeyRef.current);
           setIsSubmitting(false);
         },
         onError: (error) => {
           console.log(error);
-          if (error.response.status === 500) {
-            openBottomSheetHandler({
-              bottomSheet: "serverErrorBottomSheet",
-            });
-          }
+          defaultErrorHandler(error);
           setIsSubmitting(false);
         },
       },

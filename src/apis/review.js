@@ -38,7 +38,9 @@ export const updateReview = async ({ reviewId, content, stars, images }) => {
   return response.data;
 };
 
-export const getPortfolioReviews = async (page) => {
-  const response = await instance.get(`/api/review?page=${page}`);
+export const getPortfolioReviews = async ({ plannerId, pageParam }) => {
+  const response = await instance.get(
+    `/api/review?plannerId=${plannerId}&page=${pageParam}`,
+  );
   return response.data.response.reviews;
 };

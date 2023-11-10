@@ -9,9 +9,11 @@ import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import Spinner from "../common/atoms/Spinner";
 import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 export default function ReviewUpdateTemplate({ review }) {
   const { openBottomSheetHandler } = useOpenBottomSheet();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   // eslint-disable-next-line prefer-destructuring
   const plannerName = review.plannerName;
   const [stars, setStars] = useState(review.stars);
@@ -60,6 +62,7 @@ export default function ReviewUpdateTemplate({ review }) {
       }
     } catch (error) {
       console.log(error);
+      defaultErrorHandler(error);
     }
     setIsSubmitting(false);
   };

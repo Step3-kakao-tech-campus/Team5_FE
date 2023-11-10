@@ -2,7 +2,7 @@ import { instance } from "./index";
 
 export const getQuotationList = async (chatId) => {
   const response = await instance.get(`/api/quotation?chatId=${chatId}`);
-  return response.data;
+  return response.data.response;
 };
 
 export const createQuotation = async (chatId, data) => {

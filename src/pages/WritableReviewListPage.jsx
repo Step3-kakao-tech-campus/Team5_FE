@@ -5,14 +5,16 @@ import Spinner from "../components/common/atoms/Spinner";
 import NoWritableReview from "../components/review/NoWritableReview";
 import WritableReviewHeader from "../components/review/WritableReviewHeader";
 import WritableReviewTemplate from "../components/review/WritableReviewTemplate";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 import { getAvatarUrl } from "../utils/firebase";
 
 export default function WritableReviewListPage() {
   const [isFetching, setIsFetching] = useState(true);
   const avatarRef = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const { data, isLoading } = useQuery(["/reviews/writable"], getMatchReviews, {
     onError: (error) => {
-      console.log(error);
+      defaultErrorHandler(error);
     },
   });
 

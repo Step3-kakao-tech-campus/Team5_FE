@@ -7,6 +7,7 @@ import { ReactComponent as HeartOutlinedIcon } from "../../assets/heart-03.svg";
 import { ReactComponent as HeartIcon } from "../../assets/heart-04.svg";
 import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import Button from "../common/atoms/Button";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 export default function FavoriteButton({ isLiked }) {
   const { isLogged } = useSelector((state) => state.user);
@@ -16,6 +17,7 @@ export default function FavoriteButton({ isLiked }) {
   const queryClient = useQueryClient();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { openBottomSheetHandler } = useOpenBottomSheet();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleAddFavorite = () => {
     if (!isLogged) {
@@ -33,6 +35,7 @@ export default function FavoriteButton({ isLiked }) {
         },
         onError: (error) => {
           console.log(error);
+          defaultErrorHandler(error);
           setIsSubmitting(false);
         },
       },
@@ -50,6 +53,7 @@ export default function FavoriteButton({ isLiked }) {
         },
         onError: (error) => {
           console.log(error);
+          defaultErrorHandler(error);
           setIsSubmitting(false);
         },
       },
