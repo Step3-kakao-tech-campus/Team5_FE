@@ -11,10 +11,11 @@ import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 const PortfolioDetailPage = () => {
   const { defaultErrorHandler } = useDefaultErrorHandler();
   const { id } = useParams();
-  const { data, error, isLoading } = useQuery([`portfolio/${id}`], () =>
-    getPortfolioDetail(id),
-  );
-  const portfolio = data?.response;
+  const {
+    data: portfolio,
+    error,
+    isLoading,
+  } = useQuery([`portfolio/${id}`], () => getPortfolioDetail(id));
 
   useEffect(() => {
     if (error) {

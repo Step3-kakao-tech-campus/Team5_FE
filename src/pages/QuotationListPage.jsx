@@ -8,14 +8,13 @@ import QuotationListHeader from "../components/quotation/QuotationListHeader";
 
 const QuotationListPage = () => {
   const { chatId } = useParams();
-  const { data, error, isLoading } = useQuery(
-    `/quotations?chatId=${chatId}`,
-    () => getQuotationList(chatId),
-    {
-      keepPreviousData: true,
-    },
-  );
-  const quotation = data?.response;
+  const {
+    data: quotation,
+    error,
+    isLoading,
+  } = useQuery(`/quotations?chatId=${chatId}`, () => getQuotationList(chatId), {
+    keepPreviousData: true,
+  });
 
   useEffect(() => {
     if (error) {

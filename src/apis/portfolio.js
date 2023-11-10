@@ -15,7 +15,7 @@ export const getPortfolioList = async (
 
 export const getPortfolioDetail = async (portfolioId) => {
   const response = await instance.get(`/api/portfolio/${portfolioId}`);
-  return response.data;
+  return response.data.response;
 };
 
 export const createPortfolio = async (portfolioData) => {
