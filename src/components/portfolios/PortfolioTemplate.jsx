@@ -34,7 +34,6 @@ const PortfolioTemplate = () => {
     isLoading,
     fetchNextPage,
     portfolios,
-    isFetching,
   } = useFetchPortfolios({
     name: queryName,
     location: queryLocation,
@@ -123,7 +122,10 @@ const PortfolioTemplate = () => {
         {portfolios?.length === 0 ? (
           <EmptySearchResult />
         ) : (
-          <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
+          <PortfolioGrid
+            portfolios={portfolios}
+            isFetchingNextPage={isFetchingNextPage}
+          />
         )}
       </Container>
       <div ref={bottomObserver} />
