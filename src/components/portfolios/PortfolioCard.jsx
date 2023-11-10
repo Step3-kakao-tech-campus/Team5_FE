@@ -13,11 +13,11 @@ import Card from "../common/atoms/Card";
 import SquarePhoto from "../common/atoms/SquarePhoto";
 
 // done test
-const PortfolioCard = ({ portfolio }) => {
+const PortfolioCard = ({ portfolio, setFavorites }) => {
   const location = useLocation();
   const { isLogged } = useSelector((state) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const casheKeyRef = useRef(
+  const cacheKey = useRef(
     location.pathname === "/favorites" ? "favorites" : "portfolios",
   );
   const { mutate: addFavoriteMutate } = useMutation(addFavorite);
@@ -31,7 +31,7 @@ const PortfolioCard = ({ portfolio }) => {
       { portfolioId: parseInt(portfolio.id, 10) },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(casheKeyRef.current);
+          queryClient.invalidateQueries(cacheKey.current);
           setIsSubmitting(false);
         },
         onError: (error) => {
@@ -49,7 +49,11 @@ const PortfolioCard = ({ portfolio }) => {
       { portfolioId: parseInt(portfolio.id, 10) },
       {
         onSuccess: async () => {
-          queryClient.invalidateQueries(casheKeyRef.current);
+          const data = queryClient.getQueriesData(cacheKey.current);
+          console.log("data", data[0][1]?.pages?.flat());
+          setFavorites((prev) =>
+            prev.filter((item) => item.id !== portfolio.id),
+          );
           setIsSubmitting(false);
         },
         onError: (error) => {
