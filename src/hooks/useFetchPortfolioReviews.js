@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import { getPortfolioReviews } from "../apis/review";
 
-const useFetchPortfolioReviews = () => {
+const useFetchPortfolioReviews = (plannerId) => {
   const [portfolioReviews, setPortfolioReviews] = useState([]);
   const infiniteQuery = useInfiniteQuery(
     ["portfolio/reviews"],
-    ({ pageParam = 0 }) => getPortfolioReviews(pageParam),
+    ({ pageParam = 0 }) => getPortfolioReviews({ plannerId, pageParam }),
     {
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage?.length < 10) {
