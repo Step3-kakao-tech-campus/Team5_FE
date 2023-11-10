@@ -1,6 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
 import { createPortfolio } from "../../apis/portfolio";
 import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import { uncomma } from "../../utils/convert";
@@ -29,6 +30,7 @@ export default function CreatePortfolioTemplate() {
   const careerRef = useRef(null);
   const partnerCompanyRef = useRef(null);
 
+  const { userInfo } = useSelector((state) => state.user);
   const { mutate: createMutate } = useMutation(createPortfolio);
   const queryClient = useQueryClient();
 
@@ -130,7 +132,7 @@ export default function CreatePortfolioTemplate() {
           placeholder="이름을 입력해주세요."
           label="이름"
           ref={nameRef}
-          defaultValue=""
+          defaultValue={userInfo.username}
         />
         {/* 지역 */}
         <SelectRegion
