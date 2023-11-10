@@ -91,19 +91,18 @@ export default function ChatListPage() {
     <div className="flex flex-col w-full h-full">
       <ChatListHeaderRow />
       {/* 채팅 목록 영역 */}
-      {chatList.length > 0 &&
-        chatList?.map((message) => (
-          <div key={message.timestamp}>
-            <ChatRoomItem
-              timestamp={message.timestamp}
-              counterName={message.counterName}
-              lastMessage={message.lastMessage}
-              chatId={message.chatId}
-              unreadCount={message.unreadCount}
-              avatar={message.avatar}
-            />
-          </div>
-        ))}
+      {chatList?.map((message) => (
+        <div key={message.timestamp}>
+          <ChatRoomItem
+            timestamp={message.timestamp}
+            counterName={message.counterName}
+            lastMessage={message.lastMessage}
+            chatId={message.chatId}
+            unreadCount={message.unreadCount}
+            avatar={message.avatar}
+          />
+        </div>
+      ))}
     </div>
   );
 }
