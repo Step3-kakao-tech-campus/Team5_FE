@@ -24,7 +24,8 @@ export const chatHandlers = [
       ctx.json({
         success: true,
         response: {
-          chatId: 21001,
+          chatId: 21002,
+          existed: true,
         },
         error: null,
       }),

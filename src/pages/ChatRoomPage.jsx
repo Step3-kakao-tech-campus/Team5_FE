@@ -21,7 +21,8 @@ import ChatMessage from "../components/chat/ChatMessage";
 import DateSeperationLine from "../components/chat/DateSeperationLine";
 import Spinner from "../components/common/atoms/Spinner";
 import "../firebase";
-import { convertToDate, isNonNegativeInteger } from "../utils/convert";
+import { convertToDate } from "../utils/convert";
+import useChatRoom from "../hooks/useChatRoom";
 
 export default function ChatRoomPage() {
   const [messages, setMessages] = useState([]);
@@ -33,13 +34,12 @@ export default function ChatRoomPage() {
   const [counterName, setCounterName] = useState("");
   const messageEndRef = useRef(null);
   let prevDate = null;
+  const { checkChatId } = useChatRoom();
 
   useEffect(() => {
     // 0. chatId 검증
-    if (!isNonNegativeInteger(chatId)) {
-      navigate("/404", { replace: true });
-      return;
-    }
+    checkChatId(chatId);
+
     // 0. 채팅방 유저가 맞는지 검증
     const checkChatRoomUser = async () => {
       const chatRoomRef = ref(

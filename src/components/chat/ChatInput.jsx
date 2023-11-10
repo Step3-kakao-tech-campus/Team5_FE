@@ -31,10 +31,10 @@ function ChatInput() {
 
   const handleOpenImageModal = useCallback(() => {
     setImageModalOpen(true);
-  }, []);
+  }, [setImageModalOpen]);
   const handleCloseImageModal = useCallback(() => {
     setImageModalOpen(false);
-  }, []);
+  }, [setImageModalOpen]);
 
   const handleOnChange = (e) => {
     setMessage(e.target.value);
