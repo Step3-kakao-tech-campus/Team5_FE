@@ -1,15 +1,14 @@
 import { CircularProgress } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { confirmQuotationAll } from "../../apis/quotation";
-import { openNavigateReviewBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
 
 const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
-  const dispatch = useDispatch();
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { openBottomSheetHandler } = useOpenBottomSheet();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -22,7 +21,7 @@ const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
       const response = await confirmQuotationAll(chatId);
       if (response.success) {
         onClose();
-        openNavigateReviewBottomSheet(dispatch);
+        openBottomSheetHandler({ bottomSheet: "navigateReviewBottomSheet" });
       }
     } catch (error) {
       console.log(error);

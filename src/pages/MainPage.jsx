@@ -20,10 +20,9 @@ export default function MainPage() {
 
   return (
     <div className="flex w-full h-full flex-col">
-      {isSearchBarOpen && (
+      {isSearchBarOpen ? (
         <MainSearchBar handleCloseSearchBar={handleCloseSearchBar} />
-      )}
-      {!isSearchBarOpen && (
+      ) : (
         <MainHeaderRow handleOpenSearchBar={handleOpenSearchBar} />
       )}
       {userInfo.role === "couple" && <InProgressQuotationBanner />}

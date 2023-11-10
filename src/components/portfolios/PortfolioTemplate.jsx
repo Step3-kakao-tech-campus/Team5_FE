@@ -24,8 +24,8 @@ const PortfolioTemplate = () => {
 
   const [queryName, setQueryName] = useState(searchParams.get("name") || "");
   const [queryLocation, setQueryLocation] = useState(null);
-  const [queryMinPrice, setQueryMinPrice] = useState(null);
-  const [queryMaxPrice, setQueryMaxPrice] = useState(null);
+  const [queryMinPrice, setQueryMinPrice] = useState(0);
+  const [queryMaxPrice, setQueryMaxPrice] = useState(-1);
 
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부

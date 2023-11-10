@@ -1,8 +1,12 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import { getDatabase, ref, set } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
+import { sendAuthCode, verifyAuthCode } from "../apis/email";
 import { signup } from "../apis/user";
 import BackButtonHeader from "../components/common/BackButtonHeader";
+import CloseButtonPage from "../components/common/CloseButtonPage";
+import PrivacyPolicyData from "../components/common/PrivacyPolicyData";
+import TermsData from "../components/common/TermsData";
 import AlertBox from "../components/common/accounts/AlertBox";
 import InputGroup from "../components/common/accounts/InputGroup";
 import SignupCompletionSheet from "../components/common/accounts/SignupCompletionSheet";
@@ -12,34 +16,40 @@ import Container from "../components/common/atoms/Container";
 import Label from "../components/common/atoms/Label";
 import Timer from "../components/common/atoms/Timer";
 import "../firebase";
+import useDefaultErrorHander from "../hooks/useDefaultErrorHandler";
 import useInput from "../hooks/useInput";
+import useOpenBottomSheet from "../hooks/useOpenBottomSheet";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
-import useDefaultErrorHander from "../hooks/useDefaultErrorHandler";
-import CloseButtonPage from "../components/common/CloseButtonPage";
-import PrivacyPolicyData from "../components/common/PrivacyPolicyData";
-import TermsData from "../components/common/TermsData";
+
+const USER_TYPE = {
+  COUPLE: 1,
+  PLANNER: 2,
+};
 
 // 테스트 완료(찬호)
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
-  const [activeButton, setActiveButton] = useState(1);
+  const [activeButton, setActiveButton] = useState(USER_TYPE.COUPLE);
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompletionSheetOpen, setIsCompletionSheetOpen] = useState(false); // 회원가입 완료 시 나타나는 bottom sheet
   const [isTermsOpen, setIsTermsOpen] = useState(false); // 이용약관
   const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false); // 개인정보 처리방침
+
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const password2InputRef = useRef(null);
   const agreePolicyRef = useRef(null);
   const codeRef = useRef(null);
+  const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isValidatingCode, setIsValidatingCode] = useState(false);
   const [isSentCode, setIsSentCode] = useState(false);
   const [isPassAuthCode, setIsPassAuthCode] = useState(false);
   const [time, setTime] = useState(60 * 10);
   const { defaultErrorHandler } = useDefaultErrorHander();
-
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   const { values, handleChange, setValues } = useInput({
     role: "couple",
     email: "",
@@ -64,10 +74,21 @@ export default function SignupPage() {
       setErrorMessageAndFocus("이메일 형식으로 입력해주세요.", emailInputRef);
       return;
     }
-    if (isSentCode) {
-      setTime(60 * 10);
+    setIsSendingCode(true);
+    try {
+      await sendAuthCode({ email: values.email });
+      if (isSentCode) {
+        setTime(60 * 10);
+      }
+    } catch (error) {
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "인증코드 생성 과정에서 오류가 발생했습니다.",
+      });
+    } finally {
+      setIsSendingCode(false);
+      setIsSentCode(true);
     }
-    setIsSentCode(true);
   };
 
   const handleValidateCode = async () => {
@@ -83,12 +104,22 @@ export default function SignupPage() {
       setErrorMessageAndFocus("인증코드가 일치하지 않습니다.", codeRef);
       return;
     }
-    setIsPassAuthCode(true);
+    setIsValidatingCode(true);
+    try {
+      await verifyAuthCode({ email: values.email, code: values.code });
+      setIsPassAuthCode(true);
+    } catch (error) {
+      openBottomSheetHandler({
+        bottomSheet: "serverErrorBottomSheet",
+      });
+    } finally {
+      setIsValidatingCode(false);
+    }
   };
 
   const setUserRole = (roleNumber) => {
     setActiveButton(roleNumber);
-    if (roleNumber === 1) {
+    if (roleNumber === USER_TYPE.COUPLE) {
       setValues({ ...values, role: "couple" });
       return;
     }
@@ -235,9 +266,11 @@ export default function SignupPage() {
             <div className="flex-1">
               <button
                 type="button"
-                onClick={() => setUserRole(1)}
+                onClick={() => setUserRole(USER_TYPE.COUPLE)}
                 className={`${
-                  activeButton === 1 ? "bg-lightskyblue-sunsu" : "bg-white"
+                  activeButton === USER_TYPE.COUPLE
+                    ? "bg-lightskyblue-sunsu"
+                    : "bg-white"
                 } w-full h-[50px] rounded-[10px] text-sm text-gray-900 border border-lightgray-sunsu`}
               >
                 예비 신랑신부
@@ -246,9 +279,11 @@ export default function SignupPage() {
             <div className="flex-1">
               <button
                 type="button"
-                onClick={() => setUserRole(2)}
+                onClick={() => setUserRole(USER_TYPE.PLANNER)}
                 className={`${
-                  activeButton === 2 ? "bg-lightskyblue-sunsu" : "bg-white"
+                  activeButton === USER_TYPE.PLANNER
+                    ? "bg-lightskyblue-sunsu"
+                    : "bg-white"
                 } w-full h-[50px] rounded-[10px] text-sm text-gray-900 border border-lightgray-sunsu`}
               >
                 웨딩플래너
@@ -282,6 +317,7 @@ export default function SignupPage() {
               type="button"
               className="absolute right-[6px] h-[38px] bottom-[6px] w-[100px] border rounded-[10px] bg-blue-sunsu text-white text-xs"
               onClick={handleSendCode}
+              disabled={isSendingCode}
             >
               {isSentCode ? "재전송" : "인증코드 전송"}
             </button>
@@ -296,6 +332,7 @@ export default function SignupPage() {
               placeholder="인증코드는 999999입니다."
               value={values.code}
               onChange={handleChange}
+              disabled={isValidatingCode}
               className="relative pt-[15px] w-full"
             />
             <div className="absolute right-[6px] bottom-[6px] flex gap-[6px] items-center">

@@ -10,16 +10,17 @@ import { ReactComponent as ProfileIcon } from "../../assets/profile-02.svg";
 import { ReactComponent as SearchOutlinedIcon } from "../../assets/search-01.svg";
 import { ReactComponent as SearchIcon } from "../../assets/search-02.svg";
 import { closeBottomSheet } from "../../store/slices/bottomSheetSlice";
-import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 
 export default function GNB() {
   const location = useLocation();
   const { isLogged } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   const checkLoginStatus = (e) => {
     if (!isLogged) {
       e.preventDefault();
-      openLoginBottomSheet(dispatch);
+      openBottomSheetHandler({ bottomSheet: "loginBottomSheet" });
     }
   };
 

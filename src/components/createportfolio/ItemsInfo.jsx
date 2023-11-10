@@ -1,18 +1,18 @@
 import cn from "classnames";
 import React, { forwardRef } from "react";
-import { useDispatch } from "react-redux";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import { comma, uncomma } from "../../utils/convert";
-import { openMessageBottomSheet } from "../../utils/handleBottomSheet";
 
 // done test
 const ItemsInfo = forwardRef(({ items, setItems }, ref) => {
-  const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   const handleOnAddItem = () => {
     if (items.length === 5) {
-      openMessageBottomSheet(
-        dispatch,
-        "가격 항목은 최대 5개까지 추가 가능합니다.",
-      );
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "가격 항목은 최대 5개까지 추가 가능합니다.",
+      });
+
       return;
     }
     setItems([...items, { itemTitle: "", itemPrice: "0" }]);

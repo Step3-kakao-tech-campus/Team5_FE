@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import dayjs from "dayjs";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Photo from "../common/atoms/Photo";
 
 export default function ChatRoomItem({
@@ -12,14 +11,10 @@ export default function ChatRoomItem({
   unreadCount,
   avatar,
 }) {
-  const navigate = useNavigate();
-
   return (
-    <button
-      className="px-[29px] pt-[15px] pb-[20px] w-full hover:bg-zinc-100"
-      onClick={() => {
-        navigate(`/chat/${chatId}`);
-      }}
+    <Link
+      className=" block px-[29px] pt-[15px] pb-[20px] w-full hover:bg-zinc-100"
+      to={`/chat/${chatId}`}
     >
       <div className="flex items-center w-full gap-2">
         <Photo
@@ -46,6 +41,6 @@ export default function ChatRoomItem({
           </div>
         </div>
       </div>
-    </button>
+    </Link>
   );
 }
