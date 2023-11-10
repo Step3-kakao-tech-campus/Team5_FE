@@ -1,5 +1,5 @@
-import React from "react";
-import { useQuery } from "react-query";
+import React, { useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { getPortfolioSelf } from "../apis/portfolio";
 import Spinner from "../components/common/atoms/Spinner";
 import CreatePortfolioHeader from "../components/createportfolio/CreatePortfolioHeader";
@@ -11,6 +11,7 @@ import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 export default function CreatePortfolioPage() {
   const { defaultErrorHandler } = useDefaultErrorHandler();
+  const queryClient = useQueryClient();
   const { isLoading, data: portfolio } = useQuery(
     ["portfolios/self"],
     getPortfolioSelf,
@@ -21,6 +22,10 @@ export default function CreatePortfolioPage() {
       },
     },
   );
+
+  useEffect(() => {
+    queryClient.setQueryData(["portfolios/self"], null);
+  }, []);
 
   usePreventRefresh();
   usePreventGoBack();
