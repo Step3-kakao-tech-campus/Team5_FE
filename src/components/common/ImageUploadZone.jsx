@@ -7,10 +7,10 @@ import Photo from "./atoms/Photo";
 export default function ImageUploadZone({ images, setImages, setIsUploading }) {
   const returnCompressor = (reader, file) => {
     return new Compressor(file, {
-      quality: 0.8,
+      quality: 0.7,
       mimeType: "image/webp",
-      maxHeight: 2560,
-      maxWidth: 2560,
+      maxHeight: 1920,
+      maxWidth: 1920,
       success(result) {
         const newFile = new File([result], `image${new Date().getTime()}`, {
           type: result.type,
