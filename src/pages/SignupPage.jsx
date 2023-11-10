@@ -18,6 +18,7 @@ import Timer from "../components/common/atoms/Timer";
 import "../firebase";
 import useDefaultErrorHander from "../hooks/useDefaultErrorHandler";
 import useInput from "../hooks/useInput";
+import useOpenBottomSheet from "../hooks/useOpenBottomSheet";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
 
@@ -48,6 +49,7 @@ export default function SignupPage() {
   const [isPassAuthCode, setIsPassAuthCode] = useState(false);
   const [time, setTime] = useState(60 * 10);
   const { defaultErrorHandler } = useDefaultErrorHander();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   const { values, handleChange, setValues } = useInput({
     role: "couple",
     email: "",
@@ -79,7 +81,10 @@ export default function SignupPage() {
         setTime(60 * 10);
       }
     } catch (error) {
-      defaultErrorHandler(error);
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message: "인증코드 생성 과정에서 오류가 발생했습니다.",
+      });
     } finally {
       setIsSendingCode(false);
       setIsSentCode(true);
@@ -104,7 +109,9 @@ export default function SignupPage() {
       await verifyAuthCode({ email: values.email, code: values.code });
       setIsPassAuthCode(true);
     } catch (error) {
-      defaultErrorHandler(error);
+      openBottomSheetHandler({
+        bottomSheet: "serverErrorBottomSheet",
+      });
     } finally {
       setIsValidatingCode(false);
     }
