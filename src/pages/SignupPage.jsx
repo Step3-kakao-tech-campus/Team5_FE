@@ -21,10 +21,15 @@ import useInput from "../hooks/useInput";
 import { validateEmail, validatePassword } from "../utils";
 import { defaultAvatarUrl } from "../utils/constants";
 
+const USER_TYPE = {
+  COUPLE: 1,
+  PLANNER: 2,
+};
+
 // 테스트 완료(찬호)
 export default function SignupPage() {
   const [errorMessage, setErrorMessage] = useState("");
-  const [activeButton, setActiveButton] = useState(1);
+  const [activeButton, setActiveButton] = useState(USER_TYPE.COUPLE);
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompletionSheetOpen, setIsCompletionSheetOpen] = useState(false); // 회원가입 완료 시 나타나는 bottom sheet
@@ -43,7 +48,6 @@ export default function SignupPage() {
   const [isPassAuthCode, setIsPassAuthCode] = useState(false);
   const [time, setTime] = useState(60 * 10);
   const { defaultErrorHandler } = useDefaultErrorHander();
-
   const { values, handleChange, setValues } = useInput({
     role: "couple",
     email: "",
@@ -108,7 +112,7 @@ export default function SignupPage() {
 
   const setUserRole = (roleNumber) => {
     setActiveButton(roleNumber);
-    if (roleNumber === 1) {
+    if (roleNumber === USER_TYPE.COUPLE) {
       setValues({ ...values, role: "couple" });
       return;
     }
@@ -255,9 +259,11 @@ export default function SignupPage() {
             <div className="flex-1">
               <button
                 type="button"
-                onClick={() => setUserRole(1)}
+                onClick={() => setUserRole(USER_TYPE.COUPLE)}
                 className={`${
-                  activeButton === 1 ? "bg-lightskyblue-sunsu" : "bg-white"
+                  activeButton === USER_TYPE.COUPLE
+                    ? "bg-lightskyblue-sunsu"
+                    : "bg-white"
                 } w-full h-[50px] rounded-[10px] text-sm text-gray-900 border border-lightgray-sunsu`}
               >
                 예비 신랑신부
@@ -266,9 +272,11 @@ export default function SignupPage() {
             <div className="flex-1">
               <button
                 type="button"
-                onClick={() => setUserRole(2)}
+                onClick={() => setUserRole(USER_TYPE.PLANNER)}
                 className={`${
-                  activeButton === 2 ? "bg-lightskyblue-sunsu" : "bg-white"
+                  activeButton === USER_TYPE.PLANNER
+                    ? "bg-lightskyblue-sunsu"
+                    : "bg-white"
                 } w-full h-[50px] rounded-[10px] text-sm text-gray-900 border border-lightgray-sunsu`}
               >
                 웨딩플래너
