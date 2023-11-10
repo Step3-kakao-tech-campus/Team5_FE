@@ -3,14 +3,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Photo from "../common/atoms/Photo";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
+import ReviewImageCarousel from "./ReviewImageCarousel";
 
 export default function ReviewListTemplate({ reviews }) {
   return (
-    <div className="w-full h-full py-2 px-4 flex flex-col gap-2">
+    <div className="w-full h-full py-2 flex flex-col gap-2">
       {reviews.map((review) => (
         <div className="w-full h-full" key={review.id}>
-          <div className="h-full w-full border-b p-3 flex flex-col gap-2">
-            <div className="flex justify-between">
+          <div className="h-full w-full border-b flex flex-col gap-2">
+            <div className="flex justify-between px-5 pt-2 pb-1">
               <div className="font-bold text-lg">
                 <span>{review.plannerName} 플래너</span>
               </div>
@@ -25,23 +26,12 @@ export default function ReviewListTemplate({ reviews }) {
                 </Link>
               </div>
             </div>
-            <div className="grid w-full h-full grid-cols-3 gap-2">
-              {review.images.map((image, idx) => (
-                <div
-                  className="relative w-full h-0"
-                  style={{ paddingBottom: "100%" }}
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={idx}
-                >
-                  <Photo
-                    src={image}
-                    alt="결혼 사진"
-                    className="absolute w-full h-full object-cover object-center rounded-[10px]"
-                  />
-                </div>
-              ))}
+            <div>
+              <ReviewImageCarousel review={review} />
             </div>
-            <p className=" line-clamp-3 p-1">{review.content}</p>
+            <p className="flex justify-between mt-[110px] sm:mt-[80px] xs:mt-[70px] px-5 line-clamp-3 pb-5">
+              {review.content}
+            </p>
           </div>
         </div>
       ))}
