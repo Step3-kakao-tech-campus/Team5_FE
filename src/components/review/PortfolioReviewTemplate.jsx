@@ -7,7 +7,7 @@ import PortfolioReviewSkeleton from "./PortfolioReviewSkeleton";
 import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 import NoPortfolioReview from "./NoPortfolioReview";
 
-export default function PortfoliioReviewTemplate() {
+export default function PortfolioReviewTemplate() {
   const bottomObserver = useRef(null);
   const { plannerId } = useParams();
   const { defaultErrorHandler } = useDefaultErrorHandler();
