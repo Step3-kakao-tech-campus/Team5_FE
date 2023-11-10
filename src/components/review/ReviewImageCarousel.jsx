@@ -30,7 +30,11 @@ const ReviewImageCarousel = ({ review }) => {
           <img
             src={review.images[i]}
             className="absolute w-full h-full object-cover"
-            alt={`${review.coupleName}님의 리뷰 썸네일 - ${i + 1}번`}
+            alt={
+              review.coupleName
+                ? `${review.coupleName}님의 리뷰 썸네일 - ${i + 1}번`
+                : `${review.plannerName}에게 작성한 리뷰 썸네일 - ${i + 1}번`
+            }
           />
         </div>
       );
