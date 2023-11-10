@@ -35,7 +35,7 @@ instance.interceptors.response.use(
     } = error;
     if (status === 401) {
       // 액세스 토큰 만료
-      if (error.response.data.error.status === 2100) {
+      if (error?.response?.data?.error?.status === 2100) {
         const originalRequest = config;
         const accessToken = localStorage.getItem("accessToken");
         const refreshToken = localStorage.getItem("refreshToken");
@@ -55,10 +55,15 @@ instance.interceptors.response.use(
         return axios(originalRequest);
       }
       // 리프레시 토큰 만료
-      if (error.response.data.error.status === 2102) {
+      if (error?.response?.data?.error?.status === 2102) {
         // refresh token이 만료된 경우
         localStorage.clear();
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+        window.location.href = "/login";
+      }
+      if (error?.response?.data?.error?.status > 2102) {
+        localStorage.clear();
+        alert("로그인 정보가 유효하지 않습니다. 다시 로그인해주세요.");
         window.location.href = "/login";
       }
     }
