@@ -28,6 +28,7 @@ const DeleteOneBottomSheet = ({ onClose, quotationId }) => {
         onClose();
       },
       onError: (error) => {
+        onClose();
         defaultErrorHandler(error);
         setIsSubmitting(false);
       },

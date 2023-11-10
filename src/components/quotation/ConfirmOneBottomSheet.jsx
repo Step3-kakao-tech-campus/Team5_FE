@@ -30,6 +30,7 @@ const ConfirmOneBottomSheet = ({ onClose, quotationId, chatId }) => {
           onClose();
         },
         onError: (error) => {
+          onClose();
           defaultErrorHandler(error);
           setIsSubmitting(false);
         },

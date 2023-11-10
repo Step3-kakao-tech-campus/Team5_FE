@@ -26,6 +26,7 @@ const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
         openBottomSheetHandler({ bottomSheet: "navigateReviewBottomSheet" });
       }
     } catch (error) {
+      onClose();
       defaultErrorHandler(error);
     }
     setIsSubmitting(false);
