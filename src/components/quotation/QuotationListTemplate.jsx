@@ -1,7 +1,7 @@
 import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as AddIcon } from "../../assets/add-01.svg";
 import { ReactComponent as StarIcon } from "../../assets/star-01.svg";
 import { quotationItemAtom } from "../../store";
@@ -9,8 +9,8 @@ import { comma } from "../../utils/convert";
 import AlreadyConfirmBottomSheet from "./AlreadyConfirmBottomSheet";
 import ConfirmAllBottomSheet from "./ConfirmAllBottomSheet";
 import ConfirmOneBottomSheet from "./ConfirmOneBottomSheet";
-import RequiredConfirmBottomSheet from "./RequiredConfirmBottomSheet";
 import DeleteOneBottomSheet from "./DeleteOneBottomSheet";
+import RequiredConfirmBottomSheet from "./RequiredConfirmBottomSheet";
 
 const QuotationListTemplate = ({ quotation }) => {
   const navigate = useNavigate();
@@ -146,13 +146,19 @@ const QuotationListTemplate = ({ quotation }) => {
         </div>
       ))}
       {userInfo.role === "planner" ? (
-        <Link
+        <button
           className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
-          to={`/quotations/create/${chatId}`}
+          onClick={() => {
+            if (quotation.status === "완료") {
+              setAlreadyConfirmBottomSheetOpen(true);
+              return;
+            }
+            navigate(`/quotations/create/${chatId}`);
+          }}
         >
           <AddIcon className="w-4 h-4 mr-2" />
           추가하기
-        </Link>
+        </button>
       ) : (
         <button
           className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center hover:shadow-lg"

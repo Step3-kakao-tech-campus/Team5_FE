@@ -5,6 +5,7 @@ import Spinner from "../common/atoms/Spinner";
 import PortfolioReviewItem from "./PortfolioReviewItem";
 import PortfolioReviewSkeleton from "./PortfolioReviewSkeleton";
 import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
+import NoPortfolioReview from "./NoPortfolioReview";
 
 export default function PortfoliioReviewTemplate() {
   const bottomObserver = useRef(null);
@@ -41,14 +42,18 @@ export default function PortfoliioReviewTemplate() {
       defaultErrorHandler(error);
     }
   }, [error]);
-
+  console.log(portfolioReviews);
   if (isLoading) return <Spinner />;
   return (
     <>
       <div className="w-full h-full flex flex-col gap-2">
-        {portfolioReviews.map((review) => (
-          <PortfolioReviewItem review={review} key={review.id} />
-        ))}
+        {portfolioReviews?.length === 0 ? (
+          <NoPortfolioReview />
+        ) : (
+          portfolioReviews.map((review) => (
+            <PortfolioReviewItem review={review} key={review.id} />
+          ))
+        )}
         {isFetchingNextPage && <PortfolioReviewSkeleton />}
       </div>
       <div ref={bottomObserver} />

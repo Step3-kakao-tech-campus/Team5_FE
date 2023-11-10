@@ -5,6 +5,7 @@ import Spinner from "../components/common/atoms/Spinner";
 import QuotationListHeader from "../components/quotation/QuotationListHeader";
 import QuotationListTemplate from "../components/quotation/QuotationListTemplate";
 import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
+import NoQuotationListTemplate from "../components/quotation/NoQuotationListTemplate";
 
 const QuotationListPage = () => {
   const { chatId } = useParams();
@@ -26,7 +27,11 @@ const QuotationListPage = () => {
   return (
     <div className="flex w-full h-full flex-col">
       <QuotationListHeader />
-      {quotation && <QuotationListTemplate quotation={quotation} />}
+      {quotation?.quotations.length > 0 ? (
+        <QuotationListTemplate quotation={quotation} />
+      ) : (
+        <NoQuotationListTemplate />
+      )}
     </div>
   );
 };
