@@ -3,13 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { updateReview } from "../../apis/review";
 import { ReactComponent as StarIcon } from "../../assets/star-02.svg";
 import { ReactComponent as EmptyStarIcon } from "../../assets/star-03.svg";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import ImageUploadZone from "../common/ImageUploadZone";
 import AutoHeightTextarea from "../common/atoms/AutoHeightTextarea";
 import Button from "../common/atoms/Button";
 import Spinner from "../common/atoms/Spinner";
-import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
-import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 export default function ReviewUpdateTemplate({ review }) {
   const { openBottomSheetHandler } = useOpenBottomSheet();
@@ -21,10 +20,7 @@ export default function ReviewUpdateTemplate({ review }) {
   const contentRef = useRef(review.content);
   const heightRef = useRef(null);
 
-  const [isOpenSuccessBottomSheet, setIsOpenSuccessBottomSheet] =
-    useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // login api 호출 중인지 아닌지 확인
-
   const [isUploading, setIsUploading] = useState(false);
 
   const handleSubmit = async () => {
@@ -58,7 +54,10 @@ export default function ReviewUpdateTemplate({ review }) {
         images,
       });
       if (response.success) {
-        setIsOpenSuccessBottomSheet(true);
+        openBottomSheetHandler({
+          bottomSheet: "routeBottomSheet",
+          message: "리뷰가 성공적으로 수정되었습니다.",
+        });
       }
     } catch (error) {
       console.log(error);
@@ -78,14 +77,6 @@ export default function ReviewUpdateTemplate({ review }) {
 
   return (
     <>
-      {isOpenSuccessBottomSheet && (
-        <SuccessBottomSheet
-          message="리뷰가 성공적으로 수정되었습니다."
-          onClose={() => {
-            setIsOpenSuccessBottomSheet(false);
-          }}
-        />
-      )}
       {isUploading && <Spinner />}
       <div
         className="w-full flex flex-col px-[40px] py-[29px] gap-[5px] "

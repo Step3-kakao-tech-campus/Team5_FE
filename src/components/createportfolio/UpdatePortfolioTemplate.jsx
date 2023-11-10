@@ -105,7 +105,7 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
         queryClient.invalidateQueries("portfolios/self");
         setIsSubmitting(false);
         openBottomSheetHandler({
-          bottomSheet: "messageBottomSheet",
+          bottomSheet: "routeBottomSheet",
           message: "포트폴리오가 성공적으로 수정되었습니다.",
         });
       },
