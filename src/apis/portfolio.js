@@ -19,12 +19,52 @@ export const getPortfolioDetail = async (portfolioId) => {
 };
 
 export const createPortfolio = async (portfolioData) => {
-  const response = await instance.post("/api/portfolio", portfolioData);
+  const {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    carrer,
+    partnerCompany,
+  } = portfolioData;
+  console.log(portfolioData);
+  const response = await instance.post("/api/portfolio", {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    carrer,
+    partnerCompany,
+  });
   return response.data;
 };
 
 export const updatePortfolio = async (portfolioData) => {
-  const response = await instance.put("/api/portfolio", portfolioData);
+  const {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    carrer,
+    partnerCompany,
+  } = portfolioData;
+  console.log(portfolioData);
+  const response = await instance.put("/api/portfolio", {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    carrer,
+    partnerCompany,
+  });
   return response.data;
 };
 
