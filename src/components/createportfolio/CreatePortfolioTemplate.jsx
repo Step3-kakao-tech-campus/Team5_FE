@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import React, { useRef, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { createPortfolio } from "../../apis/portfolio";
 import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
@@ -30,7 +30,6 @@ export default function CreatePortfolioTemplate() {
 
   const { userInfo } = useSelector((state) => state.user);
   const { mutate: createMutate } = useMutation(createPortfolio);
-  const queryClient = useQueryClient();
 
   const openMessageBottomSheetAndFocus = (message, ref) => {
     openBottomSheetHandler({ bottomSheet: "messageBottomSheet", message });
@@ -95,7 +94,6 @@ export default function CreatePortfolioTemplate() {
     setIsSubmitting(true);
     createMutate(portfolioData, {
       onSuccess: () => {
-        queryClient.invalidateQueries("portfolios/self");
         setIsSubmitting(false);
         openBottomSheetHandler({
           bottomSheet: "routeBottomSheet",
