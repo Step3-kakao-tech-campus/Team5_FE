@@ -11,6 +11,7 @@ const Input = forwardRef(
       className = "",
       onChange,
       defaultValue,
+      readOnly = false,
     },
     ref,
   ) => {
@@ -25,6 +26,7 @@ const Input = forwardRef(
         onChange={onChange}
         placeholder={placeholder}
         ref={ref}
+        readOnly={readOnly}
       />
     );
   },
