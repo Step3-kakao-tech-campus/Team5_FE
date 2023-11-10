@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { getPortfolioDetail } from "../apis/portfolio";
@@ -11,17 +10,16 @@ import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 const PortfolioDetailPage = () => {
   const { defaultErrorHandler } = useDefaultErrorHandler();
   const { id } = useParams();
-  const {
-    data: portfolio,
-    error,
-    isLoading,
-  } = useQuery([`portfolio/${id}`], () => getPortfolioDetail(id));
+  const { data: portfolio, isLoading } = useQuery(
+    [`portfolio/${id}`],
+    () => getPortfolioDetail(id),
+    {
+      onError: (error) => {
+        defaultErrorHandler(error);
+      },
+    },
+  );
 
-  useEffect(() => {
-    if (error) {
-      defaultErrorHandler(error);
-    }
-  }, [error]);
   if (isLoading) return <Spinner />;
 
   return (
