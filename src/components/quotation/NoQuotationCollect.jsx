@@ -9,9 +9,7 @@ export default function NoQuotationCollect() {
       <div className="pt-10 flex flex-col items-center gap-5">
         <BsExclamationTriangle size={50} />
         <div className="flex flex-col items-center">
-          <span className="text-2xl font-bold">
-            아직 진행 중인 견적서가 없어요.
-          </span>
+          <span className="text-2xl font-bold">진행 중인 견적서가 없어요.</span>
           {userInfo === "planner" ? (
             <span>지금 매칭을 시작해보세요!</span>
           ) : (
