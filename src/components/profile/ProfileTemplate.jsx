@@ -75,7 +75,7 @@ export default function ProfileTemplate() {
           <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
           <Link
             className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-            to="/favorites"
+            to="/profile/favorites"
           >
             찜한 플래너 모아보기
           </Link>

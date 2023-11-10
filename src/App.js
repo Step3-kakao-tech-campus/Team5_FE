@@ -88,7 +88,7 @@ function App() {
               path="/profile/reviews/collect"
               element={<ReviewListPage />}
             />
-            <Route path="/favorites" element={<FavoriteListPage />} />
+            <Route path="/profile/favorites" element={<FavoriteListPage />} />
           </Route>
           <Route element={<DuplicatedCheckLayout />}>
             <Route path="/signup" element={<SignupPage />} />
