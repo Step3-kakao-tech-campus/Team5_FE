@@ -49,11 +49,15 @@ const PortfolioCard = ({ portfolio, setFavorites }) => {
       { portfolioId: parseInt(portfolio.id, 10) },
       {
         onSuccess: async () => {
-          const data = queryClient.getQueriesData(cacheKey.current);
-          console.log("data", data[0][1]?.pages?.flat());
-          setFavorites((prev) =>
-            prev.filter((item) => item.id !== portfolio.id),
-          );
+          if (location.pathname === "/search") {
+            queryClient.refetchQueries(cacheKey.current);
+          } else {
+            const data = queryClient.getQueriesData(cacheKey.current);
+            console.log("data", data[0][1]?.pages?.flat());
+            setFavorites((prev) =>
+              prev.filter((item) => item.id !== portfolio.id),
+            );
+          }
           setIsSubmitting(false);
         },
         onError: (error) => {
