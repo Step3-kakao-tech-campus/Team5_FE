@@ -50,10 +50,8 @@ const PortfolioCard = ({ portfolio, setFavorites }) => {
       {
         onSuccess: async () => {
           if (location.pathname === "/search") {
-            queryClient.refetchQueries(cacheKey.current);
+            queryClient.invalidateQueries(cacheKey.current);
           } else {
-            const data = queryClient.getQueriesData(cacheKey.current);
-            console.log("data", data[0][1]?.pages?.flat());
             setFavorites((prev) =>
               prev.filter((item) => item.id !== portfolio.id),
             );
