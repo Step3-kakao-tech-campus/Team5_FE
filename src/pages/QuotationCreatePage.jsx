@@ -11,6 +11,7 @@ import Label from "../components/common/atoms/Label";
 import QuotationCreateHeader from "../components/quotation/QuotationCreateHeader";
 import useInput from "../hooks/useInput";
 import { comma, uncomma } from "../utils/convert";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 const QuotationCreatePage = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const QuotationCreatePage = () => {
   const companyInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
   const priceInputRef = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const { values, handleChange } = useInput({
     title: "",
@@ -83,8 +85,7 @@ const QuotationCreatePage = () => {
         navigate(`/quotations/${chatId}`);
       }
     } catch (error) {
-      console.log(error);
-      setErrorMessage(error.response.data.message);
+      defaultErrorHandler(error);
     } finally {
       setIsSubmitting(false);
     }
