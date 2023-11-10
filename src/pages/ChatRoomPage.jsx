@@ -181,7 +181,7 @@ export default function ChatRoomPage() {
 
   // 3. 메세지가 추가될 때마다 스크롤 내리기
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messageEndRef.current?.scrollIntoView({ behavior: "auto" });
   }, [messages.length]);
 
   if (isLoading) return <Spinner />;
