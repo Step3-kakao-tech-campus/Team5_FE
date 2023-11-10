@@ -27,6 +27,12 @@ const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
       }
     } catch (error) {
       onClose();
+      if (error?.response?.data?.error?.status === 6001) {
+        openBottomSheetHandler({
+          bottomSheet: "messageBottomSheet",
+          message: "확정할 견적서가 없습니다",
+        });
+      }
       defaultErrorHandler(error);
     }
     setIsSubmitting(false);
