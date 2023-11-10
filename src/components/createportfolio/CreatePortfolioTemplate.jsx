@@ -130,9 +130,14 @@ export default function CreatePortfolioTemplate() {
           name="plannerName"
           type="text"
           placeholder="이름을 입력해주세요."
-          label="이름"
+          label={
+            <>
+              이름 | <span className="text-gray-sunsu">수정 불가능</span>
+            </>
+          }
           ref={nameRef}
           defaultValue={userInfo.username}
+          readOnly
         />
         {/* 지역 */}
         <SelectRegion
