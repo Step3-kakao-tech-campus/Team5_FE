@@ -11,20 +11,20 @@ import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 export default function CreatePortfolioPage() {
   const { defaultErrorHandler } = useDefaultErrorHandler();
-  const {
-    isLoading,
-    data: portfolio,
-    error,
-  } = useQuery(["portfolios/self"], getPortfolioSelf, {
-    keepPreviousData: true,
-  });
+  const { isLoading, data: portfolio } = useQuery(
+    ["portfolios/self"],
+    getPortfolioSelf,
+    {
+      keepPreviousData: true,
+      onError: (error) => {
+        defaultErrorHandler(error);
+      },
+    },
+  );
 
   usePreventRefresh();
   usePreventGoBack();
 
-  if (error) {
-    defaultErrorHandler(error);
-  }
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-full">
