@@ -49,8 +49,9 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
     }
     setIsSubmitting(true);
     try {
-      const { response } = await createChatRoom(portfolio.userId);
-      const { chatId, existed } = response;
+      const {
+        response: { chatId, existed },
+      } = await createChatRoom(portfolio.userId);
       if (existed) {
         navigate(`/chat/${chatId}`);
         return;
