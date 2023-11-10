@@ -112,7 +112,7 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
               <div className="flex gap-1 items-center">
                 <StarIcon className="w-[16px] h-[16px] object-cover mb-[1px]" />
                 <div className="text-base align-middle font-bold">
-                  {portfolio.avgStars}
+                  {portfolio.avgStars.toFixed(1)}
                 </div>
               </div>
             </div>
