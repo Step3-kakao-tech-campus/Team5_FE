@@ -301,18 +301,7 @@ export default function SignupPage() {
             id="username"
             type="text"
             name="username"
-            label={
-              activeButton === USER_TYPE.PLANNER ? (
-                <>
-                  이름 |{" "}
-                  <span className="text-gray-sunsu">
-                    작성한 이름이 포트폴리오에서 사용됩니다.
-                  </span>
-                </>
-              ) : (
-                "이름"
-              )
-            }
+            label="이름"
             placeholder="이름"
             value={values.username}
             onChange={handleChange}
