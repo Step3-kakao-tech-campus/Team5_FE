@@ -4,11 +4,13 @@ import { confirmQuotationAll } from "../../apis/quotation";
 import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { openBottomSheetHandler } = useOpenBottomSheet();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -24,7 +26,7 @@ const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
         openBottomSheetHandler({ bottomSheet: "navigateReviewBottomSheet" });
       }
     } catch (error) {
-      console.log(error);
+      defaultErrorHandler(error);
     }
     setIsSubmitting(false);
   };
