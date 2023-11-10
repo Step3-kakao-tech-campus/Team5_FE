@@ -5,6 +5,8 @@ import { getReviewDetail } from "../apis/review";
 import Spinner from "../components/common/atoms/Spinner";
 import ReviewUpdateHeader from "../components/review/ReviewUpdateHeader";
 import ReviewUpdateTemplate from "../components/review/ReviewUpdateTemplate";
+import usePreventGoBack from "../hooks/usePreventGoBack";
+import usePreventRefresh from "../hooks/usePreventRefresh";
 
 export default function ReviewUpdatePage() {
   const { reviewId } = useParams();
@@ -17,6 +19,9 @@ export default function ReviewUpdatePage() {
       },
     },
   );
+
+  usePreventRefresh();
+  usePreventGoBack();
 
   if (isLoading) return <Spinner />;
   return (
