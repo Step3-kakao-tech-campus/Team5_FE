@@ -4,12 +4,14 @@ import { useParams } from "react-router-dom";
 import { deleteQuotation } from "../../apis/quotation";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const DeleteOneBottomSheet = ({ onClose, quotationId }) => {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { mutate: deleteQuotationMutate } = useMutation(deleteQuotation);
   const queryClient = useQueryClient();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const { chatId } = useParams();
 
   const handleAgreement = () => {
@@ -26,7 +28,8 @@ const DeleteOneBottomSheet = ({ onClose, quotationId }) => {
         onClose();
       },
       onError: (error) => {
-        console.log(error);
+        onClose();
+        defaultErrorHandler(error);
         setIsSubmitting(false);
       },
     });

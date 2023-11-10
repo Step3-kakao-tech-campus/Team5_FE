@@ -1,7 +1,7 @@
 import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as AddIcon } from "../../assets/add-01.svg";
 import { ReactComponent as StarIcon } from "../../assets/star-01.svg";
 import { quotationItemAtom } from "../../store";
@@ -146,13 +146,13 @@ const QuotationListTemplate = ({ quotation }) => {
         </div>
       ))}
       {userInfo.role === "planner" ? (
-        <button
+        <Link
           className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
-          onClick={() => navigate(`/quotations/create/${chatId}`)}
+          to={`/quotations/create/${chatId}`}
         >
           <AddIcon className="w-4 h-4 mr-2" />
           추가하기
-        </button>
+        </Link>
       ) : (
         <button
           className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center hover:shadow-lg"

@@ -81,6 +81,12 @@ export default function SignupPage() {
         setTime(60 * 10);
       }
     } catch (error) {
+      // 이메일 중복 에러 검증
+      const customError = error?.response?.data?.error;
+      if (customError.status === 2002) {
+        setErrorMessageAndFocus("동일한 이메일이 존재합니다.", emailInputRef);
+        return;
+      }
       openBottomSheetHandler({
         bottomSheet: "messageBottomSheet",
         message: "인증코드 생성 과정에서 오류가 발생했습니다.",

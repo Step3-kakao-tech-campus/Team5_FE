@@ -15,7 +15,7 @@ export const getPortfolioList = async (
 
 export const getPortfolioDetail = async (portfolioId) => {
   const response = await instance.get(`/api/portfolio/${portfolioId}`);
-  return response.data;
+  return response.data.response;
 };
 
 export const createPortfolio = async (portfolioData) => {
@@ -26,7 +26,7 @@ export const createPortfolio = async (portfolioData) => {
     title,
     description,
     location,
-    carrer,
+    career,
     partnerCompany,
   } = portfolioData;
   console.log(portfolioData);
@@ -37,7 +37,7 @@ export const createPortfolio = async (portfolioData) => {
     title,
     description,
     location,
-    carrer,
+    career,
     partnerCompany,
   });
   return response.data;
@@ -51,7 +51,7 @@ export const updatePortfolio = async (portfolioData) => {
     title,
     description,
     location,
-    carrer,
+    career,
     partnerCompany,
   } = portfolioData;
   console.log(portfolioData);
@@ -62,7 +62,7 @@ export const updatePortfolio = async (portfolioData) => {
     title,
     description,
     location,
-    carrer,
+    career,
     partnerCompany,
   });
   return response.data;

@@ -1,11 +1,15 @@
 import React, { useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import useFetchPortfolioReviews from "../../hooks/useFetchPortfolioReviews";
 import Spinner from "../common/atoms/Spinner";
 import PortfolioReviewItem from "./PortfolioReviewItem";
 import PortfolioReviewSkeleton from "./PortfolioReviewSkeleton";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 export default function PortfoliioReviewTemplate() {
   const bottomObserver = useRef(null);
+  const { plannerId } = useParams();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
     error,
@@ -13,7 +17,7 @@ export default function PortfoliioReviewTemplate() {
     isLoading,
     fetchNextPage,
     portfolioReviews,
-  } = useFetchPortfolioReviews();
+  } = useFetchPortfolioReviews(plannerId);
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -34,8 +38,7 @@ export default function PortfoliioReviewTemplate() {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+      defaultErrorHandler(error);
     }
   }, [error]);
 

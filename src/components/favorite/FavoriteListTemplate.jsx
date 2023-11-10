@@ -3,9 +3,11 @@ import useFetchFavorites from "../../hooks/useFetchFavorites";
 import Spinner from "../common/atoms/Spinner";
 import Container from "../common/atoms/Container";
 import PortfolioGrid from "../portfolios/PortfolioGrid";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const FavoriteListTemplate = () => {
   const bottomObserver = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
     error,
@@ -35,8 +37,7 @@ const FavoriteListTemplate = () => {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+      defaultErrorHandler(error);
     }
   }, [error]);
 

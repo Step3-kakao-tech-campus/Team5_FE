@@ -3,10 +3,12 @@ import { useMutation, useQueryClient } from "react-query";
 import { confirmQuotationDetail } from "../../apis/quotation";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const ConfirmOneBottomSheet = ({ onClose, quotationId, chatId }) => {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const { mutate: confirmQuotationDetailMutate } = useMutation(
     confirmQuotationDetail,
   );
@@ -28,7 +30,8 @@ const ConfirmOneBottomSheet = ({ onClose, quotationId, chatId }) => {
           onClose();
         },
         onError: (error) => {
-          console.log(error);
+          onClose();
+          defaultErrorHandler(error);
           setIsSubmitting(false);
         },
       },

@@ -10,9 +10,11 @@ import Button from "../common/atoms/Button";
 import Spinner from "../common/atoms/Spinner";
 import SuccessBottomSheet from "../common/bottomsheet/SuccessBottomSheet";
 import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 export default function ReviewCreateTemplate() {
   const { openBottomSheetHandler } = useOpenBottomSheet();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const { chatId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -61,6 +63,7 @@ export default function ReviewCreateTemplate() {
       }
     } catch (error) {
       console.log(error);
+      defaultErrorHandler(error);
     }
     setIsSubmitting(false);
   };

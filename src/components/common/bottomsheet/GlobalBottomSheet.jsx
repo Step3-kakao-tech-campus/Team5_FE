@@ -6,6 +6,7 @@ import ServerErrorBottomSheet from "./ServerErrorBottomSheet";
 import NavigateReviewBottomSheet from "./NavigateReviewBottomSheet";
 import DeleteReviewBottomSheet from "../../review/DeleteReviewBottomSheet";
 import MessageBottomSheet from "./MessageBottomSheet";
+import ForbiddenBottomSheet from "./ForbiddenBottomSheet";
 
 export default function GlobalBottomSheet() {
   const { bottomSheetType, isOpen, message } = useSelector(
@@ -48,6 +49,12 @@ export default function GlobalBottomSheet() {
           message={message}
           onClose={() => dispatch(closeBottomSheet())}
         />
+      ),
+    },
+    {
+      type: "forbiddenBottomSheet",
+      component: (
+        <ForbiddenBottomSheet onClose={() => dispatch(closeBottomSheet())} />
       ),
     },
   ];
