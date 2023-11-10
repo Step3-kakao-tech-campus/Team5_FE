@@ -110,7 +110,7 @@ export default function ReviewUpdateTemplate({ review }) {
           setImages={setImages}
           setIsUploading={setIsUploading}
         />
-        <div className="grow flex flex-col justify-end pt-[10px]">
+        <div className="grow flex justify-end pt-[10px]">
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}
