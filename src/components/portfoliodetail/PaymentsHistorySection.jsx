@@ -18,7 +18,7 @@ export default function PaymentHistorySection({
         <div className="flex flex-col float-left w-[45%] items-center justify-center border-r border-lightgray-sunsu">
           <div className="text-lg">
             <em className="font-bold not-italic">
-              {comma(portfolio.paymentHistory.avgPrice)}
+              {comma(portfolio.paymentsHistory.avgPrice)}
             </em>
             원
           </div>
@@ -29,7 +29,7 @@ export default function PaymentHistorySection({
             <span className="mr-2.5 text-sm text-gray-sunsu">최대</span>
             <span className="text-lg">
               <em className="font-bold not-italic">
-                {comma(portfolio.paymentHistory.maxPrice)}
+                {comma(portfolio.paymentsHistory.maxPrice)}
               </em>
               원
             </span>
@@ -38,7 +38,7 @@ export default function PaymentHistorySection({
             <span className="mr-2.5 text-sm text-gray-sunsu">최소</span>
             <span className="text-lg">
               <em className="font-bold not-italic">
-                {comma(portfolio.paymentHistory.minPrice)}
+                {comma(portfolio.paymentsHistory.minPrice)}
               </em>
               원
             </span>
@@ -46,7 +46,7 @@ export default function PaymentHistorySection({
         </div>
       </div>
       <div>
-        {portfolio.paymentHistory.payments?.map((payment, idx) => (
+        {portfolio.paymentsHistory.payments?.map((payment, idx) => (
           <Button
             onClick={() => {
               setPayment(payment);
