@@ -21,3 +21,6 @@ export const regions = [
 ];
 
 export const defaultAvatarUrl = "/images/default-avatar.jpeg";
+
+export const isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
+export const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1;
