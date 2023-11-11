@@ -17,7 +17,7 @@ async function sleep(ms) {
 
 export const portfolioHandlers = [
   // /portfolios?cursor={nextCursor}
-  rest.get("/portfolios", async (req, res, ctx) => {
+  rest.get("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const nextCursor = req.url.searchParams.get("cursor");
     if (nextCursor === "-1") {
@@ -30,7 +30,7 @@ export const portfolioHandlers = [
   }),
 
   // portfolios/self
-  rest.get("/portfolios/self", async (req, res, ctx) => {
+  rest.get("/api/portfolio/self", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -47,19 +47,14 @@ export const portfolioHandlers = [
     //   ctx.json({
     //     success: true,
     //     response: {
-    //       plannerName: "",
-    //       imageItems: [],
-    //       items: [
-    //         {
-    //           itemTitle: "",
-    //           itemPrice: 0,
-    //         },
-    //       ],
-    //       title: "",
-    //       description: "",
-    //       location: "",
-    //       career: "",
-    //       partnerCompany: "",
+    //       plannerName: null,
+    //       images: null,
+    //       items: null,
+    //       title: null,
+    //       description: null,
+    //       location: null,
+    //       career: null,
+    //       partnerCompany: null,
     //     },
     //     error: null,
     //   }),
@@ -68,7 +63,7 @@ export const portfolioHandlers = [
   }),
 
   // /portfolios/{portfolioId}
-  rest.get("/portfolios/:portfolioId", async (req, res, ctx) => {
+  rest.get("/api/portfolio/:portfolioId", async (req, res, ctx) => {
     await sleep(500);
     if (req.params.portfolioId === "1") {
       return res(ctx.status(200), ctx.json(portfolioDetail1));
@@ -78,7 +73,7 @@ export const portfolioHandlers = [
   }),
 
   // /portfolios
-  rest.post("/portfolios", async (req, res, ctx) => {
+  rest.post("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -94,7 +89,7 @@ export const portfolioHandlers = [
   }),
 
   // /portfolios
-  rest.put("/portfolios", async (req, res, ctx) => {
+  rest.put("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -110,7 +105,7 @@ export const portfolioHandlers = [
   }),
 
   // /portfolios
-  rest.delete("/portfolios", async (req, res, ctx) => {
+  rest.delete("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {

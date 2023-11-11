@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
-import _ from "lodash";
 import { getFavoriteList } from "../apis/favorite";
 
 const useFetchFavorites = () => {
@@ -16,20 +15,19 @@ const useFetchFavorites = () => {
         return allPages.length;
       },
       keepPreviousData: true,
+      refetchOnWindowFocus: true,
     },
   );
 
   useEffect(() => {
     if (infiniteQuery.data) {
-      const allFetchedFavorites = infiniteQuery.data?.pages.flat();
-      setFavorites((prev) =>
-        _.unionBy([...prev, ...allFetchedFavorites], "id"),
-      );
+      setFavorites(infiniteQuery.data?.pages.flat());
     }
   }, [infiniteQuery.data]);
 
   return {
     favorites,
+    setFavorites,
     ...infiniteQuery,
   };
 };

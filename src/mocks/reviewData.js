@@ -59,6 +59,8 @@ export const reviewsReviewIdData = {
   response: {
     id: 1,
     plannerName: "유희정",
+    portfolioId: 1,
+    coupleName: "김부부",
     stars: 5,
     content:
       "너무 친절하시고 준비도 잘 해주셨습니다!\n너무 친절하시고 준비도 잘 해주셨습니다!너무 친절하시고 준비도 잘 해주셨습니다!\n너무 친절하시고 준비도 잘 해주셨습니다!너무 친절하시고 준비도 잘 해주셨습니다!너무 친절하시고 준비도 잘 해주셨습니다!\n너무 친절하시고 준비도 잘 해주셨습니다!\n너무 친절하시고 준비도 잘 해주셨습니다!",
@@ -86,6 +88,7 @@ export const portfolioReviewsData1 = {
           "/images/1.jpg",
           "/images/2.jpg",
           "/images/3.jpg",
+          "/images/4.jpg",
           "/images/4.jpg",
         ],
       },

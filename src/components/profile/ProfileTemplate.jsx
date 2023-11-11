@@ -7,6 +7,8 @@ import DeleteAccountBottomSheet from "./DeleteAccountBottomSheet";
 import DeletePortfolioBottomSheet from "./DeletePortfolioBottomSheet";
 import MembershipBottomSheet from "./MembershipBottomSheet";
 import ProfileImage from "./ProfileImage";
+import ReviewSection from "./ReviewSection";
+import PortfolioSection from "./PortfolioSection";
 
 export default function ProfileTemplate() {
   const { userInfo } = useSelector((state) => state.user);
@@ -73,7 +75,7 @@ export default function ProfileTemplate() {
           <span className="pb-[5px] text-skyblue-sunsu">서비스</span>
           <Link
             className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-            to="/favorites"
+            to="/profile/favorites"
           >
             찜한 플래너 모아보기
           </Link>
@@ -84,35 +86,13 @@ export default function ProfileTemplate() {
             견적서 모아보기
           </Link>
           {userInfo.role === "planner" ? (
-            <>
-              <Link
-                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-                to="/profile/create/portfolio"
-              >
-                포트폴리오 등록 / 수정
-              </Link>
-              <button
-                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-                onClick={() => setDeletePortfolioBottomSheetOpen(true)}
-              >
-                포트폴리오 삭제
-              </button>
-            </>
+            <PortfolioSection
+              setDeletePortfolioBottomSheetOpen={
+                setDeletePortfolioBottomSheetOpen
+              }
+            />
           ) : (
-            <>
-              <Link
-                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-                to="/profile/reviews/writable"
-              >
-                작성 가능한 리뷰
-              </Link>
-              <Link
-                className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"
-                to="/profile/reviews/collect"
-              >
-                리뷰 관리
-              </Link>
-            </>
+            <ReviewSection />
           )}
           <button
             className="w-fit pt-[5px] pb-[5px] text-lg hover:underline"

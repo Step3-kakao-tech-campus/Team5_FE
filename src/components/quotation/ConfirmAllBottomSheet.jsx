@@ -1,15 +1,16 @@
 import { CircularProgress } from "@mui/material";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { confirmQuotationAll } from "../../apis/quotation";
-import { openNavigateReviewBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
-  const dispatch = useDispatch();
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { openBottomSheetHandler } = useOpenBottomSheet();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -22,10 +23,17 @@ const ConfirmAllBottomSheet = ({ onClose, chatId }) => {
       const response = await confirmQuotationAll(chatId);
       if (response.success) {
         onClose();
-        openNavigateReviewBottomSheet(dispatch);
+        openBottomSheetHandler({ bottomSheet: "navigateReviewBottomSheet" });
       }
     } catch (error) {
-      console.log(error);
+      onClose();
+      if (error?.response?.data?.error?.status === 6001) {
+        openBottomSheetHandler({
+          bottomSheet: "messageBottomSheet",
+          message: "확정할 견적서가 없습니다",
+        });
+      }
+      defaultErrorHandler(error);
     }
     setIsSubmitting(false);
   };

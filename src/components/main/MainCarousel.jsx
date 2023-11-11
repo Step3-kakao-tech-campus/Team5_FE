@@ -30,6 +30,7 @@ const MainCarousel = () => {
     ),
     dotsClass: "custom-dots",
     arrows: false,
+    lazyLoad: "anticipated",
   };
 
   return (
@@ -38,7 +39,7 @@ const MainCarousel = () => {
       <Slider {...settings}>
         <MainPhoto
           to="portfolios/1"
-          src="images/1.jpg"
+          src="images/1_1.png"
           alt="유희정 플래너 메인 사진"
           className="portfolio-image"
           plannerName="유희정 플래너"
@@ -46,13 +47,13 @@ const MainCarousel = () => {
           brideInstagram="@yunakim"
         />
         <MainPhoto
-          to="portfolios/4"
-          src="images/4.jpg"
-          alt="임혜주 플래너 메인 사진"
+          to="portfolios/2"
+          src="images/2_1.png"
+          alt="김아름 플래너 메인 사진"
           className="portfolio-image"
-          plannerName="임혜주 플래너"
-          brideName="김연아 신부님"
-          brideInstagram="@yunakim"
+          plannerName="김아름 플래너"
+          brideName="박신혜 신부님"
+          brideInstagram="@ssinz7"
         />
       </Slider>
     </>

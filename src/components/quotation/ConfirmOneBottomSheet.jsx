@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import BottomSheet from "../common/bottomsheet/BottomSheet";
-import Button from "../common/atoms/Button";
+import { useMutation, useQueryClient } from "react-query";
 import { confirmQuotationDetail } from "../../apis/quotation";
+import Button from "../common/atoms/Button";
+import BottomSheet from "../common/bottomsheet/BottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 const ConfirmOneBottomSheet = ({ onClose, quotationId, chatId }) => {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
+  const { mutate: confirmQuotationDetailMutate } = useMutation(
+    confirmQuotationDetail,
+  );
+  const queryClient = useQueryClient();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -14,18 +21,21 @@ const ConfirmOneBottomSheet = ({ onClose, quotationId, chatId }) => {
   const handleConfirmOne = async () => {
     if (!agreePolicy) return;
     setIsSubmitting(true);
-    try {
-      const response = await confirmQuotationDetail(quotationId, chatId);
-      console.log(response);
-      if (response.success) {
-        // eslint-disable-next-line no-restricted-globals
-        location.reload();
-        onClose();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setIsSubmitting(false);
+    confirmQuotationDetailMutate(
+      { quotationId, chatId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(`/quotations?chatId=${chatId}`);
+          setIsSubmitting(false);
+          onClose();
+        },
+        onError: (error) => {
+          onClose();
+          defaultErrorHandler(error);
+          setIsSubmitting(false);
+        },
+      },
+    );
   };
 
   return (

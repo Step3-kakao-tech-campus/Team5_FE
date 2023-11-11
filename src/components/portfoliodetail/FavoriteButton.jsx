@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addFavorite, deleteFavorite } from "../../apis/favorite";
 import { ReactComponent as HeartOutlinedIcon } from "../../assets/heart-03.svg";
 import { ReactComponent as HeartIcon } from "../../assets/heart-04.svg";
-import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import Button from "../common/atoms/Button";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 export default function FavoriteButton({ isLiked }) {
   const { isLogged } = useSelector((state) => state.user);
   const { mutate: addFavoriteMutate } = useMutation(addFavorite);
   const { mutate: deleteFavoriteMutate } = useMutation(deleteFavorite);
   const { id } = useParams();
-  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { openBottomSheetHandler } = useOpenBottomSheet();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleAddFavorite = () => {
     if (!isLogged) {
-      openLoginBottomSheet(dispatch);
+      openBottomSheetHandler({ bottomSheet: "loginBottomSheet" });
       return;
     }
     if (isLiked) return;
@@ -32,7 +34,7 @@ export default function FavoriteButton({ isLiked }) {
           setIsSubmitting(false);
         },
         onError: (error) => {
-          console.log(error);
+          defaultErrorHandler(error);
           setIsSubmitting(false);
         },
       },
@@ -49,7 +51,7 @@ export default function FavoriteButton({ isLiked }) {
           setIsSubmitting(false);
         },
         onError: (error) => {
-          console.log(error);
+          defaultErrorHandler(error);
           setIsSubmitting(false);
         },
       },
@@ -63,9 +65,9 @@ export default function FavoriteButton({ isLiked }) {
       disabled={isSubmitting}
     >
       {isLogged && isLiked ? (
-        <HeartOutlinedIcon className="w-[20px] h-[20px] object-cover" />
-      ) : (
         <HeartIcon className="w-[20px] h-[20px] object-cover" />
+      ) : (
+        <HeartOutlinedIcon className="w-[20px] h-[20px] object-cover" />
       )}
       <span className="font-bold">찜하기</span>
     </Button>

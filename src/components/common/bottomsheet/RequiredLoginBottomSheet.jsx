@@ -7,7 +7,7 @@ export default function RequiredLoginBottomSheet({ onClose }) {
     <BottomSheet onClose={onClose}>
       <div className="flex flex-col gap-12">
         <div className="flex flex-col font-semibold">
-          <span>더 많은 서비스를 이용할려면</span>
+          <span>더 많은 서비스를 이용하려면</span>
           <span>로그인이 필요합니다.</span>
         </div>
         <Link

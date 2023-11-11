@@ -21,13 +21,13 @@ const dhToken = "Bearer 1002";
 
 export const userHandlers = [
   // /user/signup
-  rest.post("/user/signup", async (req, res, ctx) => {
+  rest.post("/api/user/signup", async (req, res, ctx) => {
     await sleep(500);
     return res(ctx.status(200), ctx.json(signupResponse));
   }),
 
   // /user/login
-  rest.post("/user/login", async (req, res, ctx) => {
+  rest.post("/api/user/login", async (req, res, ctx) => {
     await sleep(500);
     if (req.body.email === "hj1@naver.com") {
       return res(
@@ -87,7 +87,7 @@ export const userHandlers = [
   }),
 
   // /user
-  rest.delete("/user", async (req, res, ctx) => {
+  rest.delete("/api/user", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -103,7 +103,7 @@ export const userHandlers = [
   }),
 
   // /user/info
-  rest.get("/user/info", async (req, res, ctx) => {
+  rest.get("/api/user/info", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -128,7 +128,7 @@ export const userHandlers = [
   }),
 
   // /user/token
-  rest.put("/user/token", async (req, res, ctx) => {
+  rest.post("/api/user/token", async (req, res, ctx) => {
     await sleep(500);
     const refreshToken = req.headers.get("Refresh");
     return res(
@@ -149,5 +149,15 @@ export const userHandlers = [
     //     },
     //   }),
     // );
+  }),
+
+  rest.post("/api/mail", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
+  }),
+
+  rest.post("/api/mail/verify", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];

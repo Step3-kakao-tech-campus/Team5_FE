@@ -5,17 +5,15 @@ import Spinner from "../components/common/atoms/Spinner";
 import NoReviewList from "../components/review/NoReviewList";
 import ReviewListHeader from "../components/review/ReviewListHeader";
 import ReviewListTemplate from "../components/review/ReviewListTemplate";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 export default function ReviewListPage() {
-  const { data, isLoading } = useQuery(
-    ["/reviews/collect"],
-    getReviewsListSelf,
-    {
-      onError: (error) => {
-        console.log(error);
-      },
+  const { defaultErrorHandler } = useDefaultErrorHandler();
+  const { data, isLoading } = useQuery(["/reviews/all"], getReviewsListSelf, {
+    onError: (error) => {
+      defaultErrorHandler(error);
     },
-  );
+  });
 
   if (isLoading) return <Spinner />;
   return (

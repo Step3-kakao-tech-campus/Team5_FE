@@ -14,7 +14,7 @@ const InputGroup = forwardRef(
       label,
       className,
       onChange,
-      defaultValue = "",
+      defaultValue,
     },
     ref,
   ) => {

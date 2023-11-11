@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 import useFetchFavorites from "../../hooks/useFetchFavorites";
-import Spinner from "../common/atoms/Spinner";
 import Container from "../common/atoms/Container";
+import Spinner from "../common/atoms/Spinner";
 import PortfolioGrid from "../portfolios/PortfolioGrid";
+import NoFavoriteList from "./NoFavoriteList";
 
 const FavoriteListTemplate = () => {
   const bottomObserver = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
     error,
@@ -13,7 +16,7 @@ const FavoriteListTemplate = () => {
     isLoading,
     fetchNextPage,
     favorites,
-    isFetching,
+    setFavorites,
   } = useFetchFavorites();
 
   useEffect(() => {
@@ -35,19 +38,24 @@ const FavoriteListTemplate = () => {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      alert("서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.");
+      defaultErrorHandler(error);
     }
   }, [error]);
 
   if (isLoading) return <Spinner />;
 
-  console.log(favorites);
-
   return (
     <>
       <Container>
-        <PortfolioGrid portfolios={favorites} isFetching={isFetching} />
+        {favorites?.length === 0 ? (
+          <NoFavoriteList />
+        ) : (
+          <PortfolioGrid
+            portfolios={favorites}
+            isFetchingNextPage={isFetchingNextPage}
+            setFavorites={setFavorites}
+          />
+        )}
       </Container>
       <div ref={bottomObserver} />
     </>

@@ -1,18 +1,19 @@
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useAtomValue } from "jotai";
-import useInput from "../hooks/useInput";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { updateQuotation } from "../apis/quotation";
-import QuotationUpdateHeader from "../components/quotation/QuotationUpdateHeader";
-import Box from "../components/common/atoms/Box";
-import InputGroup from "../components/common/accounts/InputGroup";
-import Label from "../components/common/atoms/Label";
 import AlertBox from "../components/common/accounts/AlertBox";
-import Button from "../components/common/atoms/Button";
-import { quotationItemAtom } from "../store";
+import InputGroup from "../components/common/accounts/InputGroup";
 import AutoHeightTextarea from "../components/common/atoms/AutoHeightTextarea";
-import { convertPriceFormat, uncomma } from "../utils/convert";
+import Box from "../components/common/atoms/Box";
+import Button from "../components/common/atoms/Button";
+import Label from "../components/common/atoms/Label";
+import QuotationUpdateHeader from "../components/quotation/QuotationUpdateHeader";
+import useInput from "../hooks/useInput";
+import { quotationItemAtom } from "../store";
+import { comma, uncomma } from "../utils/convert";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 const QuotationUpdatePage = () => {
   const navigate = useNavigate();
@@ -22,17 +23,24 @@ const QuotationUpdatePage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const quotationItem = useAtomValue(quotationItemAtom);
-  const [price, setPrice] = useState(convertPriceFormat(quotationItem.price));
+  const [price, setPrice] = useState(comma(quotationItem.price));
   const titleInputRef = useRef(null);
   const companyInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
   const priceInputRef = useRef(null);
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const { values, handleChange } = useInput({
     title: quotationItem.title,
     company: quotationItem.company,
     description: quotationItem.description,
   });
+
+  const handleChangePrice = (e) => {
+    const { value } = e.target;
+    const numberPrice = uncomma(value);
+    setPrice(comma(numberPrice));
+  };
 
   const validateInput = () => {
     if (!values.title) {
@@ -76,8 +84,7 @@ const QuotationUpdatePage = () => {
         navigate(-1);
       }
     } catch (error) {
-      console.log(error);
-      setErrorMessage(error.response.data.message);
+      defaultErrorHandler(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -114,7 +121,6 @@ const QuotationUpdatePage = () => {
             onChange={handleChange}
             className="relative pt-[15px]"
           />
-
           <Box className="relative pt-[15px]">
             <AutoHeightTextarea
               label="상세 설명"
@@ -128,7 +134,6 @@ const QuotationUpdatePage = () => {
               className="relative w-full h-[70px] rounded-[10px] px-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent overflow-hidden resize-none"
             />
           </Box>
-
           <Box className="relative pt-[15px]">
             <div className="pb-[5px]">
               <Label htmlFor="price" className="text-xs">
@@ -142,11 +147,10 @@ const QuotationUpdatePage = () => {
                 name="price"
                 type="text"
                 value={price}
-                onChange={() =>
-                  setPrice(convertPriceFormat(priceInputRef.current.value))
-                }
+                onChange={handleChangePrice}
                 placeholder="0"
                 className="w-full h-[50px] rounded-[10px] pl-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent text-right pr-[34px]"
+                maxLength={11}
               />
               <p className="absolute right-[20px] text-sm text-gray-sunsu">
                 원

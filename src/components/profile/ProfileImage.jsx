@@ -24,15 +24,15 @@ export default function ProfileImage() {
         open={imageModalOpen}
         setUploading={setUploading}
       />
-      <div className="relative w-32 h-32 sm:w-24 sm:h-24">
+      <div className="relative min-w-[100px] min-h-[100px] w-[40%] h-[40%] max-w-[160px] max-h-[160px] after:pb-[100%] after:block">
         <Photo
           src={avatar}
           alt="avatar"
-          className="object-cover object-center w-full h-full rounded-full"
+          className="absolute right-0 bottom-0 object-cover object-center w-full h-full rounded-full"
         />
         {upLoading && <ProfileImageSpinner />}
         <button
-          className="absolute bottom-[5%] right-[5%] w-6 h-6 p-1 rounded-full bg-zinc-100 cursor-pointer hover:bg-zinc-500 hover:text-white"
+          className="absolute bottom-[7%] right-[7%] w-6 h-6 p-1 rounded-full bg-zinc-100 cursor-pointer hover:bg-zinc-500 hover:text-white xs:bottom-[4%] xs:right-[4%]"
           onClick={handleOpenImageModal}
         >
           <BsCamera className="w-full h-ful" />
