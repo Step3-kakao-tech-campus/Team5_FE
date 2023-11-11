@@ -1,10 +1,26 @@
 import { BsCamera } from "react-icons/bs";
 import heic2any from "heic2any";
 import Compressor from "compressorjs";
+import { useEffect } from "react";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
 import Photo from "./atoms/Photo";
+import { isChrome, isFirefox } from "../../utils/constants";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 
 export default function ImageUploadZone({ images, setImages, setIsUploading }) {
+  const { openBottomSheetHandler } = useOpenBottomSheet();
+
+  useEffect(() => {
+    if (!isChrome && !isFirefox) {
+      console.log("it is not chrome and firefox");
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message:
+          "접속하신 브라우저에서는 고용량 사진 업로드를 지원하지 않습니다. 저용량 사진을 업로드하시거나, 데스크탑 크롬 브라우저를 이용해주세요.",
+      });
+    }
+  }, []);
+
   const returnCompressor = (reader, file) => {
     return new Compressor(file, {
       quality: 0.7,
