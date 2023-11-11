@@ -1,4 +1,5 @@
 import { ReactComponent as SearchOutlinedIcon } from "../../assets/search-03.svg";
+import { ReactComponent as LogoIcon } from "../../assets/logo-02.svg";
 import HeaderRow from "../common/HeaderRow";
 import { scrollToTop } from "../../utils/convert";
 
@@ -7,8 +8,8 @@ const MainHeaderRow = ({ handleOpenSearchBar }) => {
     <HeaderRow>
       <div className="flex justify-between items-center w-full px-1">
         <button onClick={scrollToTop}>
-          <div className="my-auto font-['Comfortaa'] font-bold text-2xl text-blue-sunsu">
-            sunsu
+          <div className="">
+            <LogoIcon className="my-auto h-[15px] w-[80px]" />
           </div>
         </button>
         <button onClick={() => {}}>

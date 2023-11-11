@@ -26,7 +26,7 @@ export default function NoQuotationListTemplate() {
       </div>
       {userInfo.role === "planner" && (
         <Link
-          className="absolute bottom-[79px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
+          className="absolute bottom-[70px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
           to={`/quotations/create/${chatId}`}
         >
           <AddIcon className="w-4 h-4 mr-2" />
