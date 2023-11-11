@@ -46,7 +46,7 @@ const MainPhoto = ({
         />
         <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full">
           <div className="flex">
-            <Congratulations className="mt-3 mx-auto xs:h-[80px] sm:h-[100px] h-[120px]" />
+            <Congratulations className="mt-[5px] mx-auto xs:h-[80px] sm:h-[100px] h-[120px]" />
           </div>
           <div className="flex">
             <div className="ml-auto mr-4 text-right text-sm text-white">

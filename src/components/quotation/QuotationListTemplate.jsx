@@ -149,7 +149,7 @@ const QuotationListTemplate = ({ quotation }) => {
       </div>
       {userInfo.role === "planner" ? (
         <button
-          className="fixed flex bottom-[70px] right-[29px] w-[130px] h-[60px] rounded-2xl text-base text-black justify-center items-center z-30 bg-lightskyblue-sunsu opacity-95"
+          className="absolute bottom-[70px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center"
           onClick={() => {
             if (quotation.status === "완료") {
               setAlreadyConfirmBottomSheetOpen(true);
@@ -163,7 +163,7 @@ const QuotationListTemplate = ({ quotation }) => {
         </button>
       ) : (
         <button
-          className="fixed flex bottom-[70px] right-[29px] w-[130px] h-[60px] rounded-2xl text-base text-black justify-center items-center z-30 bg-lightskyblue-sunsu opacity-95"
+          className="absolute bottom-[70px] right-[29px] w-[130px] h-[60px] flex rounded-2xl bg-lightskyblue-sunsu text-base text-black justify-center items-center hover:shadow-lg"
           onClick={handleOnConfirmAll}
         >
           <StarIcon className="w-4 h-4 mr-2" />
