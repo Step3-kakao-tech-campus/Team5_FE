@@ -35,7 +35,6 @@ const PortfolioCard = ({ portfolio, setFavorites }) => {
           setIsSubmitting(false);
         },
         onError: (error) => {
-          console.log(error);
           defaultErrorHandler(error);
           setIsSubmitting(false);
         },
@@ -59,7 +58,6 @@ const PortfolioCard = ({ portfolio, setFavorites }) => {
           setIsSubmitting(false);
         },
         onError: (error) => {
-          console.log(error);
           defaultErrorHandler(error);
           setIsSubmitting(false);
         },

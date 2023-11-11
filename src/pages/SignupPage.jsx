@@ -70,7 +70,6 @@ export default function SignupPage() {
       setErrorMessage("");
       await new Promise((resolve) => {
         setTimeout(() => {
-          console.log("validateInput1");
           resolve();
         }, 300);
       });
@@ -116,7 +115,6 @@ export default function SignupPage() {
       setErrorMessage("");
       await new Promise((resolve) => {
         setTimeout(() => {
-          console.log("validateInput1");
           resolve();
         }, 300);
       });
@@ -241,13 +239,6 @@ export default function SignupPage() {
   const handleSubmit = async () => {
     if (!(await validateInput())) return;
     try {
-      console.log({
-        role: values.role,
-        email: values.email,
-        password: values.password,
-        password2: values.password2,
-        username: values.username,
-      });
       setIsSubmitting(true);
       const res = await signup({
         role: values.role,

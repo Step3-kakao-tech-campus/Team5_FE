@@ -67,9 +67,7 @@ export default function LoginPage() {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
       const customError = error?.response?.data?.error;
-      console.log(customError);
       switch (customError.status) {
         case 2003:
           setErrorMessageAndFocus("이메일을 찾을 수 없습니다.", emailInputRef);

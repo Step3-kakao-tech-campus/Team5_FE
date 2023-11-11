@@ -42,7 +42,6 @@ const FavoriteListTemplate = () => {
     }
   }, [error]);
 
-  console.log("list", favorites);
   if (isLoading) return <Spinner />;
 
   return (

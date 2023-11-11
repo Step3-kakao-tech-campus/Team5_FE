@@ -34,7 +34,6 @@ export default function FavoriteButton({ isLiked }) {
           setIsSubmitting(false);
         },
         onError: (error) => {
-          console.log(error);
           defaultErrorHandler(error);
           setIsSubmitting(false);
         },
@@ -52,7 +51,6 @@ export default function FavoriteButton({ isLiked }) {
           setIsSubmitting(false);
         },
         onError: (error) => {
-          console.log(error);
           defaultErrorHandler(error);
           setIsSubmitting(false);
         },

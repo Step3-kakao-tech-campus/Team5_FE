@@ -37,7 +37,6 @@ export default function CreatePortfolioPage() {
       </div>
     );
   }
-  console.log(portfolio);
   return (
     <div className="w-full h-full">
       <CreatePortfolioHeader />

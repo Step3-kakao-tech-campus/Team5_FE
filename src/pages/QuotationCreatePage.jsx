@@ -67,12 +67,6 @@ const QuotationCreatePage = () => {
 
   const handleSubmit = async () => {
     if (!validateInput()) return;
-    console.log({
-      title: values.title,
-      company: values.company,
-      description: values.description,
-      price: uncomma(price),
-    });
     try {
       setIsSubmitting(true);
       const res = await createQuotation(chatId, {
