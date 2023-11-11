@@ -70,12 +70,20 @@ export default function LoginPage() {
       console.log(error);
       const customError = error?.response?.data?.error;
       console.log(customError);
-      if (customError.status === 2003) {
-        setErrorMessageAndFocus("이메일을 찾을 수 없습니다", emailInputRef);
-        return;
+      switch (customError.status) {
+        case 2003:
+          setErrorMessageAndFocus("이메일을 찾을 수 없습니다.", emailInputRef);
+          break;
+        case 2005:
+          setErrorMessageAndFocus(
+            "패스워드를 잘못 입력하셨습니다.",
+            passwordInputRef,
+          );
+          break;
+        default:
+          defaultErrorHandler(error);
+          setErrorMessage("이메일 또는 비밀번호를 잘못 입력했습니다.");
       }
-      defaultErrorHandler(error);
-      setErrorMessage("이메일 또는 비밀번호를 잘못 입력했습니다. ");
     } finally {
       setIsSubmitting(false);
     }
