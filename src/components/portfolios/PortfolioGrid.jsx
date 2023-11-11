@@ -1,7 +1,7 @@
 import PortfolioCard from "./PortfolioCard";
 import SkeletonCard from "../common/atoms/SkeletonCard";
 
-const PortfolioGrid = ({ portfolios, isFetching, setFavorites }) => {
+const PortfolioGrid = ({ portfolios, isFetchingNextPage, setFavorites }) => {
   return (
     <div className="portfolio-grid grid grid-cols-2 gap-[6px] p-[6px] w-full">
       {portfolios?.map((portfolio) => (
@@ -11,7 +11,7 @@ const PortfolioGrid = ({ portfolios, isFetching, setFavorites }) => {
           setFavorites={setFavorites}
         />
       ))}
-      {isFetching && (
+      {isFetchingNextPage && (
         <>
           <SkeletonCard /> <SkeletonCard />
           <SkeletonCard /> <SkeletonCard />

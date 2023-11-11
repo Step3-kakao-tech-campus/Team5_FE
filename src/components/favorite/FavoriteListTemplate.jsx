@@ -16,7 +16,6 @@ const FavoriteListTemplate = () => {
     isLoading,
     fetchNextPage,
     favorites,
-    isFetching,
     setFavorites,
   } = useFetchFavorites();
 
@@ -54,7 +53,7 @@ const FavoriteListTemplate = () => {
         ) : (
           <PortfolioGrid
             portfolios={favorites}
-            isFetching={isFetching}
+            isFetchingNextPage={isFetchingNextPage}
             setFavorites={setFavorites}
           />
         )}
