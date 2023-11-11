@@ -64,6 +64,7 @@ const ItemsInfo = forwardRef(({ items, setItems }, ref) => {
               className={cn("w-full text-right font-bold focus:outline-none")}
               placeholder="0"
               value={item?.itemPrice === "0" ? "" : item?.itemPrice}
+              maxLength={11}
             />
             <span>원</span>
           </div>
