@@ -22,13 +22,57 @@
       name="viewport"
       content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, viewport-fit=cover"
     />
-    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/icons/favicon.svg">
-    <link rel="mask-icon" href="%PUBLIC_URL%/icons/mask-icon.svg" color="#000000">
-    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/icons/favicon-16x16.png">
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="%PUBLIC_URL%/icons/favicon.svg"
+    />
+    <link
+      rel="mask-icon"
+      href="%PUBLIC_URL%/icons/mask-icon.svg"
+      color="#000000"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="%PUBLIC_URL%/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="%PUBLIC_URL%/icons/favicon-16x16.png"
+    />
+
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="순수웨딩" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="icons/favicon-152x152.png" />
+
+    <meta
+      name="description"
+      content="투명한 가격으로 웨딩플래너와 예비부부를 매칭하다."
+    />
+    <meta name="theme-color" content="#A7CFFF" />
     <title>순수웨딩</title>
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+              console.log(
+                "Service worker regisered successfully",
+                registration,
+              );
+            });
+        });
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
