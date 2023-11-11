@@ -150,6 +150,7 @@ const QuotationUpdatePage = () => {
                 onChange={handleChangePrice}
                 placeholder="0"
                 className="w-full h-[50px] rounded-[10px] pl-[20px] py-[15px] border border-lightgray-sunsu text-sm bg-transparent text-right pr-[34px]"
+                maxLength={11}
               />
               <p className="absolute right-[20px] text-sm text-gray-sunsu">
                 원

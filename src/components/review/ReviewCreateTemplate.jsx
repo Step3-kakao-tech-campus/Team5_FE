@@ -89,7 +89,7 @@ export default function ReviewCreateTemplate() {
     <>
       {isUploading && <Spinner />}
       <div
-        className="w-full flex flex-col px-[40px] py-[29px] gap-[5px] "
+        className="w-full flex flex-col px-[29px] py-[29px] gap-[5px] "
         ref={heightRef}
       >
         <div className="w-full flex flex-col items-center justify-center mt-[20px] mb-[40px]">
