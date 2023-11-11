@@ -39,6 +39,19 @@ export default function ChatRoomPage() {
     counterName,
   } = useChatRoom({ chatId, userId: userInfo.userId });
 
+  const viewport = window.visualViewport;
+  function adjustLayout() {
+    const viewportHeight = viewport.height;
+    window.innerHeight = viewportHeight;
+    console.log("viewportHeight", viewportHeight);
+    console.log("window.innerHeight", window.innerHeight);
+  }
+
+  viewport.addEventListener("resize", adjustLayout);
+
+  // 초기 레이아웃 조정
+  adjustLayout();
+
   useEffect(() => {
     checkChatId(); // 채팅방이 ID 검증
     // 이전 메세지 가져오기

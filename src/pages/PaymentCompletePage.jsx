@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link, useSearchParams } from "react-router-dom";
 import { paymentApprovalAndUserUpgrade } from "../apis/payments";
-import GNBBOX from "../components/common/GNBBOX";
 import { fetchUserInfo } from "../store/slices/userSlice";
 import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
@@ -53,7 +52,7 @@ export default function PaymentCompletePage() {
     );
 
   return (
-    <div className="flex flex-col tracking-tight h-screen w-full">
+    <div className="flex flex-col tracking-tight h-[calc(100vh-50px)] w-full">
       <div className=" grow p-10 flex justify-between flex-col">
         <div>
           <h1 className=" text-2xl font-medium pt-10">
@@ -80,7 +79,6 @@ export default function PaymentCompletePage() {
           </Link>
         </div>
       </div>
-      <GNBBOX />
     </div>
   );
 }
