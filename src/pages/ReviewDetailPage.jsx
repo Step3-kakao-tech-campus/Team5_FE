@@ -4,15 +4,17 @@ import ReviewDetailHeader from "../components/review/ReviewDetailHeader";
 import ReviewDetailTemplate from "../components/review/ReviewDetailTemplate";
 import { getReviewDetail } from "../apis/review";
 import Spinner from "../components/common/atoms/Spinner";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 const ReviewDetailPage = () => {
   const { reviewId } = useParams();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const { data: review, isLoading } = useQuery(
     [`/reviews/${reviewId}`],
     () => getReviewDetail(reviewId),
     {
       onError: (error) => {
-        console.log(error);
+        defaultErrorHandler(error);
       },
     },
   );

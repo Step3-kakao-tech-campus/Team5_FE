@@ -17,10 +17,7 @@ export const login = async (loginData) => {
   const response = await instance.post("/api/user/login", { email, password });
   // 로그인시 accessToken, refreshToken을 localStorage에 저장
   localStorage.setItem("accessToken", response.headers.get("Authorization"));
-  console.log(response.headers.get("Authorization"));
   localStorage.setItem("refreshToken", response.headers.get("Refresh"));
-  console.log(response.headers.get("Refresh"));
-  console.log(response.headers);
   return response.data;
 };
 

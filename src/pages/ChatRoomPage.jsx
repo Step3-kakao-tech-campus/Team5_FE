@@ -43,8 +43,6 @@ export default function ChatRoomPage() {
   function adjustLayout() {
     const viewportHeight = viewport.height;
     window.innerHeight = viewportHeight;
-    console.log("viewportHeight", viewportHeight);
-    console.log("window.innerHeight", window.innerHeight);
   }
 
   viewport.addEventListener("resize", adjustLayout);

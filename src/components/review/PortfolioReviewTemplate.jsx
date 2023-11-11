@@ -42,7 +42,6 @@ export default function PortfolioReviewTemplate() {
       defaultErrorHandler(error);
     }
   }, [error]);
-  console.log(portfolioReviews);
   if (isLoading) return <Spinner />;
   return (
     <>

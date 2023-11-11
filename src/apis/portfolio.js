@@ -29,7 +29,6 @@ export const createPortfolio = async (portfolioData) => {
     career,
     partnerCompany,
   } = portfolioData;
-  console.log(portfolioData);
   const response = await instance.post("/api/portfolio", {
     plannerName,
     items,
@@ -54,7 +53,6 @@ export const updatePortfolio = async (portfolioData) => {
     career,
     partnerCompany,
   } = portfolioData;
-  console.log(portfolioData);
   const response = await instance.put("/api/portfolio", {
     plannerName,
     items,

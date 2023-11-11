@@ -5,9 +5,10 @@ import { getQuotationCollectList } from "../../apis/quotation";
 import Button from "../common/atoms/Button";
 
 const InProgressQuotationBanner = () => {
+  // 메인페이지는 에러를 띄우지 않음
   const navigate = useNavigate();
   const [firstInProgressChat, setFirstInProgressChat] = useState(null);
-  const { data, error } = useQuery(`/quotations/collect`, () =>
+  const { data } = useQuery(`/quotations/collect`, () =>
     getQuotationCollectList(0),
   );
 
@@ -18,12 +19,6 @@ const InProgressQuotationBanner = () => {
       );
     }
   }, [data]);
-
-  useEffect(() => {
-    if (error) {
-      console.log(error);
-    }
-  }, [error]);
 
   return (
     firstInProgressChat && (

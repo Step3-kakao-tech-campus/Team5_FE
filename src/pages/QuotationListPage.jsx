@@ -16,7 +16,6 @@ const QuotationListPage = () => {
     {
       keepPreviousData: true,
       onError: (error) => {
-        console.log(error);
         defaultErrorHandler(error);
       },
     },

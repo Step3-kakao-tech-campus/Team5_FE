@@ -97,7 +97,6 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
       career: careerRef.current.value,
       partnerCompany: partnerCompanyRef.current.value,
     };
-    console.log("portfolioData", portfolioData);
     setIsSubmitting(true);
     updateMutate(portfolioData, {
       onSuccess: () => {
@@ -107,9 +106,8 @@ export default function UpdatePortfolioTemplate({ portfolio }) {
           message: "포트폴리오가 성공적으로 수정되었습니다.",
         });
       },
-      onError: (error) => {
+      onError: () => {
         // 디폴트 에러 핸들러를 적용하면 작성한게 사라지므로 따로 처리
-        console.log(error);
         setIsSubmitting(false);
         openBottomSheetHandler({
           bottomSheet: "messageBottomSheet",

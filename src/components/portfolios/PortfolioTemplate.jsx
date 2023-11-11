@@ -82,7 +82,6 @@ const PortfolioTemplate = () => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
       defaultErrorHandler(error);
     }
   }, [error]);

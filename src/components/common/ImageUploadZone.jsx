@@ -12,7 +12,6 @@ export default function ImageUploadZone({ images, setImages, setIsUploading }) {
 
   useEffect(() => {
     if (!isChrome && !isFirefox) {
-      console.log("it is not chrome and firefox");
       openBottomSheetHandler({
         bottomSheet: "messageBottomSheet",
         message:
@@ -32,9 +31,6 @@ export default function ImageUploadZone({ images, setImages, setIsUploading }) {
           type: result.type,
         });
         reader.readAsDataURL(newFile);
-      },
-      error(err) {
-        console.log(err);
       },
     });
   };
@@ -60,21 +56,17 @@ export default function ImageUploadZone({ images, setImages, setIsUploading }) {
       };
       if (addedFile.name.split(".")[1].toLowerCase() === "heic") {
         const blob = addedFile;
-        await heic2any({ blob, toType: "image/jpeg" })
-          .then((resultBlob) => {
-            addedFile = new File(
-              [resultBlob],
-              `${addedFile.name.split(".")[0]}.jpg`,
-              {
-                type: "image/jpeg",
-                lastModified: new Date().getTime(),
-              },
-            );
-            returnCompressor(reader, addedFile);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        await heic2any({ blob, toType: "image/jpeg" }).then((resultBlob) => {
+          addedFile = new File(
+            [resultBlob],
+            `${addedFile.name.split(".")[0]}.jpg`,
+            {
+              type: "image/jpeg",
+              lastModified: new Date().getTime(),
+            },
+          );
+          returnCompressor(reader, addedFile);
+        });
       } else {
         returnCompressor(reader, addedFile);
       }

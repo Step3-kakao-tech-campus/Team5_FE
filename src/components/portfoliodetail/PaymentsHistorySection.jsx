@@ -51,7 +51,6 @@ export default function PaymentHistorySection({
             onClick={() => {
               setPayment(payment);
               setHistoryBottomSheetOpen(true);
-              console.log(payment);
             }}
             // eslint-disable-next-line react/no-array-index-key
             key={idx}

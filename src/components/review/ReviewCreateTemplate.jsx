@@ -63,7 +63,6 @@ export default function ReviewCreateTemplate() {
         });
       }
     } catch (error) {
-      console.log(error);
       defaultErrorHandler(error);
     }
     setIsSubmitting(false);
