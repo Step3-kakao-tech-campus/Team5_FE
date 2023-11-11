@@ -26,6 +26,8 @@ import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
 import TermsPage from "./pages/TermsPage";
 import WritableReviewListPage from "./pages/WritableReviewListPage";
+import DuplicatedCheckLayout from "./layouts/DuplicatedCheckLayout";
+import ReviewDetailPage from "./pages/ReviewDetailPage";
 
 function App() {
   return (
@@ -40,6 +42,7 @@ function App() {
               path="/portfolios/reviews/:plannerId"
               element={<PortfolioReviewPage />}
             />
+            <Route path="/reviews/:reviewId" element={<ReviewDetailPage />} />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
@@ -85,10 +88,12 @@ function App() {
               path="/profile/reviews/collect"
               element={<ReviewListPage />}
             />
-            <Route path="/favorites" element={<FavoriteListPage />} />
+            <Route path="/profile/favorites" element={<FavoriteListPage />} />
           </Route>
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route element={<DuplicatedCheckLayout />}>
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Route>
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/policy" element={<PrivacyPolicyPage />} />
         </Route>

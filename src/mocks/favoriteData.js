@@ -10,6 +10,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 225,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 2, // Long
@@ -20,6 +21,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 21,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 3, // Long
@@ -30,6 +32,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 95,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 4, // Long
@@ -40,6 +43,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 83,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 5, // Long
@@ -50,6 +54,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 5,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 6, // Long
@@ -60,6 +65,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 6,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 7, // Long
@@ -70,6 +76,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 7,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 8, // Long
@@ -80,6 +87,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 8,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 9, // Long
@@ -90,6 +98,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 9,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 10, // Long
@@ -100,6 +109,7 @@ export const favoriteList0 = {
       location: "서울",
       contractCount: 10,
       isLiked: true,
+      avgStars: 4.0,
     },
   ],
   error: null,
@@ -117,6 +127,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 1,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 12, // Long
@@ -127,6 +138,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 2,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 13, // Long
@@ -137,6 +149,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 3,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 14, // Long
@@ -147,6 +160,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 4,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 15, // Long
@@ -157,6 +171,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 5,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 16, // Long
@@ -167,6 +182,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 6,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 17, // Long
@@ -177,6 +193,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 7,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 18, // Long
@@ -187,6 +204,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 8,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 19, // Long
@@ -197,6 +215,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 9,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 20, // Long
@@ -207,6 +226,7 @@ export const favoriteList1 = {
       location: "서울",
       contractCount: 10,
       isLiked: true,
+      avgStars: 4.0,
     },
   ],
   error: null,
@@ -224,6 +244,7 @@ export const favoriteList2 = {
       location: "서울",
       contractCount: 1,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 22, // Long
@@ -234,6 +255,7 @@ export const favoriteList2 = {
       location: "서울",
       contractCount: 2,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 23, // Long
@@ -244,6 +266,7 @@ export const favoriteList2 = {
       location: "서울",
       contractCount: 3,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 24, // Long
@@ -254,6 +277,7 @@ export const favoriteList2 = {
       location: "서울",
       contractCount: 4,
       isLiked: true,
+      avgStars: 4.0,
     },
     {
       id: 25, // Long
@@ -264,6 +288,7 @@ export const favoriteList2 = {
       location: "서울",
       contractCount: 5,
       isLiked: true,
+      avgStars: 4.0,
     },
   ],
   error: null,

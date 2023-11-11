@@ -7,7 +7,7 @@ async function sleep(ms) {
 }
 
 export const chatHandlers = [
-  rest.post("/chat", async (req, res, ctx) => {
+  rest.post("/api/chat", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -24,7 +24,8 @@ export const chatHandlers = [
       ctx.json({
         success: true,
         response: {
-          chatId: 21001,
+          chatId: 21002,
+          existed: true,
         },
         error: null,
       }),

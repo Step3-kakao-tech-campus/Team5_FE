@@ -1,26 +1,36 @@
 import { BsCamera } from "react-icons/bs";
 import heic2any from "heic2any";
 import Compressor from "compressorjs";
+import { useEffect } from "react";
 import { ReactComponent as CloseIcon } from "../../assets/close-01.svg";
 import Photo from "./atoms/Photo";
+import { isChrome, isFirefox } from "../../utils/constants";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 
-export default function ImageUploadZone({
-  imageItems,
-  setImageItems,
-  setIsUploading,
-}) {
+export default function ImageUploadZone({ images, setImages, setIsUploading }) {
+  const { openBottomSheetHandler } = useOpenBottomSheet();
+
+  useEffect(() => {
+    if (!isChrome && !isFirefox) {
+      openBottomSheetHandler({
+        bottomSheet: "messageBottomSheet",
+        message:
+          "접속하신 브라우저에서는 고용량 사진 업로드를 지원하지 않습니다. 저용량 사진을 업로드하시거나, 데스크탑 크롬 브라우저를 이용해주세요.",
+      });
+    }
+  }, []);
+
   const returnCompressor = (reader, file) => {
     return new Compressor(file, {
-      quality: 0.8,
+      quality: 0.7,
       mimeType: "image/webp",
+      maxHeight: 1440,
+      maxWidth: 1440,
       success(result) {
         const newFile = new File([result], `image${new Date().getTime()}`, {
           type: result.type,
         });
         reader.readAsDataURL(newFile);
-      },
-      error(err) {
-        console.log(err);
       },
     });
   };
@@ -41,26 +51,22 @@ export default function ImageUploadZone({
 
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageItems([...imageItems, reader.result]);
+        setImages([...images, reader.result]);
         setIsUploading(false);
       };
       if (addedFile.name.split(".")[1].toLowerCase() === "heic") {
         const blob = addedFile;
-        await heic2any({ blob, toType: "image/jpeg" })
-          .then((resultBlob) => {
-            addedFile = new File(
-              [resultBlob],
-              `${addedFile.name.split(".")[0]}.jpg`,
-              {
-                type: "image/jpeg",
-                lastModified: new Date().getTime(),
-              },
-            );
-            returnCompressor(reader, addedFile);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        await heic2any({ blob, toType: "image/jpeg" }).then((resultBlob) => {
+          addedFile = new File(
+            [resultBlob],
+            `${addedFile.name.split(".")[0]}.jpg`,
+            {
+              type: "image/jpeg",
+              lastModified: new Date().getTime(),
+            },
+          );
+          returnCompressor(reader, addedFile);
+        });
       } else {
         returnCompressor(reader, addedFile);
       }
@@ -68,9 +74,9 @@ export default function ImageUploadZone({
   };
 
   const handleDeleteImage = (index) => {
-    const updatedImageItems = [...imageItems];
+    const updatedImageItems = [...images];
     updatedImageItems.splice(index, 1); // 해당 항목 삭제
-    setImageItems(updatedImageItems); // 이미지 배열 업데이트
+    setImages(updatedImageItems); // 이미지 배열 업데이트
   };
 
   return (
@@ -82,7 +88,7 @@ export default function ImageUploadZone({
         </h6>
       </div>
       <div className="grid w-full grid-cols-3 gap-2">
-        {imageItems.map((imageItem, idx) => (
+        {images.map((imageItem, idx) => (
           <div
             className="relative w-full h-0"
             style={{ paddingBottom: "100%" }}
@@ -102,7 +108,7 @@ export default function ImageUploadZone({
             </button>
           </div>
         ))}
-        {imageItems.length < 5 && (
+        {images.length < 5 && (
           <label
             htmlFor="photo"
             className="cursor-pointer relative w-full h-0 pb-[100%]"

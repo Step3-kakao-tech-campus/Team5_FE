@@ -18,21 +18,10 @@ export const comma = (num) => {
 
 export const uncomma = (str) => {
   if (!str || str.length === 0) {
-    return "";
+    return "0";
   }
-  return str.replace(/[^\d]+/g, "");
-};
-
-export const convertPriceFormat = (num) => {
-  const commaA = (str) => {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-  };
-  const commaB = (str) => {
-    str = String(str);
-    return str.replace(/[^\d]+/g, "");
-  };
-  return commaA(commaB(num));
+  const numericString = str.replace(/[^\d]+/g, "");
+  return /^\d+$/.test(numericString) ? parseInt(numericString, 10) : "0";
 };
 
 // timestamp를 받아서 "2021년 10월 10일 일요일" 형식으로 포맷팅하는 함수
@@ -61,4 +50,8 @@ export const isNonNegativeInteger = (str) => {
 export const getReactAppApiUrl = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   return apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
+};
+
+export const scrollToTop = () => {
+  window.scrollTo(0, 0);
 };

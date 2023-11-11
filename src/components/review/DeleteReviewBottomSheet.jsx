@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { deleteReview } from "../../apis/review";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 
 export default function DeleteReviewBottomSheet({ onClose }) {
   const [agreePolicy, setAgreePolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { reviewId } = useParams();
   const navigate = useNavigate();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -25,7 +27,8 @@ export default function DeleteReviewBottomSheet({ onClose }) {
         navigate("/profile");
       }
     } catch (error) {
-      console.log(error);
+      onClose();
+      defaultErrorHandler(error);
     }
     setIsSubmitting(false);
   };

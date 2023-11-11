@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import useDefaultErrorHandler from "../../hooks/useDefaultErrorHandler";
 import useFetchPortfolios from "../../hooks/useFetchPortfolios";
-import { openSeverErrorBottomSheet } from "../../utils/handleBottomSheet";
+import SearchBar from "../common/SearchBar";
 import Container from "../common/atoms/Container";
 import Spinner from "../common/atoms/Spinner";
 import EmptySearchResult from "./EmptySearchResult";
 import FilterForm from "./FilterForm";
 import PortfolioGrid from "./PortfolioGrid";
-import PortfolioSearchBar from "./PortfolioSearchBar";
 import SearchHeaderRow from "./SearchHeaderRow";
 
+// done test
 const PortfolioTemplate = () => {
-  const dispatch = useDispatch();
   const bottomObserver = useRef(null);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [isFilterFormOpen, setIsFilterFormOpen] = useState(false);
   const [searchParams] = useSearchParams();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   const [name, setName] = useState(searchParams.get("name") || "");
   const [selectedRegion, setSelectedRegion] = useState(null);
@@ -24,8 +24,8 @@ const PortfolioTemplate = () => {
 
   const [queryName, setQueryName] = useState(searchParams.get("name") || "");
   const [queryLocation, setQueryLocation] = useState(null);
-  const [queryMinPrice, setQueryMinPrice] = useState(null);
-  const [queryMaxPrice, setQueryMaxPrice] = useState(null);
+  const [queryMinPrice, setQueryMinPrice] = useState(0);
+  const [queryMaxPrice, setQueryMaxPrice] = useState(-1);
 
   const {
     isFetchingNextPage, // 다음 페이지를 가져오는 요청이 진행 중인지 여부
@@ -34,7 +34,6 @@ const PortfolioTemplate = () => {
     isLoading,
     fetchNextPage,
     portfolios,
-    isFetching,
   } = useFetchPortfolios({
     name: queryName,
     location: queryLocation,
@@ -83,8 +82,7 @@ const PortfolioTemplate = () => {
 
   useEffect(() => {
     if (error) {
-      console.error(error.message);
-      openSeverErrorBottomSheet(dispatch); // 현재 msw에서 가끔씩 404에러 발생을 서버에러로 대체 처리중
+      defaultErrorHandler(error);
     }
   }, [error]);
 
@@ -93,7 +91,7 @@ const PortfolioTemplate = () => {
   return (
     <>
       {isSearchBarOpen && (
-        <PortfolioSearchBar
+        <SearchBar
           handleCloseSearchBar={handleCloseSearchBar}
           name={name}
           setName={setName}
@@ -120,10 +118,13 @@ const PortfolioTemplate = () => {
         />
       )}
       <Container>
-        {portfolios.length === 0 ? (
+        {portfolios?.length === 0 ? (
           <EmptySearchResult />
         ) : (
-          <PortfolioGrid portfolios={portfolios} isFetching={isFetching} />
+          <PortfolioGrid
+            portfolios={portfolios}
+            isFetchingNextPage={isFetchingNextPage}
+          />
         )}
       </Container>
       <div ref={bottomObserver} />

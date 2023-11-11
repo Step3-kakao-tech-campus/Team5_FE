@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Photo from "../common/atoms/Photo";
+import { ReactComponent as Congratulations } from "../../assets/congratulations-01.svg";
 
 const MainPhoto = ({
   className = "",
@@ -30,7 +31,7 @@ const MainPhoto = ({
 
   return (
     <div
-      className={`photo-wrapper relative sm:h-[600px] h-[800px] ${className}`}
+      className={`photo-wrapper relative xs:h-[600px] sm:h-[700px] h-[800px] ${className}`}
     >
       <div
         onMouseUp={() => upListener()}
@@ -45,9 +46,7 @@ const MainPhoto = ({
         />
         <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full">
           <div className="flex">
-            <div className="mt-4 mx-auto text-white xs:text-[60px] sm:text-[80px] text-[100px] leading-none font-['Licorice']">
-              Congratulations!
-            </div>
+            <Congratulations className="mt-[5px] mx-auto xs:h-[80px] sm:h-[100px] h-[120px]" />
           </div>
           <div className="flex">
             <div className="ml-auto mr-4 text-right text-sm text-white">
