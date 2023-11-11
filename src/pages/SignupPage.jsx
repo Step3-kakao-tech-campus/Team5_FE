@@ -83,14 +83,19 @@ export default function SignupPage() {
     } catch (error) {
       // 이메일 중복 에러 검증
       const customError = error?.response?.data?.error;
-      if (customError.status === 2002) {
-        setErrorMessageAndFocus("동일한 이메일이 존재합니다.", emailInputRef);
-        return;
+      switch (customError.status) {
+        case 2002:
+          setErrorMessageAndFocus("동일한 이메일이 존재합니다.", emailInputRef);
+          break;
+        case 2206:
+          setErrorMessageAndFocus("이미 인증이 완료되었습니다.", emailInputRef);
+          break;
+        default:
+          openBottomSheetHandler({
+            bottomSheet: "messageBottomSheet",
+            message: "인증코드 생성 과정에서 오류가 발생했습니다.",
+          });
       }
-      openBottomSheetHandler({
-        bottomSheet: "messageBottomSheet",
-        message: "인증코드 생성 과정에서 오류가 발생했습니다.",
-      });
     } finally {
       setIsSendingCode(false);
       setIsSentCode(true);
@@ -106,18 +111,39 @@ export default function SignupPage() {
       setErrorMessageAndFocus("인증코드를 입력해주세요.", codeRef);
       return;
     }
-    if (values.code !== "999999") {
-      setErrorMessageAndFocus("인증코드가 일치하지 않습니다.", codeRef);
-      return;
-    }
     setIsValidatingCode(true);
     try {
       await verifyAuthCode({ email: values.email, code: values.code });
       setIsPassAuthCode(true);
     } catch (error) {
-      openBottomSheetHandler({
-        bottomSheet: "serverErrorBottomSheet",
-      });
+      const customError = error?.response?.data?.error;
+      switch (customError.status) {
+        case 2202:
+          setErrorMessageAndFocus(
+            "인증코드 전송 내역이 없습니다. 인증코드를 요청 후 진행해주세요.",
+            codeRef,
+          );
+          break;
+        case 2203:
+          setErrorMessageAndFocus(
+            "인증코드가 만료되었습니다. 다시 요청해주세요.",
+            codeRef,
+          );
+          break;
+        case 2204:
+          setErrorMessageAndFocus("인증코드가 일치하지 않습니다.", codeRef);
+          break;
+        case 2206:
+          setErrorMessageAndFocus("이미 인증이 완료되었습니다.", codeRef);
+          break;
+        case 400:
+          setErrorMessageAndFocus("인증코드는 6글자입니다.", codeRef);
+          break;
+        default:
+          openBottomSheetHandler({
+            bottomSheet: "serverErrorBottomSheet",
+          });
+      }
     } finally {
       setIsValidatingCode(false);
     }
