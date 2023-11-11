@@ -66,6 +66,15 @@ export default function SignupPage() {
   };
 
   const handleSendCode = async () => {
+    if (errorMessage !== "") {
+      setErrorMessage("");
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          console.log("validateInput1");
+          resolve();
+        }, 300);
+      });
+    }
     if (!values.email) {
       setErrorMessageAndFocus("이메일을 입력해주세요.", emailInputRef);
       return;
@@ -80,6 +89,7 @@ export default function SignupPage() {
       if (isSentCode) {
         setTime(60 * 10);
       }
+      setIsSentCode(true);
     } catch (error) {
       // 이메일 중복 에러 검증
       const customError = error?.response?.data?.error;
@@ -98,11 +108,19 @@ export default function SignupPage() {
       }
     } finally {
       setIsSendingCode(false);
-      setIsSentCode(true);
     }
   };
 
   const handleValidateCode = async () => {
+    if (errorMessage !== "") {
+      setErrorMessage("");
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          console.log("validateInput1");
+          resolve();
+        }, 300);
+      });
+    }
     if (!isSentCode) {
       setErrorMessageAndFocus("인증코드를 전송해주세요.", emailInputRef);
       return;
@@ -162,7 +180,16 @@ export default function SignupPage() {
     setAgreePolicy(!agreePolicy);
   };
 
-  const validateInput = () => {
+  const validateInput = async () => {
+    // 기존의 에러메세지가 존재
+    if (errorMessage !== "") {
+      setErrorMessage("");
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 300);
+      });
+    }
     if (!values.username) {
       setErrorMessageAndFocus("이름을 입력해주세요.", nameInputRef);
       return false;
@@ -212,7 +239,7 @@ export default function SignupPage() {
   };
 
   const handleSubmit = async () => {
-    if (!validateInput()) return;
+    if (!(await validateInput())) return;
     try {
       console.log({
         role: values.role,
