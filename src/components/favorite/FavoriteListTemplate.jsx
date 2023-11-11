@@ -14,6 +14,7 @@ const FavoriteListTemplate = () => {
     error,
     hasNextPage,
     isLoading,
+    isFetching,
     fetchNextPage,
     favorites,
     setFavorites,
@@ -47,7 +48,7 @@ const FavoriteListTemplate = () => {
   return (
     <>
       <Container>
-        {favorites?.length === 0 ? (
+        {!isFetching && favorites?.length === 0 ? (
           <NoFavoriteList />
         ) : (
           <PortfolioGrid
