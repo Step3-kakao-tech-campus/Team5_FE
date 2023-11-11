@@ -60,7 +60,6 @@ export default function ReviewUpdateTemplate({ review }) {
         });
       }
     } catch (error) {
-      console.log(error);
       defaultErrorHandler(error);
     }
     setIsSubmitting(false);

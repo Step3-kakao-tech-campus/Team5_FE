@@ -24,13 +24,11 @@ export default function DeleteAccountBottomSheet({ onClose }) {
     setIsSubmitting(true);
     try {
       const response = await deleteAccount();
-      console.log(response);
       if (response.success) {
         deleteUserData(userInfo.userId);
         dispatch(logOut());
       }
     } catch (error) {
-      console.log(error);
       if (error?.response.status === 500) {
         onClose();
         openBottomSheetHandler({ bottomSheet: "serverErrorBottomSheet" });

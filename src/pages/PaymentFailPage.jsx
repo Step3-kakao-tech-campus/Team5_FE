@@ -21,7 +21,7 @@ export default function PaymentFailPage() {
             {paymentFailMessage}
           </div>
         </div>
-        <div className=" flex justify-center gap-3 font-medium text-sm text-center">
+        <div className=" flex justify-center gap-3 font-medium text-sm text-center pb-10">
           <button
             onClick={() => navigate(-1)}
             className=" w-1/2 bg-white text-black rounded-md py-2 px-4 border border-solid hover:bg-zinc-200"

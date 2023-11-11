@@ -63,7 +63,6 @@ function ChatInput() {
       setLoading(false);
       setMessage("");
     } catch (error) {
-      console.error(error);
       setLoading(false);
     }
   }, [chatId, createMessage, message]);

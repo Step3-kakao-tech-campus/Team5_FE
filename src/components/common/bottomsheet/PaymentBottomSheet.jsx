@@ -38,8 +38,6 @@ export default function PaymentBottomSheet({ onClose }) {
         customerName: userInfo.username,
       });
     } catch (error) {
-      console.error("결제 작업 중 오류 발생:", error);
-      console.log(error);
       defaultErrorHandler(error);
     } finally {
       setIsLoading(false);

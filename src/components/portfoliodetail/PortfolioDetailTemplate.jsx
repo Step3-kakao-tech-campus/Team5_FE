@@ -74,7 +74,6 @@ const PortfolioDetailTemplate = ({ portfolio }) => {
       });
       navigate(`/chat/${chatId}`);
     } catch (error) {
-      console.log(error);
       defaultErrorHandler(error);
     } finally {
       setIsSubmitting(false);

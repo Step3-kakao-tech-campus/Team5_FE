@@ -7,16 +7,18 @@ import ReviewUpdateHeader from "../components/review/ReviewUpdateHeader";
 import ReviewUpdateTemplate from "../components/review/ReviewUpdateTemplate";
 import usePreventGoBack from "../hooks/usePreventGoBack";
 import usePreventRefresh from "../hooks/usePreventRefresh";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 export default function ReviewUpdatePage() {
   const { reviewId } = useParams();
   const queryClient = useQueryClient();
+  const { defaultErrorHandler } = useDefaultErrorHandler();
   const { data: review, isLoading } = useQuery(
     [`/reviews/${reviewId}`],
     () => getReviewDetail(parseInt(reviewId, 10)),
     {
       onError: (error) => {
-        console.log(error);
+        defaultErrorHandler(error);
       },
     },
   );
