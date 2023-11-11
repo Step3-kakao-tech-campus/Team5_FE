@@ -88,18 +88,22 @@ const QuotationCollectTemplate = () => {
                   {userInfo.role === "planner" ? (
                     <span className="mr-[3px]">님 |</span>
                   ) : (
-                    <span className="mx-[3px]">플래너님 |</span>
+                    <span className="mx-[3px]">플래너 |</span>
                   )}
                   {chat.status === "완료" ? (
-                    <span className="text-gray-sunsu">확정 완료</span>
+                    <span className="text-gray-sunsu mt-[2px] text-sm">
+                      확정 완료
+                    </span>
                   ) : (
-                    <span className="text-blue-sunsu font-bold">진행 중</span>
+                    <span className="text-blue-sunsu font-bold mt-[2px] text-sm">
+                      진행 중
+                    </span>
                   )}
                   <Link
                     to={`/chat/${chat.chatId}`}
                     className="ml-auto text-sm text-darkgray-sunsu font-bold underline"
                   >
-                    채팅방으로 이동
+                    채팅 &gt;
                   </Link>
                 </div>
                 {chat.quotations?.map((quotationItem) => (
@@ -125,7 +129,7 @@ const QuotationCollectTemplate = () => {
                         <span>결제완료</span>
                       ) : (
                         <span>
-                          결제미완료
+                          <span className="text-red-sunsu">결제미완료</span>
                           {userInfo.role === "planner" && (
                             <>
                               <span> | </span>
