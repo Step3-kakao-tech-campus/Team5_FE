@@ -29,10 +29,7 @@ instance.interceptors.response.use(
       );
       window.location.href = "/";
     }
-    const {
-      config,
-      response: { status },
-    } = error;
+    const { config, response: { status } = {} } = error;
     if (status === 401) {
       // 액세스 토큰 만료
       if (error?.response?.data?.error?.status === 2100) {
