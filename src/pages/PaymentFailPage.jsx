@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { Link, useSearchParams } from "react-router-dom";
-import GNBBOX from "../components/common/GNBBOX";
 
 export default function PaymentFailPage() {
   const [searchParams] = useSearchParams();
@@ -9,7 +8,7 @@ export default function PaymentFailPage() {
   const paymentFailMessage = searchParams.get("message");
 
   return (
-    <div className="flex flex-col tracking-tight h-screen w-full">
+    <div className="flex flex-col tracking-tight w-full h-[calc(100vh-50px)]">
       <div className=" grow p-10 flex justify-between flex-col">
         <div>
           <h1 className=" text-2xl font-medium pt-10">
@@ -37,7 +36,6 @@ export default function PaymentFailPage() {
           </Link>
         </div>
       </div>
-      <GNBBOX />
     </div>
   );
 }
