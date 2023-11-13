@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link, useSearchParams } from "react-router-dom";
 import { paymentApprovalAndUserUpgrade } from "../apis/payments";
-import GNBBOX from "../components/common/GNBBOX";
 import { fetchUserInfo } from "../store/slices/userSlice";
+import useDefaultErrorHandler from "../hooks/useDefaultErrorHandler";
 
 export default function PaymentCompletePage() {
   const [isApproving, setIsApproving] = useState(true);
@@ -15,6 +15,7 @@ export default function PaymentCompletePage() {
   const amount = searchParams.get("amount");
   const orderId = searchParams.get("orderId");
   const paymentKey = searchParams.get("paymentKey");
+  const { defaultErrorHandler } = useDefaultErrorHandler();
 
   useEffect(() => {
     if (!amount || !orderId || !paymentKey) {
@@ -33,7 +34,12 @@ export default function PaymentCompletePage() {
         dispatch(fetchUserInfo());
         setIsApproving(false);
       } catch (error) {
-        navigate(`/payments/fail?message=${error.message}`);
+        const customError = error?.response?.data?.error;
+        if (customError) {
+          navigate(`/payments/fail?message=${customError.message}`);
+          return;
+        }
+        defaultErrorHandler(error);
       }
     })();
   }, []);
@@ -46,7 +52,7 @@ export default function PaymentCompletePage() {
     );
 
   return (
-    <div className="flex flex-col tracking-tight h-screen w-full">
+    <div className="flex flex-col tracking-tight h-[calc(100vh-50px)] w-full">
       <div className=" grow p-10 flex justify-between flex-col">
         <div>
           <h1 className=" text-2xl font-medium pt-10">
@@ -58,7 +64,7 @@ export default function PaymentCompletePage() {
             <span>자유롭게 확인해보세요!</span>
           </h3>
         </div>
-        <div className=" flex justify-center gap-3 font-medium text-sm text-center">
+        <div className=" flex justify-center gap-3 font-medium text-sm text-center pb-10">
           <button
             onClick={() => navigate(-1)}
             className=" w-1/2 bg-white text-black rounded-md py-2 px-4 border border-solid hover:bg-zinc-200"
@@ -73,7 +79,6 @@ export default function PaymentCompletePage() {
           </Link>
         </div>
       </div>
-      <GNBBOX />
     </div>
   );
 }

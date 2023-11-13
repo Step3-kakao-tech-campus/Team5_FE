@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteAccount } from "../../apis/user";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 import { logOut } from "../../store/slices/userSlice";
+import { deleteUserData } from "../../utils/firebase";
 import Button from "../common/atoms/Button";
 import BottomSheet from "../common/bottomsheet/BottomSheet";
 
+// test 완료
 export default function DeleteAccountBottomSheet({ onClose }) {
+  const { userInfo } = useSelector((state) => state.user);
   const [agreePolicy, setAgreePolicy] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
 
   const handleAgreement = () => {
     setAgreePolicy(!agreePolicy);
@@ -15,15 +21,20 @@ export default function DeleteAccountBottomSheet({ onClose }) {
 
   const handleDeleteAccount = async () => {
     if (!agreePolicy) return;
+    setIsSubmitting(true);
     try {
       const response = await deleteAccount();
-      console.log(response);
       if (response.success) {
+        deleteUserData(userInfo.userId);
         dispatch(logOut());
       }
     } catch (error) {
-      console.log(error);
+      if (error?.response.status === 500) {
+        onClose();
+        openBottomSheetHandler({ bottomSheet: "serverErrorBottomSheet" });
+      }
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -52,10 +63,8 @@ export default function DeleteAccountBottomSheet({ onClose }) {
           className={`block w-full h-[50px] rounded-[10px] text-sm ${
             agreePolicy ? "bg-lightskyblue-sunsu" : "bg-zinc-300"
           }`}
-          onClick={() => {
-            handleDeleteAccount();
-          }}
-          disabled={!agreePolicy}
+          onClick={handleDeleteAccount}
+          disabled={isSubmitting}
         >
           탈퇴하기
         </Button>

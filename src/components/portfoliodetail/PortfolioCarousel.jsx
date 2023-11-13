@@ -29,6 +29,8 @@ const PortfolioCarousel = ({ portfolio }) => {
       </div>
     ),
     dotsClass: "custom-dots",
+    arrows: false,
+    lazyLoad: "anticipated",
   };
 
   return (

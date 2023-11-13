@@ -1,5 +1,4 @@
 import { rest } from "msw";
-import { chatIdHJ, chatIdAR } from "./chatData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -8,7 +7,7 @@ async function sleep(ms) {
 }
 
 export const chatHandlers = [
-  rest.post("/chat", async (req, res, ctx) => {
+  rest.post("/api/chat", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -20,9 +19,16 @@ export const chatHandlers = [
         }),
       );
     }
-    if (req.body.plannerId === 1) {
-      return res(ctx.status(200), ctx.json(chatIdHJ));
-    }
-    return res(ctx.status(200), ctx.json(chatIdAR));
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        response: {
+          chatId: 21002,
+          existed: true,
+        },
+        error: null,
+      }),
+    );
   }),
 ];

@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
+import { success } from "./commonData";
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -9,7 +9,7 @@ async function sleep(ms) {
 
 export const paymentHandlers = [
   // /payments/save
-  rest.post("/payments/save", async (req, res, ctx) => {
+  rest.post("/api/payment/save", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -21,11 +21,11 @@ export const paymentHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /payments/approve
-  rest.post("/payments/approve", async (req, res, ctx) => {
+  rest.post("/api/payment/approve", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -52,6 +52,6 @@ export const paymentHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];

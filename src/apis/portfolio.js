@@ -8,32 +8,70 @@ export const getPortfolioList = async (
   maxPrice,
 ) => {
   const response = await instance.get(
-    `/portfolios?cursor=${nextCursor}&name=${name}&location=${location}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
+    `/api/portfolio?cursor=${nextCursor}&name=${name}&location=${location}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
   );
   return response.data.response;
 };
 
 export const getPortfolioDetail = async (portfolioId) => {
-  const response = await instance.get(`/portfolios/${portfolioId}`);
-  return response.data;
+  const response = await instance.get(`/api/portfolio/${portfolioId}`);
+  return response.data.response;
 };
 
 export const createPortfolio = async (portfolioData) => {
-  const response = await instance.post("/portfolios", portfolioData);
+  const {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    career,
+    partnerCompany,
+  } = portfolioData;
+  const response = await instance.post("/api/portfolio", {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    career,
+    partnerCompany,
+  });
   return response.data;
 };
 
 export const updatePortfolio = async (portfolioData) => {
-  const response = await instance.put("/portfolios", portfolioData);
+  const {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    career,
+    partnerCompany,
+  } = portfolioData;
+  const response = await instance.put("/api/portfolio", {
+    plannerName,
+    items,
+    images,
+    title,
+    description,
+    location,
+    career,
+    partnerCompany,
+  });
   return response.data;
 };
 
 export const deletePortfolio = async () => {
-  const response = await instance.delete("/portfolios");
+  const response = await instance.delete("/api/portfolio");
   return response.data;
 };
 
 export const getPortfolioSelf = async () => {
-  const response = await instance.get("/portfolios/self");
-  return response.data;
+  const res = await instance.get("/api/portfolio/self");
+  return res.data.response;
 };

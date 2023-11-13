@@ -18,10 +18,10 @@
     "react/react-in-jsx-scope": "off",
     "react/button-has-type": "off",
     "react/prop-types": "off",
-    "no-console": "off",
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
     "no-param-reassign": "off",
+    "react/no-unescaped-entities": "off",
     "prettier/prettier": [
       "error",
       {

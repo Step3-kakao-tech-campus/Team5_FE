@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ChatListHeaderRow from "../components/chat/ChatListHeaderRow";
 import ChatRoomItem from "../components/chat/ChatRoomItem";
-import GNBBOX from "../components/common/GNBBOX";
 import Spinner from "../components/common/atoms/Spinner";
 import "../firebase";
 
@@ -53,12 +52,16 @@ export default function ChatListPage() {
           ? Object.values(unreadSnapShot.val()).length
           : 0;
         const message = Object.values(snapShot.val())[0];
+        const avatar = await get(
+          ref(getDatabase(), `users/${chat.counterId}/avatar`),
+        );
         return {
           chatId: chat.chatId,
           counterName: chat.counterName,
           lastMessage: message.content,
           timestamp: message.timestamp,
           unreadCount,
+          avatar: avatar.val(),
         };
       });
 
@@ -79,9 +82,8 @@ export default function ChatListPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center w-full h-full flex-col">
+      <div className="flex flex-col items-center justify-center w-full h-full">
         <Spinner />
-        <GNBBOX />
       </div>
     );
   }
@@ -89,19 +91,18 @@ export default function ChatListPage() {
     <div className="flex flex-col w-full h-full">
       <ChatListHeaderRow />
       {/* 채팅 목록 영역 */}
-      {chatList.length > 0 &&
-        chatList?.map((message) => (
-          <div key={message.timestamp}>
-            <ChatRoomItem
-              timestamp={message.timestamp}
-              counterName={message.counterName}
-              lastMessage={message.lastMessage}
-              chatId={message.chatId}
-              unreadCount={message.unreadCount}
-            />
-          </div>
-        ))}
-      <GNBBOX />
+      {chatList?.map((message) => (
+        <div key={message.timestamp}>
+          <ChatRoomItem
+            timestamp={message.timestamp}
+            counterName={message.counterName}
+            lastMessage={message.lastMessage}
+            chatId={message.chatId}
+            unreadCount={message.unreadCount}
+            avatar={message.avatar}
+          />
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
+import { success } from "./commonData";
 import {
   portfolioDetail1,
   portfolioDetail2,
@@ -17,7 +17,7 @@ async function sleep(ms) {
 
 export const portfolioHandlers = [
   // /portfolios?cursor={nextCursor}
-  rest.get("/portfolios", async (req, res, ctx) => {
+  rest.get("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const nextCursor = req.url.searchParams.get("cursor");
     if (nextCursor === "-1") {
@@ -29,8 +29,41 @@ export const portfolioHandlers = [
     return res(ctx.status(200), ctx.json(portfolioList3));
   }),
 
+  // portfolios/self
+  rest.get("/api/portfolio/self", async (req, res, ctx) => {
+    await sleep(500);
+    const accessToken = req.headers.get("Authorization");
+    if (!accessToken) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          code: 403,
+          message: "Not authorized",
+        }),
+      );
+    }
+    // return res(
+    //   ctx.status(200),
+    //   ctx.json({
+    //     success: true,
+    //     response: {
+    //       plannerName: null,
+    //       images: null,
+    //       items: null,
+    //       title: null,
+    //       description: null,
+    //       location: null,
+    //       career: null,
+    //       partnerCompany: null,
+    //     },
+    //     error: null,
+    //   }),
+    // );
+    return res(ctx.status(200), ctx.json(portfolioSelfData));
+  }),
+
   // /portfolios/{portfolioId}
-  rest.get("/portfolios/:portfolioId", async (req, res, ctx) => {
+  rest.get("/api/portfolio/:portfolioId", async (req, res, ctx) => {
     await sleep(500);
     if (req.params.portfolioId === "1") {
       return res(ctx.status(200), ctx.json(portfolioDetail1));
@@ -40,7 +73,7 @@ export const portfolioHandlers = [
   }),
 
   // /portfolios
-  rest.post("/portfolios", async (req, res, ctx) => {
+  rest.post("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -52,11 +85,11 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /portfolios
-  rest.put("/portfolios", async (req, res, ctx) => {
+  rest.put("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -68,11 +101,11 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /portfolios
-  rest.delete("/portfolios", async (req, res, ctx) => {
+  rest.delete("/api/portfolio", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -84,22 +117,6 @@ export const portfolioHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
-  }),
-
-  // portfolios/self
-  rest.get("/portfolios/self", async (req, res, ctx) => {
-    await sleep(500);
-    const accessToken = req.headers.get("Authorization");
-    if (!accessToken) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          code: 403,
-          message: "Not authorized",
-        }),
-      );
-    }
-    return res(ctx.status(200), ctx.json(portfolioSelfData));
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];

@@ -10,16 +10,17 @@ import { ReactComponent as ProfileIcon } from "../../assets/profile-02.svg";
 import { ReactComponent as SearchOutlinedIcon } from "../../assets/search-01.svg";
 import { ReactComponent as SearchIcon } from "../../assets/search-02.svg";
 import { closeBottomSheet } from "../../store/slices/bottomSheetSlice";
-import { openLoginBottomSheet } from "../../utils/handleBottomSheet";
+import useOpenBottomSheet from "../../hooks/useOpenBottomSheet";
 
 export default function GNB() {
   const location = useLocation();
   const { isLogged } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { openBottomSheetHandler } = useOpenBottomSheet();
   const checkLoginStatus = (e) => {
     if (!isLogged) {
       e.preventDefault();
-      openLoginBottomSheet(dispatch);
+      openBottomSheetHandler({ bottomSheet: "loginBottomSheet" });
     }
   };
 
@@ -34,7 +35,8 @@ export default function GNB() {
         to="/"
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname === "/" ? (
+        {location.pathname === "/" ||
+        location.pathname.startsWith("/reviews") ? (
           <HomeIcon className="w-6 h-6" />
         ) : (
           <HomeOutlinedIcon className="w-6 h-6" />
@@ -67,7 +69,9 @@ export default function GNB() {
         onClick={checkLoginStatus}
         className="text-black w-full flex items-center justify-center"
       >
-        {location.pathname.startsWith("/profile") ? (
+        {location.pathname.startsWith("/profile") ||
+        location.pathname.startsWith("/payments") ||
+        location.pathname.startsWith("/quotations") ? (
           <ProfileIcon className="w-6 h-6" />
         ) : (
           <ProfileOutlinedIcon className="w-6 h-6" />

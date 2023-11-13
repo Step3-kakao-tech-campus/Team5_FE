@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { sucess } from "./commonData";
+import { success } from "./commonData";
 import {
   infoResponseAR,
   infoResponseDH,
@@ -21,18 +21,24 @@ const dhToken = "Bearer 1002";
 
 export const userHandlers = [
   // /user/signup
-  rest.post("/user/signup", async (req, res, ctx) => {
+  rest.post("/api/user/signup", async (req, res, ctx) => {
     await sleep(500);
     return res(ctx.status(200), ctx.json(signupResponse));
   }),
 
   // /user/login
-  rest.post("/user/login", async (req, res, ctx) => {
+  rest.post("/api/user/login", async (req, res, ctx) => {
     await sleep(500);
     if (req.body.email === "hj1@naver.com") {
       return res(
         ctx.status(200),
-        ctx.json(sucess),
+        ctx.json({
+          success: true,
+          response: {
+            userId: 1,
+          },
+          error: null,
+        }),
         ctx.set("Authorization", hjToken),
         ctx.set("Refresh", hjToken),
       );
@@ -40,7 +46,13 @@ export const userHandlers = [
     if (req.body.email === "ar2@naver.com") {
       return res(
         ctx.status(200),
-        ctx.json(sucess),
+        ctx.json({
+          success: true,
+          response: {
+            userId: 2,
+          },
+          error: null,
+        }),
         ctx.set("Authorization", arToken),
         ctx.set("Refresh", arToken),
       );
@@ -48,7 +60,13 @@ export const userHandlers = [
     if (req.body.email === "hn1001@naver.com") {
       return res(
         ctx.status(200),
-        ctx.json(sucess),
+        ctx.json({
+          success: true,
+          response: {
+            userId: 1001,
+          },
+          error: null,
+        }),
         ctx.set("Authorization", hnToken),
         ctx.set("Refresh", hnToken),
       );
@@ -56,14 +74,20 @@ export const userHandlers = [
 
     return res(
       ctx.status(200),
-      ctx.json(sucess),
+      ctx.json({
+        success: true,
+        response: {
+          userId: 1002,
+        },
+        error: null,
+      }),
       ctx.set("Authorization", dhToken),
       ctx.set("Refresh", dhToken),
     );
   }),
 
   // /user
-  rest.delete("/user", async (req, res, ctx) => {
+  rest.delete("/api/user", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -75,11 +99,11 @@ export const userHandlers = [
         }),
       );
     }
-    return res(ctx.status(200), ctx.json(sucess));
+    return res(ctx.status(200), ctx.json(success));
   }),
 
   // /user/info
-  rest.get("/user/info", async (req, res, ctx) => {
+  rest.get("/api/user/info", async (req, res, ctx) => {
     await sleep(500);
     const accessToken = req.headers.get("Authorization");
     if (!accessToken) {
@@ -104,12 +128,12 @@ export const userHandlers = [
   }),
 
   // /user/token
-  rest.put("/user/token", async (req, res, ctx) => {
+  rest.post("/api/user/token", async (req, res, ctx) => {
     await sleep(500);
     const refreshToken = req.headers.get("Refresh");
     return res(
       ctx.status(200),
-      ctx.json(sucess),
+      ctx.json(success),
       ctx.set("Authorization", `NEW ${refreshToken}`),
       ctx.set("Refresh", refreshToken),
     );
@@ -125,5 +149,15 @@ export const userHandlers = [
     //     },
     //   }),
     // );
+  }),
+
+  rest.post("/api/mail", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
+  }),
+
+  rest.post("/api/mail/verify", async (req, res, ctx) => {
+    await sleep(500);
+    return res(ctx.status(200), ctx.json(success));
   }),
 ];
