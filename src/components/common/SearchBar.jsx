@@ -45,6 +45,7 @@ export default function SearchBar({
             />
           </div>
           <CloseIcon
+            aria-label="검색창 닫기"
             className="w-4 h-4 cursor-pointer"
             onClick={handleCloseSearchBar}
           />

@@ -9,6 +9,7 @@ export default function ProfileImage() {
   const { avatar } = useSelector((state) => state.user);
   const [imageModalOpen, setImageModalOpen] = useState(false); // 이미지 모달
   const [upLoading, setUploading] = useState(false); // 업로드 중
+  const { userInfo } = useSelector((state) => state.user);
 
   const handleOpenImageModal = () => {
     setImageModalOpen(true);
@@ -27,7 +28,7 @@ export default function ProfileImage() {
       <div className="relative min-w-[100px] min-h-[100px] w-[40%] h-[40%] max-w-[160px] max-h-[160px] after:pb-[100%] after:block">
         <Photo
           src={avatar}
-          alt="avatar"
+          alt={`${userInfo.username}님의 프로필 사진`}
           className="absolute right-0 bottom-0 object-cover object-center w-full h-full rounded-full"
         />
         {upLoading && <ProfileImageSpinner />}

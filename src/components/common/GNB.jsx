@@ -34,6 +34,7 @@ export default function GNB() {
       <Link
         to="/"
         className="text-black w-full flex items-center justify-center"
+        aria-label="홈으로 이동"
       >
         {location.pathname === "/" ||
         location.pathname.startsWith("/reviews") ? (
@@ -45,6 +46,7 @@ export default function GNB() {
       <Link
         to="/search"
         className="text-black w-full flex items-center justify-center"
+        aria-label="탐색으로 이동"
       >
         {location.pathname === "/search" ||
         location.pathname.startsWith("/portfolios/") ? (
@@ -57,6 +59,7 @@ export default function GNB() {
         to="/chat/list"
         onClick={checkLoginStatus}
         className="text-black w-full flex items-center justify-center"
+        aria-label="채팅으로 이동"
       >
         {location.pathname.startsWith("/chat") ? (
           <ChatIcon className="w-6 h-6" />
@@ -68,6 +71,7 @@ export default function GNB() {
         to="/profile"
         onClick={checkLoginStatus}
         className="text-black w-full flex items-center justify-center"
+        aria-label="프로필로 이동"
       >
         {location.pathname.startsWith("/profile") ||
         location.pathname.startsWith("/payments") ||

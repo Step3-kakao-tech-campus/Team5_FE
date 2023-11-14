@@ -69,7 +69,7 @@ const PortfolioCard = ({ portfolio, setFavorites }) => {
     <Card to={`/portfolios/${portfolio.id}`} className="portfolio-card">
       <SquarePhoto
         src={portfolio.image}
-        alt={portfolio.plannerName}
+        alt={`${portfolio.plannerName}플래너 소개 사진`}
         className="portfolio-image"
       />
       <div className="py-[9px] px-[8px] relative">
