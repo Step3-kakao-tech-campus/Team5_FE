@@ -83,14 +83,21 @@ function ChatInput() {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <IconButton onClick={handleOpenImageModal}>
+                <IconButton
+                  onClick={handleOpenImageModal}
+                  aria-label="사진 업로드"
+                >
                   <GalleryIcon className="w-6 h-6" />
                 </IconButton>
               </InputAdornment>
             ),
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={onClickSendMessage} disabled={loading}>
+                <IconButton
+                  onClick={onClickSendMessage}
+                  disabled={loading}
+                  aria-label="메세지 전송"
+                >
                   <SendIcon className="w-6 h-6" />
                 </IconButton>
               </InputAdornment>
@@ -103,6 +110,7 @@ function ChatInput() {
           onChange={handleOnChange}
           onKeyDown={onKeyDownEnter}
         />
+
         {uploading ? (
           <Grid item xs={12} sx={{ m: "10px" }}>
             <LinearProgress variant="determinate" value={percent} />

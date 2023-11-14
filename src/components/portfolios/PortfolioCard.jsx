@@ -123,9 +123,15 @@ const PortfolioCard = ({ portfolio, setFavorites }) => {
                 disabled={isSubmitting}
               >
                 {portfolio.isLiked ? (
-                  <HeartIcon className="w-[11px] h-[10px]" />
+                  <HeartIcon
+                    className="w-[11px] h-[10px]"
+                    aria-label="찜하기 취소"
+                  />
                 ) : (
-                  <HeartOutlinedIcon className="w-[11px] h-[10px]" />
+                  <HeartOutlinedIcon
+                    className="w-[11px] h-[10px]"
+                    aria-label="찜하기"
+                  />
                 )}
               </Button>
             </div>

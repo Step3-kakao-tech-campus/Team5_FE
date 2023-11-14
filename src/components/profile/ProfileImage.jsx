@@ -35,6 +35,7 @@ export default function ProfileImage() {
         <button
           className="absolute bottom-[7%] right-[7%] w-6 h-6 p-1 rounded-full bg-zinc-100 cursor-pointer hover:bg-zinc-500 hover:text-white xs:bottom-[4%] xs:right-[4%]"
           onClick={handleOpenImageModal}
+          aria-label="프로필 사진 변경"
         >
           <BsCamera className="w-full h-ful" />
         </button>
