@@ -5,7 +5,7 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="viewport"
-      content="user-scalable=yes, initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, width=device-width, viewport-fit=cover"
+      content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, viewport-fit=cover"
     />
     <link
       rel="icon"
@@ -50,10 +50,7 @@
           navigator.serviceWorker
             .register("/service-worker.js")
             .then((registration) => {
-              console.log(
-                "Service worker regisered successfully",
-                registration,
-              );
+              console.log("Service worker regisered successfully");
             });
         });
       }
