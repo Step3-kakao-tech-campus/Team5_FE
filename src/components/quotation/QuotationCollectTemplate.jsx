@@ -75,7 +75,7 @@ const QuotationCollectTemplate = () => {
           />
         )}
         <div className="mb-[24px]">
-          {chats.length === 0 ? (
+          {!isFetching && chats.length === 0 ? (
             <NoQuotationCollect />
           ) : (
             chats.map((chat) => (
@@ -183,7 +183,7 @@ const QuotationCollectTemplate = () => {
               </div>
             ))
           )}
-          {chats.length > 0 && isFetching && <SkeletonQuotationItem />}
+          {chats.length > 0 && isFetchingNextPage && <SkeletonQuotationItem />}
         </div>
       </Container>
       <div ref={bottomObserver} />

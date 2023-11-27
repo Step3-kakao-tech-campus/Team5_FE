@@ -39,7 +39,7 @@ const MainCarousel = () => {
       <Slider {...settings}>
         <MainPhoto
           to="portfolios/1"
-          src="images/1_1.png"
+          src="images/1_1.webp"
           alt="유희정 플래너 메인 사진"
           className="portfolio-image"
           plannerName="유희정 플래너"
@@ -48,7 +48,7 @@ const MainCarousel = () => {
         />
         <MainPhoto
           to="portfolios/2"
-          src="images/2_1.png"
+          src="images/2_1.webp"
           alt="김아름 플래너 메인 사진"
           className="portfolio-image"
           plannerName="김아름 플래너"

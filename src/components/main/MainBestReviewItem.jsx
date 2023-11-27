@@ -11,7 +11,7 @@ const MainBestReviewItem = ({
   reviewId,
 }) => {
   return (
-    <Card to={`/reviews/${reviewId}`} className="best-review-card">
+    <Card to={`/portfolios/reviews/${reviewId}`} className="best-review-card">
       <div
         className={`flex py-[10px] mx-[10px] items-center gap-[10px] ${className}`}
       >

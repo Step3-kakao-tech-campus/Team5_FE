@@ -19,7 +19,7 @@ export default function ChatRoomItem({
       <div className="flex items-center w-full gap-2">
         <Photo
           src={avatar}
-          alt="avatar"
+          alt={`${counterName}님의 프로필 사진`}
           className="w-12 h-12 object-cover object-center rounded-2xl shrink-0"
         />
         <div className="flex flex-col grow">

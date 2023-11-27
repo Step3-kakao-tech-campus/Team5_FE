@@ -2,10 +2,6 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="description"
-      content="투명한 가격으로 웨딩 플래너와 예비 부부를 매칭하다, 순수웨딩."
-    />
     <meta name="theme-color" content="#000000" />
     <meta
       name="viewport"
@@ -54,10 +50,7 @@
           navigator.serviceWorker
             .register("/service-worker.js")
             .then((registration) => {
-              console.log(
-                "Service worker regisered successfully",
-                registration,
-              );
+              console.log("Service worker regisered successfully");
             });
         });
       }
